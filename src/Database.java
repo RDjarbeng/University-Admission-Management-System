@@ -5,6 +5,7 @@ import java.sql.*;
  * Need to include derby libraries to run
  *
  * todo:
+ * add foreign keys
  * admin View to view all tables
  */
 public class Database {
@@ -104,8 +105,8 @@ public class Database {
 //                "ResidentialAddress VARCHAR(50),"+
 //                "PostalAddress VARCHAR(50)"+
         try {
-            mydatabase.createTables(createT);
-            ResultSet result =mydatabase.selectQuery("Select * from ADMIN");
+
+            ResultSet result =mydatabase.selectQuery("Select * from STUDENT");
             ResultSetMetaData md = result.getMetaData();
             int col = md.getColumnCount();
             System.out.println("Number of Column : "+ col);
