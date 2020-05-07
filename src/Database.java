@@ -2,6 +2,7 @@ import java.sql.*;
 
 /**
  * Contains functions to access database
+ * Need to include derby libraries to run
  *
  * todo:
  * admin View to view all tables
@@ -63,7 +64,59 @@ public class Database {
 
 
     public static void main(String[] args) {
-        new Database();
+        Database mydatabase =new Database();
+
+        //Admin database commands
+
+//        String createT = "CREATE TABLE Admin ( "+
+//                "AdminNumber INT,"+
+//                "USERNAME varchar(25),"+
+//                "PASSWORD varchar(35),"+
+//                " PRIMARY KEY(ADMINNumber)"+
+//                ")"
+//                ;
+
+        /*
+        String createT = "CREATE TABLE admittedStudents ( "+
+                "StudentID char(8),"+
+                "ApplicationID char(10),"+
+                "ReceiptID char(10),"+
+                "CourseOfStudy varchar(25),"+
+                "HallOfResidence varchar(35),"+
+                " PRIMARY KEY(StudentID)"+
+                ")"
+                ;
+        */
+
+//        String createT = "CREATE TABLE APPLICATIONSTATUS ( "+
+//                "APPLICATIONNUMBER INT NOT NULL,"+
+//                "ApplicationID CHAR(10),"+
+//                "AdmissionStatus varchar(15),"+
+//                " PRIMARY KEY(APPLICATIONNUMBER)"+
+//                ")"
+
+//        "LastName VARCHAR(25),"+
+//                "FirstName VARCHAR(25),"+
+//                "MiddleInitial VARCHAR(25),"+
+//                "DOB DATE,"+
+//                "Nationality VARCHAR(25),"+
+//                "PhoneNumber varchar(15),"+
+//                "ResidentialAddress VARCHAR(50),"+
+//                "PostalAddress VARCHAR(50)"+
+        try {
+            mydatabase.createTables(createT);
+            ResultSet result =mydatabase.selectQuery("Select * from ADMIN");
+            ResultSetMetaData md = result.getMetaData();
+            int col = md.getColumnCount();
+            System.out.println("Number of Column : "+ col);
+            System.out.println("Columns Name: ");
+            for (int i = 1; i <= col; i++){
+                String col_name = md.getColumnName(i);
+                System.out.println(col_name +" "+ md.getColumnTypeName(i));
+            }
+        }catch (SQLException ex){
+            System.out.println("Create table failed \n" +ex.getMessage());
+        }
         System.out.println("Complete");
 
     }

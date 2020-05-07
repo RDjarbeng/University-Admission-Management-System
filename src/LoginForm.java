@@ -8,7 +8,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Arrays;
-import java.util.concurrent.Flow;
 
 public class LoginForm  {
 
@@ -22,12 +21,12 @@ public class LoginForm  {
     private static JPasswordField passwordText;
     LoginButtonListener bListener;
     //buttons
-    private static JButton button;
+    private static JButton loginButton, newStudentButton;
 
-    private Font font1, font2;
+    private Font font1, font2, font3;
 
     //panels for user name and password
-    JPanel userPanel, passwordPanel, buttonPanel;
+    JPanel userPanel, passwordPanel, loginButtonPanel, buttonsPanel, newStudentPanel;
 
     //constructor
     public LoginForm(){
@@ -42,11 +41,14 @@ public class LoginForm  {
         userPanel = new JPanel();
         userPanel.setBackground(Color.BLUE);
         passwordPanel=new JPanel();
-        buttonPanel = new JPanel();
+        loginButtonPanel = new JPanel();
+        buttonsPanel = new JPanel();
+        newStudentPanel = new JPanel();
 
         //set Fonts
         font1 = new Font("Arial",Font.BOLD, 30);
-        font2 = new Font("Dialog",Font.BOLD, 25);
+        font2 = new Font("Dialog",Font.BOLD, 22);
+        font3 = new Font("SansSerif",Font.ITALIC, 16);
 
         //Title
         JLabel titleLabel= new JLabel("Enter your Login details", JLabel.CENTER);
@@ -69,6 +71,7 @@ public class LoginForm  {
         //password
 
         passwordLabel= new JLabel("Password");
+        passwordLabel.setFont(font2);
         passwordText = new JPasswordField(20);
         passwordText.setActionCommand("OK");
         passwordText.addActionListener(bListener);
@@ -76,22 +79,33 @@ public class LoginForm  {
         passwordPanel.add(passwordLabel);
         passwordPanel.add(passwordText);
 
-        //button panel
-        button = new JButton("Login");
-        button.addActionListener(bListener);
-        buttonPanel.add(button);
+        //login button panel
+        loginButtonPanel.setLayout(new FlowLayout());
+        loginButton = new JButton("Login");
+        loginButton.addActionListener(bListener);
+        loginButtonPanel.add(loginButton);
 
-        button = new JButton("New Student?");
-        button.setBounds(280,150,125,25);
-        buttonPanel.add(button);
-
+        //Result indicator
         success = new JLabel("");
-        buttonPanel.add(success);
+        loginButtonPanel.add(success);
+        success.setFont(font3);
+
+        newStudentButton = new JButton("New Student?");
+        newStudentButton.setFont(font3);
+        newStudentPanel.add(newStudentButton);
+
+        //add to buttons Panel
+        buttonsPanel.setLayout(new GridLayout(2,1));
+        buttonsPanel.add(loginButtonPanel, BorderLayout.NORTH);
+        buttonsPanel.add(newStudentPanel, BorderLayout.SOUTH);
+
+        loginButton.setFont(font1);
+
 
         frame.add(titleLabel);
         frame.add(userPanel);
         frame.add(passwordPanel);
-        frame.add(buttonPanel);
+        frame.add(buttonsPanel);
 
         frame.setVisible(true);
 
@@ -122,9 +136,11 @@ public class LoginForm  {
             System.out.println(user + ", ***" );
 
             if (isPasswordCorrect(password)) {
+                success.setForeground(Color.green);
                 success.setText("Login successful!");
             }else
             {
+                success.setForeground(Color.red);
                 success.setText("Login failed!");
             }
         }
@@ -136,23 +152,8 @@ public class LoginForm  {
         new LoginForm();
 
         //frame.setBounds(150,90,500,500);
-
-
-
         //label1.setBounds(120,10,200,40);
-
-
-
-
-        //initialize  password fields
-
-
-
-
         //passwordLabel.setBounds(100,110,70,20);
-
-
-
         //passwordText.setBounds(200 ,110,130,20);
 
     }
