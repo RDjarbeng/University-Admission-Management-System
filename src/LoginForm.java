@@ -7,6 +7,7 @@ import javax.swing.JTextField;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 import java.util.concurrent.Flow;
 
 public class LoginForm  {
@@ -19,6 +20,7 @@ public class LoginForm  {
     //text fields
     private static JTextField userText;
     private static JPasswordField passwordText;
+    LoginButtonListener bListener;
     //buttons
     private static JButton button;
 
@@ -44,6 +46,7 @@ public class LoginForm  {
 
         //set Fonts
         font1 = new Font("Arial",Font.BOLD, 30);
+        font2 = new Font("Dialog",Font.BOLD, 25);
 
         //Title
         JLabel titleLabel= new JLabel("Enter your Login details", JLabel.CENTER);
@@ -54,21 +57,28 @@ public class LoginForm  {
         //Usernme
         //initialize  username fields
         userLabel = new JLabel("Username");
+        userLabel.setFont(font2);
         userText= new JTextField(20);
 
         userPanel.add(userLabel);
         userPanel.add( userText);
 
+        //listener
+        bListener = new LoginButtonListener();
+
         //password
+
         passwordLabel= new JLabel("Password");
         passwordText = new JPasswordField(20);
+        passwordText.setActionCommand("OK");
+        passwordText.addActionListener(bListener);
 
         passwordPanel.add(passwordLabel);
         passwordPanel.add(passwordText);
 
         //button panel
         button = new JButton("Login");
-        button.addActionListener(new LoginButtonListener() );
+        button.addActionListener(bListener);
         buttonPanel.add(button);
 
         button = new JButton("New Student?");
@@ -87,15 +97,35 @@ public class LoginForm  {
 
     }
 
+    private static boolean isPasswordCorrect(char[] input) {
+        boolean isCorrect = true;
+        String correctPass="123";
+        char[] correctPassword = correctPass.toCharArray();
+
+        if (input.length != correctPassword.length) {
+            isCorrect = false;
+        } else {
+            isCorrect = Arrays.equals (input, correctPassword);
+        }
+
+        //Zero out the password.
+        Arrays.fill(correctPassword,'0');
+
+        return isCorrect;
+    }
+
     private class LoginButtonListener implements  ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             String user = userText.getText();
-            String password = passwordText.getText();
-            System.out.println(user + "," + password);
+            char[] password = passwordText.getPassword();
+            System.out.println(user + ", ***" );
 
-            if (user.equals("k") && password.equals("123")) {
+            if (isPasswordCorrect(password)) {
                 success.setText("Login successful!");
+            }else
+            {
+                success.setText("Login failed!");
             }
         }
     }
