@@ -5,12 +5,12 @@ import java.sql.*;
  * Need to include derby libraries to run
  *
  * todo:
- * add foreign keys
+ * add foreign keys and auto increment values
  * admin View to view all tables
  */
 public class Database {
 
-    final String DBURL ="jdbc:derby:universityDB;create=true";
+    final String DB_URL ="jdbc:derby:universityDB;create=true";
     //final String DBURL ="jdbc:derby:universityDB;";
     Statement stmt;
 
@@ -18,7 +18,7 @@ public class Database {
     //constructor
     public Database(){
         try {
-            conn = DriverManager.getConnection(DBURL);
+            getDatabaseConnection();
              stmt = conn.createStatement();
             System.out.println("Connection established");
 
@@ -67,7 +67,50 @@ public class Database {
     public static void main(String[] args) {
         Database mydatabase =new Database();
 
-        //Admin database commands
+
+        try {
+
+            ResultSet result =mydatabase.selectQuery("Select * from STUDENT");
+            ResultSetMetaData md = result.getMetaData();
+            mydatabase.displayTableInfo(md);
+
+
+        }catch (SQLException ex){
+            System.out.println("Create table failed \n" +ex.getMessage());
+        }
+        System.out.println("Complete");
+
+    }
+
+    public void displayTableInfo(ResultSetMetaData md) throws SQLException{
+        int col = md.getColumnCount();
+        System.out.println("Number of Column : "+ col);
+        System.out.println("Columns Name: ");
+        for (int i = 1; i <= col; i++){
+            String col_name = md.getColumnName(i);
+            System.out.println(col_name +" "+ md.getColumnTypeName(i));
+        }
+    }
+
+    private void getDatabaseConnection()
+ {
+         try
+         {
+             // Create a connection to the database.
+             conn = DriverManager.getConnection(DB_URL);
+             }
+         catch (Exception ex)
+         {
+             System.out.println("Database Connectivity error ");
+             ex.printStackTrace();
+             System.exit(0);
+             }
+         }
+
+
+};
+
+//Admin database commands
 
 //        String createT = "CREATE TABLE Admin ( "+
 //                "AdminNumber INT,"+
@@ -104,23 +147,3 @@ public class Database {
 //                "PhoneNumber varchar(15),"+
 //                "ResidentialAddress VARCHAR(50),"+
 //                "PostalAddress VARCHAR(50)"+
-        try {
-
-            ResultSet result =mydatabase.selectQuery("Select * from STUDENT");
-            ResultSetMetaData md = result.getMetaData();
-            int col = md.getColumnCount();
-            System.out.println("Number of Column : "+ col);
-            System.out.println("Columns Name: ");
-            for (int i = 1; i <= col; i++){
-                String col_name = md.getColumnName(i);
-                System.out.println(col_name +" "+ md.getColumnTypeName(i));
-            }
-        }catch (SQLException ex){
-            System.out.println("Create table failed \n" +ex.getMessage());
-        }
-        System.out.println("Complete");
-
-    }
-
-
-};
