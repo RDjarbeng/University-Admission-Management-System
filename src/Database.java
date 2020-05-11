@@ -205,6 +205,9 @@ public class Database {
 
     }
 
+    public void executeQuery(String userStatement) throws SQLException {
+        stmt.executeQuery(userStatement);
+    }
 };
 
 

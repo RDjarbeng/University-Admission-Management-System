@@ -6,10 +6,11 @@ import java.sql.SQLException;
 
 public class AdminViewer extends JFrame {
 
-    JPanel queryPanel; // A panel to hold the query
+    JPanel selectQueryPanel, adminQueryPanel, queryPanels ; // A panel to hold the query
     JPanel buttonPanel; // A panel to hold the buttons
     JTextArea queryTextArea; // The user enters a query here
-    JButton submitButton; // To submit a query
+    JTextArea adminQueryTextArea; // The user enters a query here
+    JButton submitButton, executeButton; // To submit a query
     JButton exitButton; // To quit the application
 
     /**
@@ -25,12 +26,20 @@ public class AdminViewer extends JFrame {
         
          // Build the Query Panel.
          buildQueryPanel();
+         selectQueryPanel.setBorder(BorderFactory.createTitledBorder("Enter SQL SELECT statements"));
+         buildAdminQueryPanel();
+         adminQueryPanel.setBorder(BorderFactory.createTitledBorder("(ADMIN)Enter SQL ALTER AND CREATE statements"));
+         queryPanels = new JPanel();
+
+         //queryPanels.setLayout(new GridLayout(2,1));
         
          // Build the Button Panel.
          buildButtonPanel();
         
          // Add the panels to the content pane.
-         add(queryPanel, BorderLayout.NORTH);
+         queryPanels.add(selectQueryPanel);
+         queryPanels.add(adminQueryPanel);
+         add(queryPanels, BorderLayout.CENTER);
          add(buttonPanel, BorderLayout.SOUTH);
         
          // Pack and display.
@@ -45,10 +54,10 @@ public class AdminViewer extends JFrame {
             
              private void buildQueryPanel()
          { // Create a panel.
-         queryPanel = new JPanel();
+         selectQueryPanel = new JPanel();
         
          // Create a text area, 8 rows by 0 columns.
-         queryTextArea = new JTextArea(20, 40);
+         queryTextArea = new JTextArea(15, 40);
         
          // Turn line wrapping on.
          queryTextArea.setLineWrap(true);
@@ -62,8 +71,32 @@ public class AdminViewer extends JFrame {
                  JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         
          // Add the text area to the panel.
-         queryPanel.add(qaScrollPane);
+         selectQueryPanel.add(qaScrollPane);
          }
+         //build a panel to accept sql commands to create and modify tables
+    //admin only
+
+    private void buildAdminQueryPanel()
+    { // Create a panel.
+        adminQueryPanel = new JPanel();
+
+        // Create a text area, 8 rows by 0 columns.
+        adminQueryTextArea = new JTextArea(15, 40);
+
+        // Turn line wrapping on.
+        adminQueryTextArea.setLineWrap(true);
+
+        // Add a scroll pane to the text area.
+        JScrollPane qaScrollPane =
+                new JScrollPane(adminQueryTextArea);
+        qaScrollPane.setHorizontalScrollBarPolicy(
+                JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        qaScrollPane.setVerticalScrollBarPolicy(
+                JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+
+        // Add the text area to the panel.
+        adminQueryPanel.add(qaScrollPane);
+    }
 
     /**
      7 The buildButtonPanel method builds a panel
@@ -77,10 +110,12 @@ public class AdminViewer extends JFrame {
         
          // Create the Submit button.
          submitButton = new JButton("Submit");
+         executeButton = new JButton("Execute");
         
          // Register an action listener for the Submit button.
          submitButton.addActionListener(new SubmitButtonListener());
-        
+         executeButton.addActionListener(new executeButtonListener());
+
          // Create the Exit button.
          exitButton = new JButton("Exit");
         
@@ -89,6 +124,7 @@ public class AdminViewer extends JFrame {
         
          // Add the two buttons to the panel.
          buttonPanel.add(submitButton);
+         buttonPanel.add(executeButton);
          buttonPanel.add(exitButton);
          }
 
@@ -97,44 +133,41 @@ public class AdminViewer extends JFrame {
      0 for the Submit button.
      0 */
         
-                 private class SubmitButtonListener implements ActionListener
- {
-         public void actionPerformed(ActionEvent e)
-         {
-             // Get the user's statement.
-             String userStatement = queryTextArea.getText();
-            
-             // Qualify that it is a SELECT statement.
-             if (userStatement.trim().toUpperCase()
-             .startsWith("SELECT"))
+         private class SubmitButtonListener implements ActionListener {
+             public void actionPerformed(ActionEvent e)
              {
-                // Create a CoffeeDBQuery object for the query.
-                Database dbQuery =
-                        new Database();
-                try {
-                    dbQuery.selectQuery(userStatement);
-                    dbQuery.closeConnection();
-                }catch (SQLException ex){
-                    System.out.println("SQL exception error: \n"+ ex.getMessage());
-                }
+                 // Get the user's statement.
+                 String userStatement = queryTextArea.getText();
 
-                 // Get the column names.
-                 String[] colNames = dbQuery.getColumnNames();
-// Get the table data.
-                 String[][] data = dbQuery.getTableData();
-                
-                 // Display the results in a table.
-                 TableFormat table =
-                         new TableFormat(data, colNames);
+                 // Qualify that it is a SELECT statement.
+                 if (userStatement.trim().toUpperCase()
+                 .startsWith("SELECT"))
+                 {
+                    // Create a CoffeeDBQuery object for the query.
+                    Database dbQuery =
+                            new Database();
+                    try {
+                        dbQuery.selectQuery(userStatement);
+                        dbQuery.closeConnection();
+                        // Get the column names.
+                        String[] colNames = dbQuery.getColumnNames();
+    // Get the table data.
+                        String[][] data = dbQuery.getTableData();
 
+                        // Display the results in a table.
+                        TableFormat table =
+                                new TableFormat(data, colNames);
+                    }catch (SQLException ex){
+                        System.out.println("SQL exception error: \n"+ ex.getMessage());
+                    }
 
+                     }
+                 else
+                 {
+                     JOptionPane.showMessageDialog(null,
+                             "Only enter SELECT statements.");
+                     }
                  }
-             else
-             {
-                 JOptionPane.showMessageDialog(null,
-                         "Only enter SELECT statements.");
-                 }
-             }
          }
         /**
          *  The ExitButtonListener class is an action listener
@@ -147,9 +180,44 @@ public class AdminViewer extends JFrame {
             }
         }
 
+        private class executeButtonListener implements ActionListener {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String userStatement = adminQueryTextArea.getText();
+                userStatement =userStatement.trim().toUpperCase();
+
+
+                // Qualify that it is a SELECT statement.
+                if (userStatement.startsWith("CREATE")|| userStatement.startsWith("ALTER") && userStatement != null)
+                {
+                    // Create a CoffeeDBQuery object for the query.
+                    Database dbQuery =
+                            new Database();
+                    try {
+                        dbQuery.executeQuery(userStatement);
+                        dbQuery.closeConnection();
+                        System.out.println("Query successfully executed");
+                    }catch (SQLException ex){
+                        System.out.println("SQL exception error: \n"+ ex.getMessage());
+                    }
+
+
+
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(null,
+                            "SYNTAX ERROR: Only enter ALTER OR CREATE statements.");
+                }
+            }
+
+        }
+
+
     public static void main(String[] args) {
         new AdminViewer();
     }
+
 
 
 }

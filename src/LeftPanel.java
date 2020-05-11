@@ -14,8 +14,11 @@ public class LeftPanel extends JPanel {
 
     JComboBox<String> comboBox;
     public LeftPanel(){
-        
+        //Appearance
         setLayout(new GridLayout(0, 1));
+        setBackground(Color.yellow);
+        setBorder(BorderFactory.createEtchedBorder());
+
         textField = new JTextField();
 
 

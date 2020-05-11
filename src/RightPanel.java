@@ -13,7 +13,12 @@ public class RightPanel extends JPanel {
     JComboBox<String> YearLevel;
 
     public RightPanel(){
+        //Appearance
         setLayout(new GridLayout(15,    1));
+        setBackground(Color.BLUE);
+        setForeground(Color.WHITE);
+        setBorder(BorderFactory.createRaisedBevelBorder());
+
         textField_7 = new JTextField();
         textField_7.setBounds(710, 38, 270, 25);
 

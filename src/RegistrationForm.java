@@ -5,14 +5,14 @@ import java.awt.event.ActionEvent;
 
 class RegistrationForm extends JFrame{
 
-
-    private JFrame frame;
-
-
     private JPanel  bottomPanel;
     private LeftPanel leftPanel;
+    private JPanel detailsPanel, titlePanel;
     public RightPanel rightPanel;
-    JButton btnClear;
+    private JButton btnClear;
+    public JLabel title;
+    Font titleFont;
+
 
 
 
@@ -38,18 +38,35 @@ class RegistrationForm extends JFrame{
     public RegistrationForm() {
         super("Registration Form");
         setVisible(true);
-        setSize(800, 800);
-        setLayout(new FlowLayout(FlowLayout.CENTER));
+
+        setSize(800, 600);
+        //pack();
+
+        setLayout(new BorderLayout(5,5));
         initializePanels();
-        add(leftPanel);
-        add(rightPanel);
+        //Appearance
+        title = new JLabel("University of Ghana");
+        title.setFont(titleFont);
+        title.setForeground(Color.white);
+        titlePanel.setBackground(Color.BLUE);
+        titlePanel.add(title);
+        add(titlePanel, BorderLayout.NORTH);
+        detailsPanel.setLayout(new GridLayout(1,2 ,10, 10));
+        detailsPanel.add(leftPanel);
+        detailsPanel.add(rightPanel);
+        detailsPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.WHITE, 3),"Enter your details"));
+        detailsPanel.setBackground(Color.green);
+        detailsPanel.setToolTipText("Enter your admission details");
+        add(detailsPanel, BorderLayout.CENTER);
         add(bottomPanel, BorderLayout.SOUTH);
         System.out.println("Added panels");
         btnClear = new JButton("CLOSE");
+        bottomPanel.setBackground(Color.DARK_GRAY);
 
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //setLayout(null);
+
+        setLocationRelativeTo(null);
 
         JButton btnSubmit = new JButton("SAVE");
 
@@ -65,15 +82,18 @@ class RegistrationForm extends JFrame{
 
                 if(leftPanel.isEmpty()|| rightPanel.isEmpty())
                     JOptionPane.showMessageDialog(null, "Data Missing");
-                else
+                else {
                     JOptionPane.showMessageDialog(null, "Data Submitted");
+                    leftPanel.clear();
+                    rightPanel.clear();
+                }
             }
         });
 
         btnClear.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                leftPanel.clear();
-                rightPanel.clear();
+
+                System.exit(0);
 
 
             }
@@ -86,7 +106,11 @@ class RegistrationForm extends JFrame{
         rightPanel=new RightPanel();
         bottomPanel=new JPanel();
         leftPanel = new LeftPanel();
+        detailsPanel = new JPanel();
+        titlePanel = new JPanel();
         System.out.println("Initialized Panels");
+
+        titleFont = new Font("Arial", Font.BOLD, 20);
     }
 
 
