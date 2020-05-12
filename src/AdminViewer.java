@@ -154,6 +154,8 @@ public class AdminViewer extends JFrame {
     // Get the table data.
                         String[][] data = dbQuery.getTableData();
 
+                        System.out.println("Query Complete");
+
                         // Display the results in a table.
                         TableFormat table =
                                 new TableFormat(data, colNames);
@@ -185,16 +187,17 @@ public class AdminViewer extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 String userStatement = adminQueryTextArea.getText();
                 userStatement =userStatement.trim().toUpperCase();
+                System.out.println(userStatement);
 
 
                 // Qualify that it is a SELECT statement.
-                if (userStatement.startsWith("CREATE")|| userStatement.startsWith("ALTER") && userStatement != null)
+                if (  userStatement != null)
                 {
                     // Create a CoffeeDBQuery object for the query.
                     Database dbQuery =
                             new Database();
                     try {
-                        dbQuery.executeQuery(userStatement);
+                        dbQuery.execute(userStatement);
                         dbQuery.closeConnection();
                         System.out.println("Query successfully executed");
                     }catch (SQLException ex){

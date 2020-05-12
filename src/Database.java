@@ -199,7 +199,7 @@ public class Database {
 
 
         } catch (SQLException ex) {
-            System.out.println("Create table failed \n" + ex.getMessage());
+            System.out.println("Create/Alter table failed \n" + ex.getMessage());
         }
         System.out.println("Complete");
 
@@ -207,6 +207,10 @@ public class Database {
 
     public void executeQuery(String userStatement) throws SQLException {
         stmt.executeQuery(userStatement);
+    }
+
+    public void execute(String userStatement) throws SQLException {
+        stmt.execute(userStatement);
     }
 };
 
