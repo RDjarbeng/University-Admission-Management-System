@@ -55,6 +55,8 @@ public class AdminViewer extends JFrame {
              private void buildQueryPanel()
          { // Create a panel.
          selectQueryPanel = new JPanel();
+             // Create the Submit button.
+             submitButton = new JButton("Submit");
         
          // Create a text area, 8 rows by 0 columns.
          queryTextArea = new JTextArea(15, 40);
@@ -72,6 +74,7 @@ public class AdminViewer extends JFrame {
         
          // Add the text area to the panel.
          selectQueryPanel.add(qaScrollPane);
+         selectQueryPanel.add(submitButton);
          }
          //build a panel to accept sql commands to create and modify tables
     //admin only
@@ -79,6 +82,7 @@ public class AdminViewer extends JFrame {
     private void buildAdminQueryPanel()
     { // Create a panel.
         adminQueryPanel = new JPanel();
+        executeButton = new JButton("Execute");
 
         // Create a text area, 8 rows by 0 columns.
         adminQueryTextArea = new JTextArea(15, 40);
@@ -96,6 +100,7 @@ public class AdminViewer extends JFrame {
 
         // Add the text area to the panel.
         adminQueryPanel.add(qaScrollPane);
+        adminQueryPanel.add(executeButton);
     }
 
     /**
@@ -108,9 +113,8 @@ public class AdminViewer extends JFrame {
          // Create a panel.
          buttonPanel = new JPanel();
         
-         // Create the Submit button.
-         submitButton = new JButton("Submit");
-         executeButton = new JButton("Execute");
+
+
         
          // Register an action listener for the Submit button.
          submitButton.addActionListener(new SubmitButtonListener());
@@ -123,8 +127,8 @@ public class AdminViewer extends JFrame {
          exitButton.addActionListener(new ExitButtonListener());
         
          // Add the two buttons to the panel.
-         buttonPanel.add(submitButton);
-         buttonPanel.add(executeButton);
+
+
          buttonPanel.add(exitButton);
          }
 
@@ -148,17 +152,31 @@ public class AdminViewer extends JFrame {
                             new Database();
                     try {
                         dbQuery.selectQuery(userStatement);
-                        dbQuery.closeConnection();
+                        System.out.println("select query complete");
+
                         // Get the column names.
                         String[] colNames = dbQuery.getColumnNames();
+                        for(String names: colNames)
+                            System.out.println("col name " +names);
     // Get the table data.
                         String[][] data = dbQuery.getTableData();
 
+                        System.out.println(colNames[0]+ colNames[1]);
+
+                        for(int i=0; i<data.length; i++) {
+                            for(int j=0; j<data[i].length; j++) {
+                                System.out.println("Values at arr["+i+"]["+j+"] is "+data[i][j]);
+                            }
+                        }
+
+
                         System.out.println("Query Complete");
+                        dbQuery.closeConnection();
 
                         // Display the results in a table.
                         TableFormat table =
                                 new TableFormat(data, colNames);
+
                     }catch (SQLException ex){
                         System.out.println("SQL exception error: \n"+ ex.getMessage());
                     }
