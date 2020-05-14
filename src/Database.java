@@ -11,8 +11,12 @@ import java.util.ArrayList;
  */
 public class Database {
 
+    //Derby
     //final String DB_URL = "jdbc:derby:universityDB;create=true";
-    final String DB_URL = "jdbc:derby:universityDB;";
+    //final String DB_URL = "jdbc:derby:universityDB;";
+    final String DB_URL = "jdbc:mysql://localhost:3306/universitydb";
+    String uname="root";
+    String pass ="";
 
     private String[][] tableData;
     private String [] columnNames;
@@ -24,6 +28,7 @@ public class Database {
 
     //constructor
     public Database() {
+        //Class.forName("com.mysql.jdbc.Driver");
             getDatabaseConnection();
             System.out.println("Connection established");
 
@@ -134,7 +139,7 @@ public class Database {
     private void getDatabaseConnection() {
         try {
             // Create a connection to the database.
-            conn = DriverManager.getConnection(DB_URL);
+            conn = DriverManager.getConnection(DB_URL, uname, pass);
             stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
         } catch (Exception ex) {
             System.out.println("Database Connectivity error ");
@@ -294,10 +299,10 @@ public class Database {
 
             DatabaseMetaData dbmd=mydatabase.conn.getMetaData();
 
-            mydatabase.executeUpdateQuery(
-                    "Insert into users(username, password)"+
-                            "values('kofi', '123')"
-            );
+//            mydatabase.executeUpdateQuery(
+//                    "Insert into users(username, password)"+
+//                            "values('kofi', '123')"
+//            );
             System.out.println("inserted values");
 
             //print table names

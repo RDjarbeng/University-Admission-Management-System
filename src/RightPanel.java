@@ -5,115 +5,88 @@ import java.awt.event.ActionListener;
 
 public class RightPanel extends JPanel {
 
-    private JTextField textField_7,
-            textField_8;
+    private JFileChooser schoolDocumentChooser;
     private JTextArea textArea_2;;
-    JComboBox<String> AccountBox;
-    JComboBox<String> CourseBox;
+    JComboBox<String> residenceBox;
+    JComboBox<String> courseBox;
     JComboBox<String> YearLevel;
 
     public RightPanel(){
         //Appearance
-        setLayout(new GridLayout(15,    1));
+        setLayout(new GridLayout(0,    1));
         setBackground(Color.BLUE);
         setForeground(Color.WHITE);
         setBorder(BorderFactory.createRaisedBevelBorder());
 
-        textField_7 = new JTextField();
-        textField_7.setBounds(710, 38, 270, 25);
+        courseBox = new JComboBox<String>();
+        courseBox.addItem("Select");
+        courseBox.addItem("Computer Engineering");
+        courseBox.addItem("Computer Science");
+        courseBox.addItem("Economics");
+        courseBox.addItem("Political Science");
+        courseBox.addItem("Medicine");
+        courseBox.addItem("Law");
+        courseBox.addItem("Statistics");
 
-        textField_7.setColumns(12);
+        JLabel courseLabel = new JLabel("Preferred course ");
+        JLabel schoolDocumentLabel = new JLabel("School Document(WASSCE, ...)");
 
-        JLabel PreviousSchool = new JLabel("Previous School");
-        PreviousSchool.setBounds(610, 38, 96, 14);
-        add(PreviousSchool);
-        add(textField_7);
+        schoolDocumentChooser = new JFileChooser();
 
-        JLabel lblSAddress = new JLabel("School Address");
+        JLabel residenceLabel = new JLabel("Residence");
 
-        add(lblSAddress);
+        residenceBox = new JComboBox<String>();
+        residenceBox.addItem("Select");
+        residenceBox.addItem("Akuafo");
+        residenceBox.addItem("Non-Resident");
 
-        JTextArea textArea_2 = new JTextArea();
-
-        add(textArea_2);
-
-        JLabel SchoolDocument = new JLabel("School Document");
-
-        add(SchoolDocument);
-
-        textField_8 = new JTextField();
-
-        add(textField_8);
-        textField_8.setColumns(12);
-
-        JLabel LastDateAttended = new JLabel("Last Date Attended");
-
-        add(LastDateAttended);
-
-
-        JLabel AccountStatus = new JLabel("Account Status");
-
-        add(AccountStatus);
-
-        AccountBox = new JComboBox<String>();
-        AccountBox.addItem("Select");
-        AccountBox.addItem("Complete");
-        AccountBox.addItem("In Progress");
-
-        AccountBox.addActionListener(new ActionListener() {
+        residenceBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
             }
         });
 
-        add(AccountBox);
 
-        JLabel lblCourse = new JLabel("Course");
 
-        add(lblCourse);
 
-        CourseBox = new JComboBox<String>();
-        CourseBox.addItem("Select");
-        CourseBox.addItem("Computer Engineering");
-        CourseBox.addItem("Computer Science");
-        CourseBox.addItem("Economics");
-        CourseBox.addItem("Political Science");
-        CourseBox.addItem("Medicine");
-        CourseBox.addItem("Law");
-        CourseBox.addItem("Statistics");
 
-        CourseBox.addActionListener(new ActionListener() {
+        courseBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
             }
         });
 
-        add(CourseBox);
+        //Panels
+        JPanel schoolDocumentPanel = new JPanel();
+        JPanel coursePanel = new JPanel();
+        JPanel residencePanel = new JPanel();
+
+        schoolDocumentPanel.setLayout(new GridLayout(0,1));
+        coursePanel.setLayout(new GridLayout(0,1));
+        residencePanel.setLayout(new GridLayout(0,1));
+
+        schoolDocumentPanel.add(schoolDocumentLabel);
+        schoolDocumentPanel.add(schoolDocumentChooser);
+
+        coursePanel.setBackground(Color.WHITE);
+        coursePanel.setBorder(BorderFactory.createLineBorder(Color.BLUE));
+        coursePanel.add(courseLabel);
+        coursePanel.add(courseBox);
+
+        residencePanel.add(residenceLabel);
+        residencePanel.add(residenceBox);
 
 
-        JLabel YearLev = new JLabel("Year Level");
-
-        add(YearLev);
-
-        YearLevel = new JComboBox<String>();
-        YearLevel.addItem("Select");
-        YearLevel.addItem("100");
-        YearLevel.addItem("200");
-        YearLevel.addItem("300");
-        YearLevel.addItem("400");
 
 
-        YearLevel.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-            }
-        });
-
-        add( YearLevel);
-
+        //add to panel
+        add(schoolDocumentPanel);
+        add(coursePanel);
+        add(residencePanel);
 
 
     }
 
     public boolean isEmpty(){
-        if((textField_7.getText().isEmpty()) || (textField_8.getText()).isEmpty() || (AccountBox.getSelectedItem().equals("Select")) || (YearLevel.getSelectedItem().equals("Select")) || (CourseBox.getSelectedItem().equals("Select"))){
+        if((residenceBox.getSelectedItem().equals("Select")) || (YearLevel.getSelectedItem().equals("Select")) || (courseBox.getSelectedItem().equals("Select"))){
             return true;
         }else{
             return false;
@@ -123,11 +96,10 @@ public class RightPanel extends JPanel {
 
     public void clear(){
         //textArea_2.setText(null);
-        textField_7.setText(null);
-        textField_8.setText(null);
-        AccountBox.setSelectedItem("Select");
+
+        residenceBox.setSelectedItem("Select");
         YearLevel.setSelectedItem("Select");
-        CourseBox.setSelectedItem("Select");
+        courseBox.setSelectedItem("Select");
     }
 
 

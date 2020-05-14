@@ -7,6 +7,8 @@ import javax.swing.JTextField;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Arrays;
 
 public class LoginForm  {
@@ -19,6 +21,7 @@ public class LoginForm  {
     //text fields
     private static JTextField userText;
     private static JPasswordField passwordText;
+    private JPanel titlePanel;
     LoginButtonListener bListener;
     //buttons
     private static JButton loginButton, newStudentButton;
@@ -27,23 +30,25 @@ public class LoginForm  {
 
     //panels for user name and password
     JPanel userPanel, passwordPanel, loginButtonPanel, buttonsPanel, newStudentPanel;
+    //Jframe
+    JFrame frame;
+    //DATABASE connection variable
+    Database myDatabase ;
+
 
     //constructor
     public LoginForm(){
         //Initialize frame
-        JFrame frame= new JFrame("UAS Login Form");
+         frame= new JFrame("UAS Login Form");
         frame.setSize(500,500);
         frame.setVisible(true );
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new GridLayout(4,1));
 
         //Initialize panels
-        userPanel = new JPanel();
+        initializePanels();
         userPanel.setBackground(Color.BLUE);
-        passwordPanel=new JPanel();
-        loginButtonPanel = new JPanel();
-        buttonsPanel = new JPanel();
-        newStudentPanel = new JPanel();
+        titlePanel.setBackground(Color.BLACK);
 
         //set Fonts
         font1 = new Font("Arial",Font.BOLD, 30);
@@ -53,12 +58,12 @@ public class LoginForm  {
         //Title
         JLabel titleLabel= new JLabel("Enter your Login details", JLabel.CENTER);
         titleLabel.setForeground(Color.white);
-        titleLabel.setBackground(Color.BLACK);
         titleLabel.setFont(font1);
+        titlePanel.add(titleLabel);
 
         //Usernme
         //initialize  username fields
-        userLabel = new JLabel("Username");
+        userLabel = new JLabel("ReceiptID");
         userLabel.setFont(font2);
         userText= new JTextField(20);
 
@@ -90,36 +95,65 @@ public class LoginForm  {
         loginButtonPanel.add(success);
         success.setFont(font3);
 
-        newStudentButton = new JButton("New Student?");
-        newStudentButton.setFont(font3);
-        newStudentPanel.add(newStudentButton);
+//        newStudentButton = new JButton("New Student?");
+//        newStudentButton.setFont(font3);
+//        newStudentPanel.add(newStudentButton);
 
         //add to buttons Panel
         buttonsPanel.setLayout(new GridLayout(2,1));
         buttonsPanel.add(loginButtonPanel, BorderLayout.NORTH);
-        buttonsPanel.add(newStudentPanel, BorderLayout.SOUTH);
+        //buttonsPanel.add(newStudentPanel, BorderLayout.SOUTH);
 
         loginButton.setFont(font1);
 
-
-        frame.add(titleLabel);
+        //Add to frame
+        frame.add(titlePanel);
         frame.add(userPanel);
         frame.add(passwordPanel);
         frame.add(buttonsPanel);
 
         frame.setVisible(true);
 
+        //connect to database
+        myDatabase = new Database();
+
     }
 
-    private static boolean isPasswordCorrect(char[] input) {
-        boolean isCorrect = true;
-        String correctPass="123";
-        char[] correctPassword = correctPass.toCharArray();
+    private void initializePanels() {
+        userPanel = new JPanel();
+
+        passwordPanel=new JPanel();
+        loginButtonPanel = new JPanel();
+        buttonsPanel = new JPanel();
+        titlePanel = new JPanel();
+        newStudentPanel = new JPanel();
+    }
+
+    private  boolean isPasswordCorrect(char[] input, String user) throws SQLException {
+        boolean isCorrect = false;
+
+
+        ResultSet result =myDatabase.executeSelectQuery(
+                "Select password from users "+
+                        "WHERE username = '"+user+"'"
+        );
+        char[] correctPassword;
+
+        if(result.next()){
+            String correctPass=result.getString(1);
+             correctPassword = correctPass.toCharArray();
+        }else{
+            System.out.println("No user found");
+            return isCorrect;
+        }
+
 
         if (input.length != correctPassword.length) {
             isCorrect = false;
         } else {
             isCorrect = Arrays.equals (input, correctPassword);
+            if(isCorrect)
+                System.out.println("User found");
         }
 
         //Zero out the password.
@@ -135,13 +169,20 @@ public class LoginForm  {
             char[] password = passwordText.getPassword();
             System.out.println(user + ", ***" );
 
-            if (isPasswordCorrect(password)) {
-                success.setForeground(Color.green);
-                success.setText("Login successful!");
-            }else
-            {
-                success.setForeground(Color.red);
-                success.setText("Login failed!");
+            try {
+                if (isPasswordCorrect(password, user)) {
+                    success.setForeground(Color.green);
+                    success.setText("Login successful!");
+                    new RegistrationForm(user);
+                    frame.dispose();
+                }else
+                {
+                    success.setForeground(Color.red);
+                    success.setText("Login failed!");
+                }
+            } catch (SQLException throwables) {
+                System.out.println("Could not connect to database to retrieve user information");
+                throwables.printStackTrace();
             }
         }
     }

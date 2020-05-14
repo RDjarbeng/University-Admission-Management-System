@@ -32,10 +32,10 @@ public class TableFormat extends JFrame
          // Set the size and display.
               // Constants for size.
               int WIDTH =(colNames.length < 10 && colNames.length>0)? 145*colNames.length: (colNames.length>10)?1000: 500;
-              System.out.println("Width= "+WIDTH);
+              //System.out.println("Width= "+WIDTH);
               int HEIGHT = (data.length< 7 && data.length>2)?120*data.length :(data.length>6)?700:500;
               setSize(WIDTH, HEIGHT);
-              System.out.println("inside tableFormat");
+
          setVisible(true);
          setLocationRelativeTo(null);
          }
