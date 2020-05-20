@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1000.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="student.register.RegisterUIController">
+    <stylesheets>
+        <URL value="@registerui.css" />
+    </stylesheets>
+   <children>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="322.0" layoutY="42.0" prefHeight="82.0" prefWidth="398.0" text="Student Application" textFill="#012974">
+         <font>
+            <Font name="Dubai Bold" size="46.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="166.0" fitWidth="136.0" layoutX="864.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../images/logo.jpg" />
+         </image>
+      </ImageView>
+      <Pane layoutX="-21.0" layoutY="-130.0" prefHeight="311.0" prefWidth="200.0" rotate="55.6" style="-fx-background-radius: 75; -fx-background-color: #abbece;" />
+      <Pane layoutX="875.0" layoutY="572.0" prefHeight="311.0" prefWidth="200.0" rotate="45.0" style="-fx-background-radius: 75; -fx-background-color: #abbece;" />
+      <Separator layoutX="508.0" layoutY="166.0" orientation="VERTICAL" prefHeight="600.0" />
+      <TextField fx:id="txtSurname" layoutX="199.0" layoutY="256.0" prefHeight="26.0" prefWidth="230.0" />
+      <TextField fx:id="txtFname" layoutX="199.0" layoutY="310.0" prefHeight="26.0" prefWidth="230.0" />
+      <TextField fx:id="txtMName" layoutX="199.0" layoutY="364.0" prefHeight="26.0" prefWidth="230.0" />
+      <TextField fx:id="txtExt" layoutX="199.0" layoutY="416.0" prefHeight="26.0" prefWidth="230.0" />
+      <TextField fx:id="txtDOB" layoutX="199.0" layoutY="471.0" prefHeight="26.0" prefWidth="230.0" />
+      <TextField fx:id="txtPops" layoutX="199.0" layoutY="576.0" prefHeight="26.0" prefWidth="230.0" />
+      <TextField fx:id="txtMoms" layoutX="199.0" layoutY="631.0" prefHeight="26.0" prefWidth="230.0" />
+      <Separator layoutX="533.0" layoutY="412.0" prefHeight="4.0" prefWidth="414.0" />
+      <TextField fx:id="txtNum" layoutX="656.0" layoutY="212.0" prefHeight="26.0" prefWidth="230.0" />
+      <TextField fx:id="txtEmail" layoutX="655.0" layoutY="254.0" prefHeight="26.0" prefWidth="230.0" />
+      <Label layoutX="83.0" layoutY="254.0" text="Surname:">
+         <font>
+            <Font name="Dubai Regular" size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="84.0" layoutY="308.0" text="First Name:">
+         <font>
+            <Font name="Dubai Regular" size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="84.0" layoutY="362.0" text="Middle Name:">
+         <font>
+            <Font name="Dubai Regular" size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="84.0" layoutY="414.0" text="Extension:">
+         <font>
+            <Font name="Dubai Regular" size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="84.0" layoutY="469.0" text="DOB:">
+         <font>
+            <Font name="Dubai Regular" size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="84.0" layoutY="522.0" text="Gender">
+         <font>
+            <Font name="Dubai Regular" size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="84.0" layoutY="574.0" text="Father's Name:">
+         <font>
+            <Font name="Dubai Regular" size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="84.0" layoutY="629.0" text="Mother's Name:">
+         <font>
+            <Font name="Dubai Regular" size="16.0" />
+         </font>
+      </Label>
+      <Separator layoutX="380.0" layoutY="173.0" prefHeight="3.0" prefWidth="120.0" />
+      <Label layoutX="201.0" layoutY="160.0" text="Personal &amp; Family Info" textFill="#012974">
+         <font>
+            <Font name="Dubai Light" size="14.0" />
+         </font>
+      </Label>
+      <TextArea fx:id="txtAdd" layoutX="655.0" layoutY="305.0" prefHeight="82.0" prefWidth="230.0" />
+      <Label layoutX="533.0" layoutY="211.0" text="Contact Number:">
+         <font>
+            <Font name="Dubai Regular" size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="533.0" layoutY="254.0" text="Email Address:">
+         <font>
+            <Font name="Dubai Regular" size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="531.0" layoutY="304.0" text="Home Address:">
+         <font>
+            <Font name="Dubai Regular" size="16.0" />
+         </font>
+      </Label>
+      <Separator layoutX="521.0" layoutY="173.0" prefWidth="120.0" />
+      <Label layoutX="666.0" layoutY="160.0" text="Contact Information" textFill="#012974">
+         <font>
+            <Font name="Dubai Light" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="638.0" layoutY="425.0" text="Academic Information" textFill="#012974">
+         <font>
+            <Font name="Dubai Light" size="14.0" />
+         </font>
+      </Label>
+      <Separator layoutX="794.0" layoutY="438.0" prefWidth="120.0" />
+      <TextField fx:id="txtProg" layoutX="679.0" layoutY="479.0" prefHeight="26.0" prefWidth="230.0" />
+      <TextField fx:id="txtHall" layoutX="679.0" layoutY="522.0" prefHeight="26.0" prefWidth="230.0" />
+      <Button fx:id="btnSubmitReg" layoutX="661.0" layoutY="701.0" mnemonicParsing="false" onAction="#handleRegSubmit" prefHeight="26.0" prefWidth="120.0" text="Submit" />
+      <Label layoutX="554.0" layoutY="479.0" text="Choice of Program:">
+         <font>
+            <Font name="Dubai Regular" size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="554.0" layoutY="520.0" text="Choice of Hall:">
+         <font>
+            <Font name="Dubai Regular" size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="554.0" layoutY="562.0" text="Upload WASSCE:">
+         <font>
+            <Font name="Dubai Regular" size="16.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtGender" layoutX="199.0" layoutY="519.0" prefHeight="26.0" prefWidth="230.0" />
+      <Label layoutX="84.0" layoutY="196.0" prefHeight="30.0" prefWidth="76.0" text="Receipt:">
+         <font>
+            <Font name="Dubai Regular" size="16.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtReceipt" layoutX="199.0" layoutY="198.0" prefHeight="26.0" prefWidth="230.0" />
+      <ListView fx:id="listview" layoutX="678.0" layoutY="563.0" prefHeight="26.0" prefWidth="237.0" style="-fx-background-radius: 3px;" />
+      <Button fx:id="btnChPdf" layoutX="679.0" layoutY="602.0" mnemonicParsing="false" onAction="#handlePdfChoose" prefHeight="26.0" prefWidth="94.0" text="Choose File">
+         <font>
+            <Font name="Dubai Light" size="12.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

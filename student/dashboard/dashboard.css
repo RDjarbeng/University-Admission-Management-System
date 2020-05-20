@@ -1,0 +1,17 @@
+.button {
+    -fx-background-radius: 25px;
+    -fx-background-color:  #abbece;
+    -fx-color: white;
+}
+
+.button:hover {
+    -fx-cursor: hand;
+}
+
+.close {
+    
+}
+
+.close:hover {
+    -fx-cursor: hand;
+}
