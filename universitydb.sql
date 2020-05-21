@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 19, 2020 at 05:30 PM
+-- Generation Time: May 21, 2020 at 02:52 PM
 -- Server version: 10.1.32-MariaDB
 -- PHP Version: 7.2.5
 
@@ -95,15 +95,16 @@ CREATE TABLE `student` (
   `Nationality` varchar(25) NOT NULL,
   `PhoneNumber` varchar(25) NOT NULL,
   `ResidentialAddress` text,
-  `PostalAddress` text
+  `PostalAddress` text,
+  `Results` blob
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `student`
 --
 
-INSERT INTO `student` (`ReceiptID`, `LastName`, `FirstName`, `MiddleName`, `DOB`, `Gender`, `Nationality`, `PhoneNumber`, `ResidentialAddress`, `PostalAddress`) VALUES
-('kofi', 'Asante', 'Kofi', 'Babone', '2/4/1998', 'MALE', 'GHANAIAN', '+233451324567', 'Engineering School Roundabout, Java Projects Lane House NO 4', 'The Java Group 4\r\nP.O Box JV4\r\nLegon, Accra');
+INSERT INTO `student` (`ReceiptID`, `LastName`, `FirstName`, `MiddleName`, `DOB`, `Gender`, `Nationality`, `PhoneNumber`, `ResidentialAddress`, `PostalAddress`, `Results`) VALUES
+('kofi', 'Asante', 'Kofi', 'Babone', '2/4/1998', 'MALE', 'GHANAIAN', '+233451324567', 'Engineering School Roundabout, Java Projects Lane House NO 4', 'The Java Group 4\r\nP.O Box JV4\r\nLegon, Accra', NULL);
 
 -- --------------------------------------------------------
 
@@ -135,10 +136,17 @@ ALTER TABLE `Admin`
   ADD UNIQUE KEY `Unique` (`UserName`);
 
 --
+-- Indexes for table `AdmittedStudents`
+--
+ALTER TABLE `AdmittedStudents`
+  ADD KEY `ApplicationID` (`ApplicationID`);
+
+--
 -- Indexes for table `Application`
 --
 ALTER TABLE `Application`
-  ADD PRIMARY KEY (`ApplicationID`);
+  ADD PRIMARY KEY (`ApplicationID`),
+  ADD KEY `ReceiptID` (`ReceiptID`);
 
 --
 -- Indexes for table `ApplicationStatus`
@@ -188,6 +196,18 @@ ALTER TABLE `ApplicationStatus`
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `AdmittedStudents`
+--
+ALTER TABLE `AdmittedStudents`
+  ADD CONSTRAINT `admittedstudents_ibfk_1` FOREIGN KEY (`ApplicationID`) REFERENCES `Application` (`ApplicationID`);
+
+--
+-- Constraints for table `Application`
+--
+ALTER TABLE `Application`
+  ADD CONSTRAINT `application_ibfk_1` FOREIGN KEY (`ReceiptID`) REFERENCES `student` (`ReceiptID`);
 
 --
 -- Constraints for table `ApplicationStatus`
