@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 21, 2020 at 02:52 PM
+-- Generation Time: May 21, 2020 at 03:08 PM
 -- Server version: 10.1.32-MariaDB
 -- PHP Version: 7.2.5
 
@@ -96,15 +96,16 @@ CREATE TABLE `student` (
   `PhoneNumber` varchar(25) NOT NULL,
   `ResidentialAddress` text,
   `PostalAddress` text,
-  `Results` blob
+  `Results` blob,
+  `Email` varchar(25) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `student`
 --
 
-INSERT INTO `student` (`ReceiptID`, `LastName`, `FirstName`, `MiddleName`, `DOB`, `Gender`, `Nationality`, `PhoneNumber`, `ResidentialAddress`, `PostalAddress`, `Results`) VALUES
-('kofi', 'Asante', 'Kofi', 'Babone', '2/4/1998', 'MALE', 'GHANAIAN', '+233451324567', 'Engineering School Roundabout, Java Projects Lane House NO 4', 'The Java Group 4\r\nP.O Box JV4\r\nLegon, Accra', NULL);
+INSERT INTO `student` (`ReceiptID`, `LastName`, `FirstName`, `MiddleName`, `DOB`, `Gender`, `Nationality`, `PhoneNumber`, `ResidentialAddress`, `PostalAddress`, `Results`, `Email`) VALUES
+('kofi', 'Asante', 'Kofi', 'Babone', '2/4/1998', 'MALE', 'GHANAIAN', '+233451324567', 'Engineering School Roundabout, Java Projects Lane House NO 4', 'The Java Group 4\r\nP.O Box JV4\r\nLegon, Accra', NULL, NULL);
 
 -- --------------------------------------------------------
 
