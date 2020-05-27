@@ -1,13 +1,13 @@
 ----------------------------------------------------------------
 Tue May 12 21:43:11 GMT 2020:
 Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-0172-0ad7-71ed-0000077d6708 
-on database directory C:\Users\use\Rvideo\STUDY\Study 300 SEMESTER 2\OBJECT ORIENTED PROGRAMMING WITH JAVA\PROJECT\University Application Management System\University Application Management System\universityDB with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@77556fd 
+on database directory C:\Users\use\Rvideo\STUDY\Study 300 SEMESTER 2\OBJECT ORIENTED PROGRAMMING WITH JAVA\PROJECT\University AdmissionSystem.Application Management System\University AdmissionSystem.Application Management System\universityDB with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@77556fd
 Loaded from file:/C:/Program%20Files/Java/db-derby-10.14.2.0/lib/derby.jar
 java.vendor=Oracle Corporation
 java.runtime.version=11.0.1+13-LTS
-user.dir=C:\Users\use\Rvideo\STUDY\Study 300 SEMESTER 2\OBJECT ORIENTED PROGRAMMING WITH JAVA\PROJECT\University Application Management System\University Application Management System
+user.dir=C:\Users\use\Rvideo\STUDY\Study 300 SEMESTER 2\OBJECT ORIENTED PROGRAMMING WITH JAVA\PROJECT\University AdmissionSystem.Application Management System\University AdmissionSystem.Application Management System
 os.name=Windows 10
 os.arch=amd64
 os.version=10.0
 derby.system.home=null
-Database Class Loader started - derby.database.classpath=''
+AdmissionSystem.Database Class Loader started - derby.database.classpath=''
