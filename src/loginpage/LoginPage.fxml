@@ -86,7 +86,7 @@
                               <Font name="Ebrima Bold" size="36.0" />
                            </font>
                         </Label>
-                        <JFXTextField fx:id="txtPaymentReceipt" focusColor="#bec8e4" labelFloat="true" layoutX="131.0" layoutY="318.0" prefHeight="37.0" prefWidth="243.0" promptText="Payment Receipt" style="-fx-text-inner-color: #bec8e4;" unFocusColor="#99299ee8">
+                        <JFXTextField fx:id="txtPaymentReceipt" focusColor="#bec8e4" labelFloat="true" layoutX="131.0" layoutY="318.0" prefHeight="37.0" prefWidth="243.0" promptText="Payment Receipt" style="-fx-text-inner-color: #bec8e4; -fx-prompt-text-fill: #aeba94;" unFocusColor="#e3ebbae8">
                            <font>
                               <Font name="Ebrima" size="16.0" />
                            </font>
@@ -94,12 +94,12 @@
                               <Glow />
                            </effect>
                         </JFXTextField>
-                        <JFXPasswordField fx:id="txtPin" focusColor="#7e90c5" labelFloat="true" layoutX="131.0" layoutY="386.0" prefHeight="25.0" prefWidth="251.0" promptText="PIN" style="-fx-text-inner-color: #ffffff;" unFocusColor="#99299e">
+                        <JFXPasswordField fx:id="txtPin" focusColor="#7e90c5" labelFloat="true" layoutX="131.0" layoutY="386.0" prefHeight="25.0" prefWidth="251.0" promptText="PIN" style="-fx-text-inner-color: #ffffff; -fx-prompt-text-fill: #aeba94;" unFocusColor="#c9d398">
                            <font>
                               <Font name="Ebrima" size="16.0" />
                            </font>
                         </JFXPasswordField>
-                        <JFXButton fx:id="btnStudentLogin" buttonType="RAISED" layoutX="182.0" layoutY="456.0" onMouseClicked="#handleStudentLogin" prefHeight="37.0" prefWidth="155.0" style="-fx-background-color: white;" text="Login">
+                        <JFXButton fx:id="btnStudentLogin" buttonType="RAISED" layoutX="182.0" layoutY="456.0" onMouseClicked="#handleStudentLogin" prefHeight="37.0" prefWidth="155.0" style="-fx-background-color: white;" text="Login" textAlignment="CENTER">
                            <font>
                               <Font name="Ebrima" size="16.0" />
                            </font>
