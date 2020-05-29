@@ -9,30 +9,53 @@ import java.sql.Blob;
 import javafx.scene.control.Button;
 
 /**
- *
+ * @author Djarbeng
  * @author kezia
  */
 public class StudentInfo {
-    String payment, lname, fname, mname, exten, dob, gender, father, mother, contact, email, address, course, hall;
-    Blob results; 
+    String receiptID;
+    String lname;
+    String fname;
+    String mname;
+    String dob;
+    String gender;
+    String resAddress;
+    String email;
+
+    public StudentInfo(String string, String string1, String string2) {
+        this.receiptID = string;
+        this.lname = string1;
+        this.fname = string2;
+    }
+
+    public String getNationality() {
+        return nationality;
+    }
+
+    public void setNationality(String nationality) {
+        this.nationality = nationality;
+    }
+
+    String nationality;
+    String postalAddress;
+    String course;
+    String hall;
+    Blob results;
     Button button;
 
-    public StudentInfo(String payment, String lname, String fname, String mname, String exten, String dob, String gender, String father, String mother, String contact, String email, String address, String course, String hall, Blob results) {
-        this.payment = payment;
+
+    public StudentInfo(String receiptID, String lname, String fname, String mname, String dob, String gender,String nationality, String email, String resAddress, String posAddress) {
+        this.receiptID = receiptID;
         this.lname = lname;
         this.fname = fname;
         this.mname = mname;
-        this.exten = exten;
         this.dob = dob;
         this.gender = gender;
-        this.father = father;
-        this.mother = mother;
-        this.contact = contact;
+        this.nationality = nationality;
+        this.resAddress = resAddress;
         this.email = email;
-        this.address = address;
-        this.course = course;
-        this.hall = hall;
-        this.results = results;
+        this.postalAddress = posAddress;
+
         this.button = new Button("View");
         
     }
@@ -45,12 +68,12 @@ public class StudentInfo {
         this.button = button;
     }
 
-    public String getPayment() {
-        return payment;
+    public String getReceiptID() {
+        return receiptID;
     }
 
-    public void setPayment(String payment) {
-        this.payment = payment;
+    public void setReceiptID(String receiptID) {
+        this.receiptID = receiptID;
     }
 
     public String getLname() {
@@ -77,14 +100,6 @@ public class StudentInfo {
         this.mname = mname;
     }
 
-    public String getExten() {
-        return exten;
-    }
-
-    public void setExten(String exten) {
-        this.exten = exten;
-    }
-
     public String getDob() {
         return dob;
     }
@@ -101,28 +116,12 @@ public class StudentInfo {
         this.gender = gender;
     }
 
-    public String getFather() {
-        return father;
+    public String getResAddress() {
+        return resAddress;
     }
 
-    public void setFather(String father) {
-        this.father = father;
-    }
-
-    public String getMother() {
-        return mother;
-    }
-
-    public void setMother(String mother) {
-        this.mother = mother;
-    }
-
-    public String getContact() {
-        return contact;
-    }
-
-    public void setContact(String contact) {
-        this.contact = contact;
+    public void setResAddress(String resAddress) {
+        this.resAddress = resAddress;
     }
 
     public String getEmail() {
@@ -133,12 +132,12 @@ public class StudentInfo {
         this.email = email;
     }
 
-    public String getAddress() {
-        return address;
+    public String getPostalAddress() {
+        return postalAddress;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setPostalAddress(String postalAddress) {
+        this.postalAddress = postalAddress;
     }
 
     public String getCourse() {
@@ -164,7 +163,7 @@ public class StudentInfo {
     public void setResults(Blob results) {
         this.results = results;
     }
-    
-  
-    
+
+
+
 }

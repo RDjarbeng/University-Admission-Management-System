@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1000.0" style="-fx-background-color: white;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="admin.dashboard.AdminDashboardController">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="admin.dashboard.AdminDashboardController">
     <stylesheets>
         <URL value="@admindashboard.css" />
     </stylesheets>
@@ -21,7 +21,7 @@
       </ImageView>
       <Pane layoutY="84.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="716.0" prefWidth="1000.0" style="-fx-background-color: #0a2338;">
          <children>
-            <JFXButton fx:id="btnViewandEdit" alignment="BOTTOM_CENTER" buttonType="RAISED" contentDisplay="BOTTOM" layoutX="68.0" layoutY="189.0" onAction="#handleViewandEdit" prefHeight="250.0" prefWidth="244.0" ripplerFill="WHITE" style="-fx-background-color: white;" styleClass="option" stylesheets="@admindashboard.css" text="View Applicants" textFill="#166aaf">
+            <JFXButton fx:id="btnViewandEdit" alignment="BOTTOM_CENTER" buttonType="RAISED" contentDisplay="BOTTOM" layoutX="68.0" layoutY="189.0" onAction="#handleViewandEdit" prefHeight="250.0" prefWidth="244.0" ripplerFill="WHITE" style="-fx-background-color: white;" styleClass="option" stylesheets="@admindashboard.css" text="View pending Applicants" textFill="#166aaf">
                <font>
                   <Font name="Dubai Bold" size="18.0" />
                </font>

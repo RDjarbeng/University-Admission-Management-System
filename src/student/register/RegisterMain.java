@@ -19,6 +19,7 @@ import javafx.stage.StageStyle;
 /**
  *
  * @author kezia
+ * @author Richard
  */
 public class RegisterMain extends Application {
     
@@ -26,7 +27,7 @@ public class RegisterMain extends Application {
     public void start(Stage primaryStage) throws Exception {
         
         
-        Parent root = (Parent)FXMLLoader.load(getClass().getResource("/loginpage/LoginPage.fxml"));
+        Parent root = (Parent)FXMLLoader.load(getClass().getResource("/student/register/RegisterUI.fxml"));
         primaryStage.setScene(new Scene(root));
         primaryStage.initStyle(StageStyle.TRANSPARENT);
         primaryStage.show();

@@ -6,14 +6,12 @@
 package student.register;
 
 import AdmissionSystem.Database;
-import dbconnection.DBConnection;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
@@ -96,7 +94,7 @@ public class RegisterUIController implements Initializable {
     private FileInputStream fis;
     
     String newPath;
-    String s;
+    String s_file;
 
     /**
      * Initializes the controller class.
@@ -112,13 +110,16 @@ public class RegisterUIController implements Initializable {
      
     @FXML
     private void handleRegSubmit(ActionEvent event) {
+
+
         String receipt = txtReceipt.getText();
      String lname = txtSurname.getText();
      String fname = txtFname.getText();
      String mname = txtMName.getText();
      //String ext = txtExt.getText();
      String dob = txtDOB.getText();
-     String gender = txtGender.getText();
+     //String gender = txtGender.getText();
+     String gender = "male";
      String father = txtPops.getText();
 //     String mother = txtMoms.getText();
      String num = txtNum.getText();
@@ -126,72 +127,99 @@ public class RegisterUIController implements Initializable {
      String address = txtAdd.getText();
      String prog = txtProg.getText();
      String hall = txtHall.getText();
+
+
     
      try { 
          
             Class.forName("com.mysql.jdbc.Driver");
             myDatabase = new Database();
 
+            if(!(lname == null)){
+                if(newPath != null){
+                    File resultPDF = new File(newPath);
+                    fis = new FileInputStream(resultPDF);
+                    System.out.println("FIle size fis:" +fis.getChannel().size());
 
-            if(newPath != null){
-                File resultPDF = new File(newPath);
-                fis = new FileInputStream(resultPDF);
-            }
+                    String insert;
+                    insert="INSERT INTO STUDENT(ReceiptID, LastName, FirstName, MIDDLENAME, DOB, gender, NATIONALITY, " +
+                            "PHONENUMBER)VALUES(?,?,?,?,?,?,?,?)";
+                    pst = myDatabase.getConn().prepareStatement(insert);
+                    pst.setString(1, receipt);
+
+                    pst.setString(2, lname);
+                    pst.setString(3, fname);
+                    pst.setString(4, mname);
+                    pst.setString(5, dob);
+                    pst.setString(6, gender);
+                    pst.setString(7, father);
+                    pst.setString(8, father);
+
+                    int i = pst.executeUpdate();
+
+                    insert ="INSERT INTO "+Database.APPLICATIONTABLE+
+                            "(RECEIPTID,"+
+                            Database.FIRSTCHOICE+", "+
+                            Database.RESULTS+") "+
+                            "VALUES(?,?,?)";
+                    System.out.println("Insert: "+insert);
+
+                    pst = myDatabase.getConn().prepareStatement(insert);
+                    pst.setString(1, receipt);
+                    pst.setString(2, prog);
+                    pst.setBinaryStream(3,fis,fis.available());
+
+                    pst.executeUpdate();
 
 
 
-            pst = myDatabase.getPreparedStatement("insert into student (ReceiptID, LastName, FirstName, MiddleName, " +
-                    "dob, " +
-                    "gender, " +
-                    " nationality, phoneNumber, email, ResidentialAddress) values(?,?,?,?,?,?,?,?,?,?");
+                    System.out.println("SAVED!!!!");
 
-            pst.setString(1, receipt);
-            pst.setString(2, lname);
-            pst.setString(3, fname);
-            pst.setString(4, mname);
-            pst.setString(5, dob);
-            pst.setString(6, gender);
-            pst.setString(7, father);
-            //pst.setString(9, mother);
-            pst.setString(8, num);
-            pst.setString(9, email);
-            pst.setString(10, address);
-            //pst.setBlob(11, fis);
-            System.out.println("SAVED!!!!");
 
-            int i = pst.executeUpdate();
-            
-            if (i ==1) {
-            JOptionPane.showMessageDialog(null, "Registration Successful");
-            
-            try {
-                     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/student/dashboard/Dashboard.fxml"));  
-                     System.out.println("Hello loginpage controller1");
-                     Parent root1 = (Parent)fxmlLoader.load();
-                     Stage stage = new Stage();
-                     stage.initStyle(StageStyle.TRANSPARENT);
-                     stage.setScene(new Scene(root1));
-                     stage.show();
-                     System.out.println("Hello loginpage controller2222");
-                    ((Node)(event.getSource())).getScene().getWindow().hide();
 
-                     
+                    if (i ==1) {
+                        JOptionPane.showMessageDialog(null, "Registration Successful");
+
+                        try {
+                            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/student/dashboard/Dashboard.fxml"));
+                            System.out.println("Hello loginpage controller1");
+                            Parent root1 = (Parent)fxmlLoader.load();
+                            Stage stage = new Stage();
+                            stage.initStyle(StageStyle.TRANSPARENT);
+                            stage.setScene(new Scene(root1));
+                            stage.show();
+                            System.out.println("Hello loginpage controller2222");
+                            ((Node)(event.getSource())).getScene().getWindow().hide();
+
+
+                        }
+                        catch(Exception e){
+                            e.printStackTrace();
+
+                        }
+                        finally {
+                            pst.close();
+                        }
+
                     }
-                    catch(Exception e){
-                        e.printStackTrace();
 
-                    }
-                    finally {
-                pst.close();
+                }else{
+                    System.out.println("No file to upload");
+                }
+
             }
-            
-            }
+
+
+
        
         } 
         catch (SQLException | FileNotFoundException ex){
             ex.printStackTrace();        
         } catch (ClassNotFoundException e) {
          e.printStackTrace();
+     } catch (IOException e) {
+         e.printStackTrace();
+         System.out.println("file not found");
      }
 
 
@@ -199,14 +227,19 @@ public class RegisterUIController implements Initializable {
 
     @FXML
     private void handlePdfChoose(ActionEvent event) throws IOException {
+
+
         
         FileChooser fc = new FileChooser();
         fc.getExtensionFilters().addAll(
         new ExtensionFilter("PDF File", "*.pdf"));
         File selectedFile = fc.showOpenDialog(null);
-        s = selectedFile.getAbsolutePath();
-        newPath = s.replace('\\', '/');
-        
+        s_file = selectedFile.getAbsolutePath();
+        newPath = s_file.replace('\\', '/');
+        System.out.println("FILE: "+s_file);
+        System.out.println("New FILE: "+newPath);
+        System.out.println("file size: "+ selectedFile.length());
+
         
         if (selectedFile != null) {
         listview.getItems().add(selectedFile.getName());
@@ -221,7 +254,7 @@ public class RegisterUIController implements Initializable {
     
     
     
-    
+
     
     
     }

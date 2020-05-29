@@ -1,0 +1,19 @@
+/*
+ * Empty Stylesheet file.
+ */
+
+.adminSwitchButton {
+    -fx-text-fill: white;
+}
+
+.adminSwitchButton:hover {
+    -fx-cursor: hand;
+}
+
+.close {
+    -fx-background-color: transparent;
+}
+
+.close:hover {
+    -fx-cursor: hand;
+}

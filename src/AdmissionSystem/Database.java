@@ -16,9 +16,36 @@ public class Database {
     //Derby
     //final String DB_URL = "jdbc:derby:universityDB;create=true";
     //final String DB_URL = "jdbc:derby:universityDB;";
-    final String DB_URL = "jdbc:mysql://localhost:3306/universitydb";
-    String uname="root";
+    public static final String DB_URL = "jdbc:mysql://localhost:3306/universitydb";
+    public static final String uname="root";
     String pass ="";
+
+    public static final String STUDENT_TABLE = "STUDENT";
+    public static final String STUDENT_RECEIPTID = "RECEIPTID";
+    public static final String STUDENT_LASTNAME = "LastName";
+    public static final String STUDENT_FIRSTNAME = "FirstName";
+    public static final String STUDENT_MIDDLENAME = "MiddleName";
+    public static final String STUDENT_DOB = "DOB";
+    public static final String STUDENT_GENDER = "Gender";
+    public static final String STUDENT_NATIONALITY = "Nationality";
+    public static final String STUDENT_PHONENUMBER = "PHONENUMBER";
+    public static final String STUDENT_RESIDENTIALADDRESS = "RESIDENTIALADDRESS";
+    public static final String STUDENT_POSTALADDRESS = "POSTALADDRESS";
+    public static final String STUDENT_EMAIL = "EMAIL";
+
+
+
+    public static final String APPLICATIONTABLE = "APPLICATION";
+    public static final String APP_RECEIPTID = "RECEIPTID";
+    public static final String FIRSTCHOICE = "FIRSTCHOICEOFSTUDY";
+    public static final String SECONDCHOICE = "SecondChoiceOfStudy";
+    public static final String FIRSTHALL = "FirstHallOfResidence";
+    public static final String SECONDHALL = "SecondHallOfResidence";
+    public static final String THIRDHALL = "ThirdHallOfResidence";
+    public static final String RESULTS = "Results";
+
+
+
 
     private String[][] tableData;
     private String [] columnNames;
@@ -26,7 +53,11 @@ public class Database {
     //final String DBURL ="jdbc:derby:universityDB;";
     Statement stmt;
 
-    Connection conn;
+    public Connection getConn() {
+        return conn;
+    }
+
+    private Connection conn;
     PreparedStatement preparedStatement;
 
     //constructor

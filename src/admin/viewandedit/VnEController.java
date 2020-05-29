@@ -22,36 +22,45 @@ import javafx.scene.control.Label;
 public class VnEController implements Initializable {
 
     @FXML
-    private Label lblPayment;
+    private Label lblReceipt;
+
     @FXML
     private Label lblLname;
+
     @FXML
     private Label lblFname;
+
     @FXML
     private Label lblMname;
+
     @FXML
-    private Label lblExten;
+    private Label lblNationality;
+
     @FXML
     private Label lblDob;
+
     @FXML
     private Label lblgender;
+
     @FXML
     private Label lblEmail;
+
+
+
     @FXML
-    private Label lblFather;
-    @FXML
-    private Label lblMother;
-    @FXML
-    private Label lblCOntact;
-    @FXML
-    private Label lblAddress;
+    private Label lblResidentialAddress;
+
     @FXML
     private Label lblCourse;
+
     @FXML
     private Label lblHall;
+
     @FXML
     private Label lblResults;
 
+    @FXML
+    private Label lblPostalAddress;
     /**
      * Initializes the controller class.
      */
@@ -60,22 +69,23 @@ public class VnEController implements Initializable {
         // TOO
     }    
     
-    public void setData(String payment, String lname, String fname, String mname, String exten, String dob, String gender, String father, String mother, String contact, String email, String address, String course, String hall) //Blob results)
+    public void setData(String receiptID, String lname, String fname, String mname, String dob, String gender,
+                        String nationality,
+                         String email, String resAddress, String posAddress, String course, String hall) //Blob results)
     {
         
         
-        lblPayment.setText(payment);
+        lblReceipt.setText(receiptID);
         lblLname.setText(lname);
         lblFname.setText(fname);
         lblMname.setText(mname);
-        lblExten.setText(exten);
         lblDob.setText(dob);
         lblgender.setText(gender);
+        lblNationality.setText(nationality);
         lblEmail.setText(email);
-        lblFather.setText(father);
-        lblMother.setText(mother);
-        lblCOntact.setText(contact);
-        lblAddress.setText(address);
+
+        lblResidentialAddress.setText(resAddress);
+        lblPostalAddress.setText(posAddress);
         lblCourse.setText(course);
         lblHall.setText(hall);
     }

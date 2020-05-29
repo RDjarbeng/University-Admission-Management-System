@@ -26,7 +26,7 @@
       </Pane>
       <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="981.0" layoutY="33.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../src/images/logo.jpg" />
+            <Image url="@../../images/logo.jpg" />
          </image>
       </ImageView>
       <JFXButton fx:id="btnRegister" alignment="BOTTOM_CENTER" buttonType="RAISED" contentDisplay="CENTER" layoutX="260.0" layoutY="419.0" onMouseClicked="#handleRegisterButton" prefHeight="270.0" prefWidth="300.0" ripplerFill="#c1ccdf" stylesheets="@dashboard.css" text="Register" textFill="WHITE">
@@ -36,7 +36,7 @@
       </JFXButton>
       <ImageView fitHeight="172.0" fitWidth="200.0" layoutX="333.0" layoutY="450.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../src/images/register.png" />
+            <Image url="@../../images/register.png" />
          </image>
       </ImageView>
       <JFXButton fx:id="btnTrackApp" alignment="BOTTOM_CENTER" buttonType="RAISED" contentDisplay="CENTER" layoutX="681.0" layoutY="419.0" prefHeight="270.0" prefWidth="300.0" ripplerFill="#c1ccdf" style="-fx-background-color: #abbece;" text="Track AdmissionSystem.Application" textFill="WHITE">
@@ -46,12 +46,12 @@
       </JFXButton>
       <ImageView fx:id="btnClose" fitHeight="26.0" fitWidth="29.0" layoutX="1171.0" onMouseClicked="#closeWindow" pickOnBounds="true" preserveRatio="true" styleClass="close">
          <image>
-            <Image url="@../../src/images/close.png" />
+            <Image url="@../../images/close.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="172.0" fitWidth="200.0" layoutX="745.0" layoutY="450.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../src/images/pointers_1.png" />
+            <Image url="@../../images/pointers_1.png" />
          </image>
       </ImageView>
    </children>

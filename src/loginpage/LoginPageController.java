@@ -5,6 +5,7 @@
  */
 package loginpage;
 
+import AdmissionSystem.Database;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
@@ -215,7 +216,7 @@ public class LoginPageController implements Initializable {
                         new KeyValue(loginLogo.opacityProperty(), 1)
                 )
         );
-        // play 40s of animation
+        // play  animation
         timeline.play();
     }
 
@@ -224,23 +225,55 @@ public class LoginPageController implements Initializable {
     private void handleAdminLogin(ActionEvent event) {
         
         try {
-                     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/admin/dashboard/AdminDash.fxml"));  
-                     System.out.println("Hello loginpage controller1");
-                     Parent root1 = (Parent)fxmlLoader.load();
-                     System.out.println("Hy hey hey");
-                     Stage stage = new Stage();
-                     stage.initStyle(StageStyle.TRANSPARENT);
-                     stage.setScene(new Scene(root1));
-                     stage.show();
-                     System.out.println("Hello loginpage controller2222");
-                    ((Node)(event.getSource())).getScene().getWindow().hide();
+            String adminPassword =txtAdminPassword.getText();
+            String adminUser = txtAdminUsername.getText();
+
+            resultSet =validateAdmin(adminUser, adminPassword);
+
+
+            if (resultSet.next())
+            {
+                //loginStatusLabel.setText("Login successful! ");
+//                    JOptionPane.showMessageDialog(null, "Login Successful!");
+
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/admin/dashboard/AdminDashboard.fxml"));
+                System.out.println("Hello adminpage");
+                Parent root1 = (Parent)fxmlLoader.load();
+
+                Stage stage = new Stage();
+                stage.initStyle(StageStyle.TRANSPARENT);
+                stage.setScene(new Scene(root1));
+                stage.show();
+
+                ((Node)(event.getSource())).getScene().getWindow().hide();
+                }else{
+                System.out.println("invalid user "+adminUser+ " "+adminPassword);
+            }
+
                     
                     }
+        catch (SQLException e){
+            System.out.println("Database connectivity error");
+            e.printStackTrace();
+        }
         
                     catch(Exception e){
                         e.printStackTrace();
 
                     }
+
+
+    }
+    public ResultSet validateAdmin(String user, String password) throws SQLException {
+        Database myDatabase = new Database();
+        preparedStatement = myDatabase.getConn().prepareStatement("select * from admin where username=? and " +
+                "password=?");
+
+        preparedStatement.setString(1, user);
+        preparedStatement.setString(2, password);
+
+        return preparedStatement.executeQuery();
+
     }
 
 
