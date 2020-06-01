@@ -4,12 +4,11 @@ import java.sql.*;
 import java.util.ArrayList;
 
 /**
- * Contains functions to access database
- * Need to include derby libraries to run
- * <p>
- * todo:
- * add foreign keys and auto increment values
- * admin View to view all tables
+ * @author rDjarbeng
+ * Contains functions to access database(eg: retrive selected applicants)
+ * Contains constants for database table names and columns
+ * Need to include sql libraries to run
+ *
  */
 public class Database {
 
@@ -35,8 +34,9 @@ public class Database {
 
 
 
-    public static final String APPLICATIONTABLE = "APPLICATION";
+    public static final String APPLICATION_TABLE = "APPLICATION";
     public static final String APP_RECEIPTID = "RECEIPTID";
+    public static final String APP_STATUS = "STATUS";
     public static final String FIRSTCHOICE = "FIRSTCHOICEOFSTUDY";
     public static final String SECONDCHOICE = "SecondChoiceOfStudy";
     public static final String FIRSTHALL = "FirstHallOfResidence";
@@ -112,12 +112,52 @@ public class Database {
 
     }
 
+    public ResultSet getRejectedStudents() throws SQLException {
+
+        String select ="select * from "+Database.STUDENT_TABLE +", "+Database.APPLICATION_TABLE
+                + " WHERE "+Database.STUDENT_TABLE+"."+Database.STUDENT_RECEIPTID+" = "+
+                Database.APPLICATION_TABLE+"."+Database.APP_RECEIPTID
+                +" AND "+ Database.APPLICATION_TABLE +"." +Database.APP_STATUS+ " = " +
+                "'REJECTED' "
+                ;
+        System.out.println("Query rejected students: "+select);
+         return executeSelectQuery(select);
+    }
+
+    public ResultSet getAcceptedStudents() throws SQLException {
+
+        String select ="select * from "+Database.STUDENT_TABLE +", "+Database.APPLICATION_TABLE
+                + " WHERE "+Database.STUDENT_TABLE+"."+Database.STUDENT_RECEIPTID+" = "+
+                Database.APPLICATION_TABLE+"."+Database.APP_RECEIPTID
+                +" AND "+ Database.APPLICATION_TABLE +"." +Database.APP_STATUS+ " = " +
+                "'ACCEPTED' "
+                ;
+        System.out.println("Query rejected students: "+select);
+        return executeSelectQuery(select);
+    }
+
+    public ResultSet getPendingStudents() throws SQLException {
+
+        String select ="select * from "+Database.STUDENT_TABLE +", "+Database.APPLICATION_TABLE
+                + " WHERE "+Database.STUDENT_TABLE+"."+Database.STUDENT_RECEIPTID+" = "+
+                Database.APPLICATION_TABLE+"."+Database.APP_RECEIPTID
+                +" AND "+ Database.APPLICATION_TABLE +"." +Database.APP_STATUS+ " = " +
+                "'PENDING' "
+                ;
+        System.out.println("Query rejected students: "+select);
+        return executeSelectQuery(select);
+    }
+
+
+
     /**
      * @param query string to be input in SQL select statement
-     * run getColumnNames, getTableData after execution
+     *  Populates an array of column names and fills a 2D array in a format suitable for
+     *      use in a table
+     * run getColumnNames(), getTableData() after execution
      * throws SQL exception
      */
-    public void selectQuery(String query) throws SQLException {
+    public void selectAsTableQuery(String query) throws SQLException {
 
         ResultSet result = stmt.executeQuery(query);
         int numRows =0;

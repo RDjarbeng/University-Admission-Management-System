@@ -14,10 +14,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import student.register.RegisterUIController;
 
 /**
  * FXML Controller class
@@ -25,6 +27,14 @@ import javafx.stage.StageStyle;
  * @author kezia
  */
 public class DashboardController implements Initializable {
+
+
+
+    public static String user=" ";
+
+
+    @FXML
+    private Label studentDashboardLabel;
 
     @FXML
     private ImageView btnClose;
@@ -39,6 +49,8 @@ public class DashboardController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+
+        studentDashboardLabel.setText("Student Dashboard ("+user+")");
     }    
 
     @FXML
@@ -51,13 +63,14 @@ public class DashboardController implements Initializable {
     private void handleRegisterButton(MouseEvent event) {
         
         try {
-                     FXMLLoader loading = new FXMLLoader(getClass().getResource("/student/register/RegisterUI.fxml"));  
-                     System.out.println("Hello dashboard controller1");
+                     FXMLLoader loading = new FXMLLoader(getClass().getResource("/student/register/RegisterUI.fxml"));
+            RegisterUIController.setUser(user);
+//                     System.out.println("Hello dashboard controller1");
                      Parent root1 = (Parent)loading.load();
-                     System.out.println("Hello dashboard controller34");
+//                     System.out.println("Hello dashboard controller34");
 
                      Stage stage = new Stage();
-                     System.out.println("Hello dashboard controller41");
+//                     System.out.println("Hello dashboard controller41");
 
                      //stage.initStyle(StageStyle.TRANSPARENT);
                      stage.setScene(new Scene(root1));
@@ -75,5 +88,11 @@ public class DashboardController implements Initializable {
                         e.printStackTrace();
                     }
     }
-    
+    public static String getUser() {
+        return user;
+    }
+
+    public static void setUser(String user) {
+        DashboardController.user = user;
+    }
 }

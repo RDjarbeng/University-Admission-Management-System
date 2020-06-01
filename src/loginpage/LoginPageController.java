@@ -37,6 +37,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
+import student.dashboard.DashboardController;
 
 import javax.swing.JOptionPane;
 
@@ -151,24 +152,36 @@ public class LoginPageController implements Initializable {
                 
                 if (resultSet.next())
                 {
-                    loginStatusLabel.setText("Login successful! ");
+                    if(resultSet.getString("Username").equals(receipt)) {
+                        loginStatusLabel.setText("Login successful! ");
 //                    JOptionPane.showMessageDialog(null, "Login Successful!");
-                    try {
-                     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/student/dashboard/Dashboard.fxml"));  
-                     System.out.println("Hello loginpage controller1");
-                     Parent root1 = (Parent)fxmlLoader.load();
-                     Stage stage = new Stage();
-                     stage.initStyle(StageStyle.TRANSPARENT);
-                     stage.setScene(new Scene(root1));
-                     stage.show();
-                     System.out.println("Hello loginpage controller2222");
-                    ((Node)(event.getSource())).getScene().getWindow().hide();
+                        try {
+                            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/student/dashboard/Dashboard.fxml"));
+                            DashboardController.setUser(resultSet.getString("username"));
+                            System.out.println(resultSet.getString("username"));
+//                     System.out.println("Hello loginpage controller1");
+                            Parent root1 = (Parent) fxmlLoader.load();
+                            Stage  stage = new Stage();
+                            stage.initStyle(StageStyle.TRANSPARENT);
+                            stage.setScene(new Scene(root1));
+                            stage.show();
+                            System.out.println("Hello loginpage controller2222");
+                            ((Node) (event.getSource())).getScene().getWindow().hide();
 
-                     
-                    }
-                    catch(Exception e){
-                        e.printStackTrace();
 
+                        } catch (Exception e) {
+                            e.printStackTrace();
+
+                        }
+                    }else
+                    {
+                        loginStatusLabel.setText("Invalid username or password!");
+
+                        //JOptionPane.showMessageDialog(null, "Login Failed!");
+                        //txtPaymentReceipt.setText("");//clear text field
+                        txtPaymentReceipt.requestFocus();
+
+                        txtPin.setText("");//clear passwordfield
                     }
                 }
                 else 

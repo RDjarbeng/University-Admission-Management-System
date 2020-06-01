@@ -5,10 +5,11 @@
  */
 package admin.viewandedit;
 
-import admin.tableview.StudentInfo;
+import admin.pendingTableview.StudentInfo;
 import java.net.URL;
-import java.sql.Blob;
 import java.util.ResourceBundle;
+
+import com.jfoenix.controls.JFXButton;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -60,7 +61,15 @@ public class VnEController implements Initializable {
     private Label lblResults;
 
     @FXML
-    private Label lblPostalAddress;
+    private JFXButton btnAccept;
+
+    @FXML
+    private JFXButton btnDecline;
+
+    @FXML
+    private Label lblStatus;
+
+
     /**
      * Initializes the controller class.
      */
@@ -85,12 +94,14 @@ public class VnEController implements Initializable {
         lblEmail.setText(email);
 
         lblResidentialAddress.setText(resAddress);
-        lblPostalAddress.setText(posAddress);
+//        lblPostalAddress.setText(posAddress);
         lblCourse.setText(course);
         lblHall.setText(hall);
     }
 
     public void setNewData(ObservableList<StudentInfo> selectedItems) {
     }
-    
+
+
+
 }

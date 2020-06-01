@@ -153,7 +153,7 @@ public class AdminViewer extends JFrame {
                     Database dbQuery =
                             new Database();
                     try {
-                        dbQuery.selectQuery(userStatement);
+                        dbQuery.selectAsTableQuery(userStatement);
                         System.out.println("select query complete");
 
                         // Get the column names.

@@ -47,12 +47,12 @@
                               <Font name="Ebrima Bold" size="36.0" />
                            </font>
                         </Label>
-                        <JFXTextField fx:id="txtAdminUsername" focusColor="#a1b4ed" labelFloat="true" layoutX="142.0" layoutY="300.0" prefHeight="25.0" prefWidth="214.0" promptText="Username" unFocusColor="#1c4f97">
+                        <JFXTextField fx:id="txtAdminUsername" focusColor="#a1b4ed" labelFloat="true" layoutX="142.0" layoutY="300.0" prefHeight="25.0" prefWidth="214.0" promptText="Username" style="-fx-text-inner-color: #bec8b4;" unFocusColor="#1c4f97">
                            <font>
                               <Font name="Ebrima" size="16.0" />
                            </font>
                         </JFXTextField>
-                        <JFXPasswordField fx:id="txtAdminPassword" focusColor="#a1b4ed" labelFloat="true" layoutX="142.0" layoutY="370.0" prefHeight="37.0" prefWidth="215.0" promptText="Password" unFocusColor="#1c4f97">
+                        <JFXPasswordField fx:id="txtAdminPassword" focusColor="#a1b4ed" labelFloat="true" layoutX="142.0" layoutY="370.0" prefHeight="37.0" prefWidth="215.0" promptText="Password" style="-fx-text-inner-color: #bec8b4;" unFocusColor="#1c4f97">
                            <font>
                               <Font name="Ebrima" size="16.0" />
                            </font>

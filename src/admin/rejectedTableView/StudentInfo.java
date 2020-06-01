@@ -3,10 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package admin.tableview;
+package admin.rejectedTableView;
+
+import javafx.scene.control.Button;
 
 import java.sql.Blob;
-import javafx.scene.control.Button;
 
 /**
  * @author Djarbeng

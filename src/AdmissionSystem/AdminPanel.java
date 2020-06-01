@@ -70,7 +70,7 @@ public class AdminPanel extends JFrame {
         //AdmissionSystem.Database
         myDatabase = new Database();
         try {
-            myDatabase.selectQuery("Select ReceiptID, LastName, FirstName from Student");
+            myDatabase.selectAsTableQuery("Select ReceiptID, LastName, FirstName from Student");
             columnNames = myDatabase.getColumnNames();
             columnCount = columnNames.length;
             studentDetails = new JLabel[columnCount];

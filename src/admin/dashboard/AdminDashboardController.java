@@ -12,13 +12,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 /**
  * FXML Controller class
@@ -47,7 +45,7 @@ public class AdminDashboardController implements Initializable {
     @FXML
     private void handleViewandEdit(ActionEvent event) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/admin/tableview/TableView.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/admin/pendingTableview/PendingTableView.fxml"));
             Parent root = (Parent)fxmlLoader.load();
             Stage stage = new Stage();
             //stage.initStyle(StageStyle.TRANSPARENT);
@@ -55,7 +53,7 @@ public class AdminDashboardController implements Initializable {
             //stage.setFullScreen(true);
             stage.show();
             //((Node)(event.getSource())).getScene().getWindow().hide();
-        } 
+        }
         catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -64,10 +62,37 @@ public class AdminDashboardController implements Initializable {
 
     @FXML
     private void handleViewSelectedApplicants(ActionEvent event) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/admin/acceptedTableview/AcceptedTableView.fxml"));
+            Parent root = (Parent)fxmlLoader.load();
+            Stage stage = new Stage();
+            //stage.initStyle(StageStyle.TRANSPARENT);
+            stage.setScene(new Scene(root));
+            //stage.setFullScreen(true);
+            stage.show();
+            //((Node)(event.getSource())).getScene().getWindow().hide();
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
     }
 
     @FXML
     private void handleViewRejectedApplicants(ActionEvent event) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/admin/rejectedTableView/RejectedTableView.fxml"));
+            Parent root = (Parent)fxmlLoader.load();
+            Stage stage = new Stage();
+            //stage.initStyle(StageStyle.TRANSPARENT);
+            stage.setScene(new Scene(root));
+            //stage.setFullScreen(true);
+            stage.show();
+            //((Node)(event.getSource())).getScene().getWindow().hide();
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     @FXML

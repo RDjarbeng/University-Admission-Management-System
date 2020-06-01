@@ -1,6 +1,5 @@
 package admin.dashboard;
 
-import dbconnection.DBConnection;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -17,7 +16,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-public class AdminDashController implements Initializable{
+public class NO_AdminDashController implements Initializable{
 
     @FXML
     private TableView<Person> tableView;
@@ -51,9 +50,9 @@ public class AdminDashController implements Initializable{
             
 
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(AdminDashController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(NO_AdminDashController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(AdminDashController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(NO_AdminDashController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="admin.pendingTableview.PendingTableViewController">
+   <children>
+      <TableView fx:id="tableView" layoutY="14.0" onMouseClicked="#handleViewRow" style="-fx-text-color: #0a2338;" stylesheets="@tableview.css" AnchorPane.bottomAnchor="243.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="14.0">
+        <columns>
+          <TableColumn fx:id="colReceipt" editable="false" maxWidth="75.0" minWidth="75.0" prefWidth="75.0" styleClass=".table-cell" text="RECEIPT" />
+            <TableColumn fx:id="colnLname" maxWidth="100.0" minWidth="100.0" prefWidth="120.0" resizable="false" text="LAST NAME" />
+            <TableColumn fx:id="colnFname" maxWidth="100.0" minWidth="100.0" prefWidth="120.0" resizable="false" text="FIRST NAME" />
+            <TableColumn fx:id="colnMname" maxWidth="100.0" minWidth="150.0" prefWidth="150.0" resizable="false" text="MIDDLE NAME" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>

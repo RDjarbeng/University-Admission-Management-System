@@ -1,18 +1,8 @@
-package admin.tableview;
+package admin.rejectedTableView;
 
 import AdmissionSystem.Database;
 import admin.viewandedit.VnEController;
 import com.jfoenix.controls.JFXTextArea;
-import java.net.URL;
-import java.sql.Blob;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -20,16 +10,23 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
+import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
-public class TableViewController implements Initializable{
+public class RejectedTableViewController implements Initializable{
 
     @FXML
     private TableView<StudentInfo> tableView;
@@ -66,25 +63,25 @@ public class TableViewController implements Initializable{
                 System.out.println("Nothing selected");
             }
             else {
-                String fullDetails ="SELECT  "+
-                        Database.STUDENT_TABLE+"."+Database.STUDENT_RECEIPTID +", "+
-                        Database.STUDENT_LASTNAME+", "+
-                        Database.STUDENT_FIRSTNAME+", "+
-                        Database.STUDENT_MIDDLENAME+", "+
-                        Database.STUDENT_NATIONALITY+", "+
-                        Database.STUDENT_DOB+", "+
-                        Database.STUDENT_GENDER+", "+
-                        Database.STUDENT_POSTALADDRESS+", "+
-                        Database.STUDENT_RESIDENTIALADDRESS+", "+
-                        Database.STUDENT_EMAIL+", "+
-                        Database.FIRSTCHOICE+ ", "+
-                        Database.FIRSTHALL+" "+
+                String fullDetails ="SELECT * "+
+//                        Database.STUDENT_TABLE+"."+Database.STUDENT_RECEIPTID +", "+
+//                        Database.STUDENT_LASTNAME+", "+
+//                        Database.STUDENT_FIRSTNAME+", "+
+//                        Database.STUDENT_MIDDLENAME+", "+
+//                        Database.STUDENT_NATIONALITY+", "+
+//                        Database.STUDENT_DOB+", "+
+//                        Database.STUDENT_GENDER+", "+
+//                        Database.STUDENT_POSTALADDRESS+", "+
+//                        Database.STUDENT_RESIDENTIALADDRESS+", "+
+//                        Database.STUDENT_EMAIL+", "+
+//                        Database.FIRSTCHOICE+ ", "+
+//                        Database.FIRSTHALL+" "+
                         " FROM "+Database.STUDENT_TABLE +", "+
-                        Database.APPLICATIONTABLE +" "+
+                        Database.APPLICATION_TABLE +" "+
                         " WHERE "+
                         Database.STUDENT_TABLE+"." +Database.STUDENT_RECEIPTID+ " = '"+stinfo.getReceiptID()
                         +" AND "+ Database.STUDENT_TABLE+"." +Database.STUDENT_RECEIPTID+ "' = "+
-                        Database.APPLICATIONTABLE+ "."+Database.APP_RECEIPTID
+                        Database.APPLICATION_TABLE + "."+Database.APP_RECEIPTID
 
                         ;
                 System.out.println("Details query: "+fullDetails);
@@ -175,14 +172,9 @@ public class TableViewController implements Initializable{
 
 
              mydatabase = new Database();
+            //get students who have been rejected by the admin
+             rs = mydatabase.getRejectedStudents();
 
-            String select ="select "+
-                    Database.STUDENT_RECEIPTID +", "+
-                    Database.STUDENT_LASTNAME+", "+
-                    Database.STUDENT_FIRSTNAME+" "+
-                    " from "+Database.STUDENT_TABLE;
-            System.out.println("Query: "+select);
-            rs = mydatabase.executeSelectQuery(select);
 
             while (rs.next()) {
             oblist.add(new StudentInfo(
@@ -197,7 +189,7 @@ public class TableViewController implements Initializable{
 
         } catch (SQLException ex) {
             System.out.println("Database connectivity error!");
-            Logger.getLogger(TableViewController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RejectedTableViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         

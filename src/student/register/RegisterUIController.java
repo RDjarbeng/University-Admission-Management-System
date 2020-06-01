@@ -22,10 +22,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
@@ -39,6 +36,19 @@ import javax.swing.JOptionPane;
  * @author kezia
  */
 public class RegisterUIController implements Initializable {
+
+    public static String getUser() {
+        return user;
+    }
+
+    public static void setUser(String user) {
+        RegisterUIController.user = user;
+    }
+
+    public static String user;
+
+    @FXML
+    private Label registerTitle;//title on register page
 
     @FXML
     private TextField txtSurname;
@@ -103,6 +113,8 @@ public class RegisterUIController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         //myDatabase = DBConnection.dbconnect();
+
+        registerTitle.setText("Registration ("+user+")");
        
     }    
 
@@ -132,11 +144,14 @@ public class RegisterUIController implements Initializable {
     
      try { 
          
-            Class.forName("com.mysql.jdbc.Driver");
+//            Class.forName("com.mysql.jdbc.Driver");
             myDatabase = new Database();
 
             if(!(lname == null)){
                 if(newPath != null){
+
+                    //todo
+                    //move this to Database.java
                     File resultPDF = new File(newPath);
                     fis = new FileInputStream(resultPDF);
                     System.out.println("FIle size fis:" +fis.getChannel().size());
@@ -157,7 +172,7 @@ public class RegisterUIController implements Initializable {
 
                     int i = pst.executeUpdate();
 
-                    insert ="INSERT INTO "+Database.APPLICATIONTABLE+
+                    insert ="INSERT INTO "+Database.APPLICATION_TABLE +
                             "(RECEIPTID,"+
                             Database.FIRSTCHOICE+", "+
                             Database.RESULTS+") "+
@@ -215,9 +230,7 @@ public class RegisterUIController implements Initializable {
         } 
         catch (SQLException | FileNotFoundException ex){
             ex.printStackTrace();        
-        } catch (ClassNotFoundException e) {
-         e.printStackTrace();
-     } catch (IOException e) {
+        } catch (IOException e) {
          e.printStackTrace();
          System.out.println("file not found");
      }
