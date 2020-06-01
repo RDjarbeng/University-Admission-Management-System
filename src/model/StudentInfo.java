@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package admin.rejectedTableView;
+package model;
 
 import javafx.scene.control.Button;
 
@@ -22,6 +22,16 @@ public class StudentInfo {
     String gender;
     String resAddress;
     String email;
+    String nationality;
+    String postalAddress;
+    String course;
+    String hall;
+
+
+
+    String status;
+    Blob results;
+    Button button;
 
     public StudentInfo(String string, String string1, String string2) {
         this.receiptID = string;
@@ -37,12 +47,7 @@ public class StudentInfo {
         this.nationality = nationality;
     }
 
-    String nationality;
-    String postalAddress;
-    String course;
-    String hall;
-    Blob results;
-    Button button;
+
 
 
     public StudentInfo(String receiptID, String lname, String fname, String mname, String dob, String gender,String nationality, String email, String resAddress, String posAddress) {
@@ -60,6 +65,8 @@ public class StudentInfo {
         this.button = new Button("View");
         
     }
+
+    //Getters and setters
 
     public Button getButton() {
         return button;
@@ -163,6 +170,14 @@ public class StudentInfo {
 
     public void setResults(Blob results) {
         this.results = results;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
 

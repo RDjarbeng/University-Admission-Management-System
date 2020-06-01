@@ -5,6 +5,7 @@
  */
 package admin.dashboard;
 
+import admin.Tableview.TableViewController;
 import com.jfoenix.controls.JFXButton;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -45,11 +46,13 @@ public class AdminDashboardController implements Initializable {
     @FXML
     private void handleViewandEdit(ActionEvent event) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/admin/pendingTableview/PendingTableView.fxml"));
+            TableViewController.table =1;
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/admin/Tableview/TableView.fxml"));
             Parent root = (Parent)fxmlLoader.load();
             Stage stage = new Stage();
             //stage.initStyle(StageStyle.TRANSPARENT);
             stage.setScene(new Scene(root));
+            stage.setTitle("View Applicantsf");
             //stage.setFullScreen(true);
             stage.show();
             //((Node)(event.getSource())).getScene().getWindow().hide();
@@ -63,7 +66,11 @@ public class AdminDashboardController implements Initializable {
     @FXML
     private void handleViewSelectedApplicants(ActionEvent event) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/admin/acceptedTableview/AcceptedTableView.fxml"));
+            TableViewController.table =2;
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/admin/Tableview/TableView.fxml"));
+
+
+
             Parent root = (Parent)fxmlLoader.load();
             Stage stage = new Stage();
             //stage.initStyle(StageStyle.TRANSPARENT);
@@ -81,7 +88,8 @@ public class AdminDashboardController implements Initializable {
     @FXML
     private void handleViewRejectedApplicants(ActionEvent event) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/admin/rejectedTableView/RejectedTableView.fxml"));
+            TableViewController.table =3;
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/admin/Tableview/TableView.fxml"));
             Parent root = (Parent)fxmlLoader.load();
             Stage stage = new Stage();
             //stage.initStyle(StageStyle.TRANSPARENT);

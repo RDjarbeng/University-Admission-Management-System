@@ -134,12 +134,12 @@
       </Label>
       <Separator layoutX="415.0" layoutY="48.0" orientation="VERTICAL" prefHeight="552.0" prefWidth="2.0" />
       <JFXButton layoutX="564.0" layoutY="396.0" prefHeight="25.0" prefWidth="92.0" style="-fx-background-color: #ffffff;" text="Open" />
-      <JFXButton layoutX="447.0" layoutY="552.0" prefHeight="25.0" prefWidth="92.0" style="-fx-background-color: #ffffff;" text="Accept" textFill="#09ab78">
+      <JFXButton fx:id="btnAccept" layoutX="447.0" layoutY="552.0" prefHeight="25.0" prefWidth="92.0" style="-fx-background-color: #ffffff;" text="Accept" textFill="#09ab78">
          <font>
             <Font size="17.0" />
          </font>
       </JFXButton>
-      <JFXButton layoutX="610.0" layoutY="552.0" prefHeight="25.0" prefWidth="92.0" style="-fx-background-color: #ffffff;" text="Decline" textFill="#d35c5c">
+      <JFXButton fx:id="btnReject" layoutX="610.0" layoutY="552.0" prefHeight="25.0" prefWidth="92.0" style="-fx-background-color: #ffffff;" text="Decline" textFill="#d35c5c">
          <font>
             <Font size="16.0" />
          </font>
@@ -149,7 +149,7 @@
             <Font size="16.0" />
          </font>
       </Label>
-      <Label fx:id="statusLabel" alignment="CENTER" layoutX="564.0" layoutY="449.0" prefHeight="49.0" prefWidth="189.0" style="-fx-background-color: white;" text="status" textFill="#1b1a1a">
+      <Label fx:id="lblStatus" alignment="CENTER" layoutX="564.0" layoutY="449.0" prefHeight="49.0" prefWidth="189.0" style="-fx-background-color: white;" text="status" textFill="#1b1a1a">
          <font>
             <Font size="16.0" />
          </font>

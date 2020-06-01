@@ -1,21 +1,8 @@
-package admin.rejectedTableView;
+package admin.Tableview;
 
 import AdmissionSystem.Database;
 import admin.viewandedit.VnEController;
 import com.jfoenix.controls.JFXTextArea;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
-
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -24,9 +11,23 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
+import model.StudentInfo;
 
 
-public class RejectedTableViewController implements Initializable{
+public class TableViewController implements Initializable{
 
     @FXML
     private TableView<StudentInfo> tableView;
@@ -41,8 +42,12 @@ public class RejectedTableViewController implements Initializable{
     private TableColumn<StudentInfo, String> colnMname;
 
     @FXML
+    private Label tableViewTitle;
+
+    @FXML
     private JFXTextArea txtDisplay; 
-    
+
+    public static int table=0;
     
     Connection connection;
     PreparedStatement pst;
@@ -57,39 +62,21 @@ public class RejectedTableViewController implements Initializable{
     
     @FXML
     void handleViewRow(MouseEvent event) {
-
+//      get selected student
         StudentInfo stinfo = tableView.getSelectionModel().getSelectedItem();
+
             if (stinfo == null) {
                 System.out.println("Nothing selected");
             }
             else {
-                String fullDetails ="SELECT * "+
-//                        Database.STUDENT_TABLE+"."+Database.STUDENT_RECEIPTID +", "+
-//                        Database.STUDENT_LASTNAME+", "+
-//                        Database.STUDENT_FIRSTNAME+", "+
-//                        Database.STUDENT_MIDDLENAME+", "+
-//                        Database.STUDENT_NATIONALITY+", "+
-//                        Database.STUDENT_DOB+", "+
-//                        Database.STUDENT_GENDER+", "+
-//                        Database.STUDENT_POSTALADDRESS+", "+
-//                        Database.STUDENT_RESIDENTIALADDRESS+", "+
-//                        Database.STUDENT_EMAIL+", "+
-//                        Database.FIRSTCHOICE+ ", "+
-//                        Database.FIRSTHALL+" "+
-                        " FROM "+Database.STUDENT_TABLE +", "+
-                        Database.APPLICATION_TABLE +" "+
-                        " WHERE "+
-                        Database.STUDENT_TABLE+"." +Database.STUDENT_RECEIPTID+ " = '"+stinfo.getReceiptID()
-                        +" AND "+ Database.STUDENT_TABLE+"." +Database.STUDENT_RECEIPTID+ "' = "+
-                        Database.APPLICATION_TABLE + "."+Database.APP_RECEIPTID
 
-                        ;
-                System.out.println("Details query: "+fullDetails);
                 try {
-                    rs = mydatabase.executeSelectQuery(fullDetails);
+                    rs = mydatabase.getStudentFromDatabase(stinfo.getReceiptID());
+                    System.out.println("Rows returned = "+ mydatabase.getNumRows(rs));
 
 
-                while (rs.next()) {
+                if (rs.next()) {
+                    System.out.println("inside while");
                      stinfo = new StudentInfo(
                             rs.getString(Database.STUDENT_RECEIPTID),
                             rs.getString(Database.STUDENT_LASTNAME),
@@ -102,13 +89,17 @@ public class RejectedTableViewController implements Initializable{
                             rs.getString(Database.STUDENT_RESIDENTIALADDRESS),
                             rs.getString(Database.STUDENT_POSTALADDRESS)
                     );
+                    System.out.println("filling student details");
 
-                    stinfo.setCourse(rs.getString(Database.FIRSTCHOICE));
+                     stinfo.setCourse(rs.getString(Database.FIRSTCHOICE));
                     stinfo.setHall(rs.getString(Database.FIRSTHALL));
+                    stinfo.setStatus(rs.getString(Database.APP_STATUS));
+
+                    System.out.println("Student status: "+stinfo.getStatus());
 
                     //oblist.add(stinfo );
 
-                }
+                }else{throw  new SQLException("Could not fetch student");}
                 } catch (SQLException throwables) {
                     System.out.println("Could not fetch student from DB");
                     throwables.printStackTrace();
@@ -149,10 +140,9 @@ public class RejectedTableViewController implements Initializable{
                 stinfo.getNationality(),
                 stinfo.getEmail(),
                 stinfo.getResAddress(),
-                stinfo.getPostalAddress(),
                 stinfo.getCourse(),
-                stinfo.getHall()
-                );
+                stinfo.getHall(),
+                stinfo.getStatus());
             Parent root1 = loader.getRoot();
            Stage stage = new Stage();
           stage.setScene(new Scene(root1));
@@ -169,11 +159,21 @@ public class RejectedTableViewController implements Initializable{
     public void initialize(URL location, ResourceBundle resource){
         
         try {
-
-
              mydatabase = new Database();
-            //get students who have been rejected by the admin
-             rs = mydatabase.getRejectedStudents();
+
+
+            //get students who have not yet been approved by the admin
+            if(table == 1){
+                rs = mydatabase.getPendingStudents();
+                tableViewTitle.setText(Database.APP_STATUS_PENDING +" APPLICANTS");
+            }else if(table == 2){
+                rs = mydatabase.getAcceptedStudents();
+                tableViewTitle.setText(Database.APP_STATUS_ACCEPT +" APPLICANTS");
+            }else if(table == 3)
+            {
+                tableViewTitle.setText(Database.APP_STATUS_REJECT +" APPLICANTS");
+                rs = mydatabase.getRejectedStudents();
+            }
 
 
             while (rs.next()) {
@@ -182,14 +182,10 @@ public class RejectedTableViewController implements Initializable{
                     rs.getString(Database.STUDENT_LASTNAME),
                     rs.getString(Database.STUDENT_FIRSTNAME)));
             }
-            
-            
-            
-            
 
         } catch (SQLException ex) {
             System.out.println("Database connectivity error!");
-            Logger.getLogger(RejectedTableViewController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TableViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         

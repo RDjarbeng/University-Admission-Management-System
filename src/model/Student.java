@@ -1,5 +1,9 @@
 package model;
 
+import javafx.scene.control.Button;
+
+import java.sql.Blob;
+
 public class Student {
 
     String receiptID;

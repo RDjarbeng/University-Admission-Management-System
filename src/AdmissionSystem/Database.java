@@ -43,6 +43,10 @@ public class Database {
     public static final String SECONDHALL = "SecondHallOfResidence";
     public static final String THIRDHALL = "ThirdHallOfResidence";
     public static final String RESULTS = "Results";
+    public static final String APP_STATUS_REJECT = "REJECTED";
+    public static final String APP_STATUS_ACCEPT = "ACCEPTED";
+    public static final String APP_STATUS_PENDING = "PENDING";
+
 
 
 
@@ -112,6 +116,32 @@ public class Database {
 
     }
 
+    public ResultSet getStudentFromDatabase(String id)throws SQLException {
+        String fullDetails ="SELECT * "+
+//                        Database.STUDENT_TABLE+"."+Database.STUDENT_RECEIPTID +", "+
+//                        Database.STUDENT_LASTNAME+", "+
+//                        Database.STUDENT_FIRSTNAME+", "+
+//                        Database.STUDENT_MIDDLENAME+", "+
+//                        Database.STUDENT_NATIONALITY+", "+
+//                        Database.STUDENT_DOB+", "+
+//                        Database.STUDENT_GENDER+", "+
+//                        Database.STUDENT_POSTALADDRESS+", "+
+//                        Database.STUDENT_RESIDENTIALADDRESS+", "+
+//                        Database.STUDENT_EMAIL+", "+
+//                        Database.FIRSTCHOICE+ ", "+
+//                        Database.FIRSTHALL+" "+
+                " FROM "+Database.STUDENT_TABLE +", "+
+                Database.APPLICATION_TABLE +" "+
+                " WHERE "+
+                Database.STUDENT_TABLE+"." +Database.STUDENT_RECEIPTID+ " = '"+ id
+                +"' AND "+ Database.STUDENT_TABLE+"." +Database.STUDENT_RECEIPTID+ " = "+
+                Database.APPLICATION_TABLE + "."+Database.APP_RECEIPTID
+                ;
+
+        return executeSelectQuery(fullDetails);
+
+    }
+
     public ResultSet getRejectedStudents() throws SQLException {
 
         String select ="select * from "+Database.STUDENT_TABLE +", "+Database.APPLICATION_TABLE
@@ -132,7 +162,7 @@ public class Database {
                 +" AND "+ Database.APPLICATION_TABLE +"." +Database.APP_STATUS+ " = " +
                 "'ACCEPTED' "
                 ;
-        System.out.println("Query rejected students: "+select);
+        System.out.println("Query accepted students: "+select);
         return executeSelectQuery(select);
     }
 
@@ -144,7 +174,7 @@ public class Database {
                 +" AND "+ Database.APPLICATION_TABLE +"." +Database.APP_STATUS+ " = " +
                 "'PENDING' "
                 ;
-        System.out.println("Query rejected students: "+select);
+        System.out.println("Query pending students: "+select);
         return executeSelectQuery(select);
     }
 
@@ -251,7 +281,7 @@ public class Database {
     public int getNumRows(ResultSet res) throws SQLException{
         res.last();
         int numRows = res.getRow();
-        res.first();
+        res.absolute(0);
         return numRows;
     }
 
@@ -301,6 +331,21 @@ public class Database {
             resultSet.next();
         }
         return data;
+    }
+
+    public void updateStudentStatus(String adminStatement, String id) throws SQLException {
+        String accept ="UPDATE "+ Database.APPLICATION_TABLE+" SET "+Database.APP_STATUS +"= ?" +
+                "WHERE " +
+                "Application" +
+                ". "+Database.APP_RECEIPTID+" =?";
+
+        System.out.println("Update Query :"+ accept);
+
+        PreparedStatement updateStudent = getPreparedStatement(accept);
+        updateStudent.setString(1, adminStatement);
+        updateStudent.setString(2, id);
+        updateStudent.executeUpdate();
+
     }
 
     public void executeQuery(String userStatement) throws SQLException {

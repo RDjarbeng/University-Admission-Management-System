@@ -27,8 +27,8 @@ public class LoginPage extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        Parent root = (Parent)FXMLLoader.load(getClass().getResource("/loginpage/loginpage.fxml"));
-//        Parent root = (Parent)FXMLLoader.load(getClass().getResource("/admin/dashboard/adminDashboard.fxml"));
+//        Parent root = (Parent)FXMLLoader.load(getClass().getResource("/loginpage/loginpage.fxml"));
+        Parent root = (Parent)FXMLLoader.load(getClass().getResource("/admin/dashboard/adminDashboard.fxml"));
         primaryStage.setScene(new Scene(root));
         primaryStage.initStyle(StageStyle.TRANSPARENT);
 
