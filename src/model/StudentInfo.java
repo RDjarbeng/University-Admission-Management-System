@@ -30,6 +30,20 @@ public class StudentInfo {
 
 
     String status;
+    String dateCreated;
+
+    public StudentInfo() {
+
+    }
+
+    public String getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(String dateCreated) {
+        this.dateCreated = dateCreated;
+    }
+
     Blob results;
     Button button;
 

@@ -72,9 +72,10 @@
                               <Image url="@../images/backarrow.png" />
                            </image>
                         </ImageView>
+                        <Label fx:id="adminLoginStatusLabel" layoutX="2.0" layoutY="577.0" prefHeight="17.0" prefWidth="354.0" textFill="#c3aeae" />
                      </children>
                   </Pane>
-                  <Pane fx:id="paneStudent" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #0a2338;">
+                  <Pane fx:id="paneStudent" prefHeight="557.0" prefWidth="500.0" style="-fx-background-color: #0a2338;">
                      <children>
                         <ImageView fitHeight="115.0" fitWidth="125.0" layoutX="189.0" layoutY="102.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -110,7 +111,7 @@
                            </font>
                         </JFXButton>
                         <Label fx:id="lblPinIncorrect" alignment="CENTER" contentDisplay="CENTER" layoutX="131.0" layoutY="431.0" prefHeight="17.0" prefWidth="258.0" textFill="#fffdfd" />
-                        <Label fx:id="loginStatusLabel" layoutX="19.0" layoutY="570.0" prefHeight="17.0" prefWidth="309.0" textFill="#c3aeae" />
+                        <Label fx:id="userLoginStatusLabel" layoutX="19.0" layoutY="570.0" prefHeight="17.0" prefWidth="309.0" textFill="#c3aeae" />
                      </children>
                   </Pane>
                </children>

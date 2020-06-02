@@ -11,7 +11,6 @@ import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -30,7 +29,6 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.effect.BoxBlur;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -38,10 +36,6 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import student.dashboard.DashboardController;
-
-import javax.swing.JOptionPane;
-
-import static java.lang.Math.random;
 
 /**
  * FXML Controller class
@@ -80,7 +74,11 @@ public class LoginPageController implements Initializable {
     @FXML
     private Label lblPinIncorrect;
     @FXML
-    private Label loginStatusLabel;
+    private Label userLoginStatusLabel;
+
+
+    @FXML
+    private Label adminLoginStatusLabel;
 
     @FXML
     private ImageView loginLogo;
@@ -130,7 +128,7 @@ public class LoginPageController implements Initializable {
         if (receipt.equals("") && pin.equals(""))
         {
             //System.out.println("Hello");
-            loginStatusLabel.setText("Username/password field cannot be empty!");
+            userLoginStatusLabel.setText("Username/password field cannot be empty!");
             //JOptionPane.showMessageDialog(null, "Incorrect receipt or pin!");
             txtPaymentReceipt.requestFocus();
 
@@ -139,73 +137,38 @@ public class LoginPageController implements Initializable {
         else {
             
             try {
-                loginStatusLabel.setText("Connecting...");
-                Class.forName("com.mysql.jdbc.Driver");
-                connection = DriverManager.getConnection("jdbc:mysql://localhost/universitydb", "root", "");
-                preparedStatement = connection.prepareStatement("select * from users where username=? and password=?");
-                
-                preparedStatement.setString(1, receipt);
-                preparedStatement.setString(2, pin);
-                
-                resultSet = preparedStatement.executeQuery();
-                
-                
-                if (resultSet.next())
-                {
-                    if(resultSet.getString("Username").equals(receipt)) {
-                        loginStatusLabel.setText("Login successful! ");
-//                    JOptionPane.showMessageDialog(null, "Login Successful!");
-                        try {
-                            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/student/dashboard/Dashboard.fxml"));
-                            DashboardController.setUser(resultSet.getString("username"));
-                            System.out.println(resultSet.getString("username"));
+                if(loginUser(receipt, pin)){
+                    try {
+                        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/student/dashboard/Dashboard.fxml"));
+                        DashboardController.setUser(resultSet.getString("username"));
+                        System.out.println(resultSet.getString("username"));
 //                     System.out.println("Hello loginpage controller1");
-                            Parent root1 = (Parent) fxmlLoader.load();
-                            Stage  stage = new Stage();
-                            stage.initStyle(StageStyle.TRANSPARENT);
-                            stage.setScene(new Scene(root1));
-                            stage.show();
-                            System.out.println("Hello loginpage controller2222");
-                            ((Node) (event.getSource())).getScene().getWindow().hide();
+                        Parent root1 = (Parent) fxmlLoader.load();
+                        Stage  stage = new Stage();
+                        stage.initStyle(StageStyle.TRANSPARENT);
+                        stage.setScene(new Scene(root1));
+                        stage.show();
+                        System.out.println("Hello loginpage controller2222");
+                        ((Node) (event.getSource())).getScene().getWindow().hide();
 
 
-                        } catch (Exception e) {
-                            e.printStackTrace();
+                    } catch (Exception e) {
+                        e.printStackTrace();
 
-                        }
-                    }else
-                    {
-                        loginStatusLabel.setText("Invalid username or password!");
-
-                        //JOptionPane.showMessageDialog(null, "Login Failed!");
-                        //txtPaymentReceipt.setText("");//clear text field
-                        txtPaymentReceipt.requestFocus();
-
-                        txtPin.setText("");//clear passwordfield
                     }
-                }
-                else 
-                {
-                    loginStatusLabel.setText("Invalid username or password!");
 
-                    //JOptionPane.showMessageDialog(null, "Login Failed!");
-                        //txtPaymentReceipt.setText("");//clear text field
-                        txtPaymentReceipt.requestFocus();
-
-                        txtPin.setText("");//clear passwordfield
                 }
-            }
-            catch (ClassNotFoundException ex) {
-                Logger.getLogger(LoginPageController.class.getName()).log(Level.SEVERE, null, ex);
+
+
             } catch (SQLException ex) {
                 Logger.getLogger(LoginPageController.class.getName()).log(Level.SEVERE, null, ex);
-                loginStatusLabel.setText("Error connecting to server ");
+                userLoginStatusLabel.setText("Error connecting to server ");
             }
         }
     }
 
-    
-    
+
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
@@ -239,31 +202,46 @@ public class LoginPageController implements Initializable {
         
         try {
             String adminPassword =txtAdminPassword.getText();
-            String adminUser = txtAdminUsername.getText();
+            String adminUsername = txtAdminUsername.getText();
 
-            resultSet =validateAdmin(adminUser, adminPassword);
+            resultSet = fetchAdmin(adminUsername, adminPassword);
 
 
             if (resultSet.next())
             {
                 //loginStatusLabel.setText("Login successful! ");
 //                    JOptionPane.showMessageDialog(null, "Login Successful!");
+                if(resultSet.getString("Username").equals(adminUsername) && resultSet.getString("Password").equals(adminPassword)) {
+                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/admin/dashboard/AdminDashboard.fxml"));
+                    System.out.println("Hello adminpage");
+                    Parent root1 = (Parent) fxmlLoader.load();
 
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/admin/dashboard/AdminDashboard.fxml"));
-                System.out.println("Hello adminpage");
-                Parent root1 = (Parent)fxmlLoader.load();
+                    Stage stage = new Stage();
+                    stage.initStyle(StageStyle.TRANSPARENT);
+                    stage.setScene(new Scene(root1));
+                    stage.show();
 
-                Stage stage = new Stage();
-                stage.initStyle(StageStyle.TRANSPARENT);
-                stage.setScene(new Scene(root1));
-                stage.show();
-
-                ((Node)(event.getSource())).getScene().getWindow().hide();
+                    ((Node) (event.getSource())).getScene().getWindow().hide();
                 }else{
-                System.out.println("invalid user "+adminUser+ " "+adminPassword);
-            }
+//                System.out.println("invalid user "+adminUser+ " "+adminPassword);
+                    adminLoginStatusLabel.setText("Invalid username or password!");
 
-                    
+                    //JOptionPane.showMessageDialog(null, "Login Failed!");
+                    //txtPaymentReceipt.setText("");//clear text field
+                    txtAdminUsername.requestFocus();
+
+                    txtAdminPassword.setText("");//clear passwordfield
+                }
+                }else{
+//                System.out.println("invalid user "+adminUser+ " "+adminPassword);
+                adminLoginStatusLabel.setText("Invalid username or password!");
+
+                //JOptionPane.showMessageDialog(null, "Login Failed!");
+                //txtPaymentReceipt.setText("");//clear text field
+                txtAdminUsername.requestFocus();
+
+                txtAdminPassword.setText("");//clear passwordfield
+            }
                     }
         catch (SQLException e){
             System.out.println("Database connectivity error");
@@ -277,7 +255,59 @@ public class LoginPageController implements Initializable {
 
 
     }
-    public ResultSet validateAdmin(String user, String password) throws SQLException {
+
+
+    /**
+     * @param username
+     * @param password
+     * @return true if user exists in the database, false otherwise
+     * @throws SQLException
+     */
+    private boolean loginUser(String username, String password) throws SQLException {
+        userLoginStatusLabel.setText("Connecting...");
+        Database database = new Database();
+
+        preparedStatement = database.getPreparedStatement("select * from users where username=? and password=?");
+
+        preparedStatement.setString(1, username);
+        preparedStatement.setString(2, password);
+
+        resultSet = preparedStatement.executeQuery();
+
+
+        if (resultSet.next())
+        {
+            if(resultSet.getString("Username").equals(username) && resultSet.getString("Password").equals(password)) {
+                userLoginStatusLabel.setText("Login successful! ");
+//                    JOptionPane.showMessageDialog(null, "Login Successful!");
+                return  true;
+
+            }else
+            {
+                userLoginStatusLabel.setText("Invalid username or password!");
+
+                //JOptionPane.showMessageDialog(null, "Login Failed!");
+                //txtPaymentReceipt.setText("");//clear text field
+                txtPaymentReceipt.requestFocus();
+
+                txtPin.setText("");//clear passwordfield
+
+            }
+        }
+        else
+        {
+            userLoginStatusLabel.setText("Invalid username or password!");
+
+            //JOptionPane.showMessageDialog(null, "Login Failed!");
+            //txtPaymentReceipt.setText("");//clear text field
+            txtPaymentReceipt.requestFocus();
+
+            txtPin.setText("");//clear passwordfield
+        }
+        return false;
+    }
+
+    public ResultSet fetchAdmin(String user, String password) throws SQLException {
         Database myDatabase = new Database();
         preparedStatement = myDatabase.getConn().prepareStatement("select * from admin where username=? and " +
                 "password=?");

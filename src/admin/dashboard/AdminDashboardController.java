@@ -35,6 +35,8 @@ public class AdminDashboardController implements Initializable {
     @FXML
     private ImageView btnClose;
 
+
+
     /**
      * Initializes the controller class.
      */

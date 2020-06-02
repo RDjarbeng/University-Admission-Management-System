@@ -71,56 +71,14 @@ public class TableViewController implements Initializable{
             else {
 
                 try {
-                    rs = mydatabase.getStudentFromDatabase(stinfo.getReceiptID());
-                    System.out.println("Rows returned = "+ mydatabase.getNumRows(rs));
-
-
-                if (rs.next()) {
-                    System.out.println("inside while");
-                     stinfo = new StudentInfo(
-                            rs.getString(Database.STUDENT_RECEIPTID),
-                            rs.getString(Database.STUDENT_LASTNAME),
-                            rs.getString(Database.STUDENT_FIRSTNAME),
-                            rs.getString(Database.STUDENT_MIDDLENAME),
-                            rs.getString(Database.STUDENT_DOB),
-                            rs.getString(Database.STUDENT_GENDER),
-                            rs.getString(Database.STUDENT_NATIONALITY),
-                            rs.getString(Database.STUDENT_EMAIL),
-                            rs.getString(Database.STUDENT_RESIDENTIALADDRESS),
-                            rs.getString(Database.STUDENT_POSTALADDRESS)
-                    );
-                    System.out.println("filling student details");
-
-                     stinfo.setCourse(rs.getString(Database.FIRSTCHOICE));
-                    stinfo.setHall(rs.getString(Database.FIRSTHALL));
-                    stinfo.setStatus(rs.getString(Database.APP_STATUS));
-
-                    System.out.println("Student status: "+stinfo.getStatus());
-
+//                    rs = mydatabase.getStudentFromDatabase(stinfo.getReceiptID());
+                    mydatabase.fillStudentDetails(stinfo.getReceiptID(), stinfo);
                     //oblist.add(stinfo );
 
-                }else{throw  new SQLException("Could not fetch student");}
                 } catch (SQLException throwables) {
                     System.out.println("Could not fetch student from DB");
                     throwables.printStackTrace();
                 }
-//                String a= stinfo.getPostalAddress();
-//                String b=stinfo.getContact();
-//                String c=stinfo.getCourse();
-//                String d=stinfo.getEmail();
-//                String e=stinfo.getDob();
-//                String f=stinfo.getNationality();
-//                String g="";//remember to delete
-//                String h=stinfo.getFname();
-//                String i=stinfo.getGender();
-//                String j=stinfo.getHall();
-//                String k=stinfo.getLname();
-//                String l=stinfo.getMname();
-//                String m=;
-//                String n=
-                
-                
-                
         try {
             System.out.println("Hello table controller 1");
             loader.load();
@@ -146,8 +104,9 @@ public class TableViewController implements Initializable{
             Parent root1 = loader.getRoot();
            Stage stage = new Stage();
           stage.setScene(new Scene(root1));
+          stage.setTitle("(Admin)Student details");
           stage.show();
-           System.out.println("Hello table controller 2");
+
                 
             
                
@@ -168,7 +127,7 @@ public class TableViewController implements Initializable{
                 tableViewTitle.setText(Database.APP_STATUS_PENDING +" APPLICANTS");
             }else if(table == 2){
                 rs = mydatabase.getAcceptedStudents();
-                tableViewTitle.setText(Database.APP_STATUS_ACCEPT +" APPLICANTS");
+                tableViewTitle.setText(Database.APP_STATUS_ACCEPTED +" APPLICANTS");
             }else if(table == 3)
             {
                 tableViewTitle.setText(Database.APP_STATUS_REJECT +" APPLICANTS");
@@ -177,10 +136,16 @@ public class TableViewController implements Initializable{
 
 
             while (rs.next()) {
-            oblist.add(new StudentInfo(
-                    rs.getString(Database.STUDENT_RECEIPTID),
-                    rs.getString(Database.STUDENT_LASTNAME),
-                    rs.getString(Database.STUDENT_FIRSTNAME)));
+
+                StudentInfo student = new StudentInfo(
+                        rs.getString(Database.STUDENT_RECEIPTID),
+                        rs.getString(Database.STUDENT_LASTNAME),
+                        rs.getString(Database.STUDENT_FIRSTNAME));
+
+                student.setDateCreated(rs.getTimestamp(Database.APP_DATE_CREATED).toString());
+
+            oblist.add(student);
+
             }
 
         } catch (SQLException ex) {
@@ -194,7 +159,7 @@ public class TableViewController implements Initializable{
         colReceipt.setCellValueFactory(new PropertyValueFactory<>("receiptID"));
         colnLname.setCellValueFactory(new PropertyValueFactory<>("lname"));
         colnFname.setCellValueFactory(new PropertyValueFactory<>("fname"));
-        colnMname.setCellValueFactory(new PropertyValueFactory<>("mname"));
+        colnMname.setCellValueFactory(new PropertyValueFactory<>("dateCreated"));
 
 
 

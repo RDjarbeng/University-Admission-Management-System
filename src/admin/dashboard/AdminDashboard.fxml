@@ -60,7 +60,7 @@
       </Pane>
       <ImageView fx:id="btnClose" fitHeight="25.0" fitWidth="31.0" layoutX="974.0" layoutY="2.0" onMouseClicked="#handleCloseButton" pickOnBounds="true" preserveRatio="true" styleClass="close">
          <image>
-            <Image url="@../../images/close.png" />
+            <Image url="@../../images/x.png" />
          </image>
       </ImageView>
    </children>

@@ -1,5 +1,7 @@
 package AdmissionSystem;
 
+import model.StudentInfo;
+
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -44,8 +46,9 @@ public class Database {
     public static final String THIRDHALL = "ThirdHallOfResidence";
     public static final String RESULTS = "Results";
     public static final String APP_STATUS_REJECT = "REJECTED";
-    public static final String APP_STATUS_ACCEPT = "ACCEPTED";
+    public static final String APP_STATUS_ACCEPTED = "ACCEPTED";
     public static final String APP_STATUS_PENDING = "PENDING";
+    public static final String APP_DATE_CREATED = "DATECREATED";
 
 
 
@@ -283,6 +286,38 @@ public class Database {
         int numRows = res.getRow();
         res.absolute(0);
         return numRows;
+    }
+
+    public boolean fillStudentDetails(String user, StudentInfo student) throws SQLException {
+
+        ResultSet rs = getStudentFromDatabase(user);
+        //System.out.println("Rows returned = " + mydatabase.getNumRows(rs));
+
+        
+        if (rs.next()) {
+                    student.setReceiptID(rs.getString(Database.STUDENT_RECEIPTID));
+                    student.setLname(rs.getString(Database.STUDENT_LASTNAME));
+                    student.setFname(rs.getString(Database.STUDENT_FIRSTNAME));
+            student.setMname(rs.getString(Database.STUDENT_MIDDLENAME));
+            student.setDob(rs.getString(Database.STUDENT_DOB));
+            student.setGender(rs.getString(Database.STUDENT_GENDER));
+            student.setNationality(rs.getString(Database.STUDENT_NATIONALITY));
+            student.setEmail(rs.getString(Database.STUDENT_EMAIL));
+            student.setResAddress(rs.getString(Database.STUDENT_RESIDENTIALADDRESS));
+                    student.setPostalAddress(rs.getString(Database.STUDENT_POSTALADDRESS)
+            );
+//            System.out.println("filling student details");
+
+            student.setCourse(rs.getString(Database.FIRSTCHOICE));
+            student.setHall(rs.getString(Database.FIRSTHALL));
+            student.setStatus(rs.getString(Database.APP_STATUS));
+            return  true;
+        }else {
+            System.out.println("Error creating student");
+            return false;
+        }
+
+        
     }
 
 

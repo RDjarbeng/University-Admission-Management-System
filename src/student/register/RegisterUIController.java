@@ -27,6 +27,8 @@ import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import student.dashboard.DashboardController;
+
 import javax.swing.JOptionPane;
 
 
@@ -37,15 +39,15 @@ import javax.swing.JOptionPane;
  */
 public class RegisterUIController implements Initializable {
 
-    public static String getUser() {
-        return user;
-    }
-
-    public static void setUser(String user) {
-        RegisterUIController.user = user;
-    }
-
-    public static String user;
+//    public static String getUser() {
+//        return user;
+//    }
+//
+//    public static void setUser(String user) {
+//        RegisterUIController.user = user;
+//    }
+//
+//    public static String user;
 
     @FXML
     private Label registerTitle;//title on register page
@@ -114,7 +116,7 @@ public class RegisterUIController implements Initializable {
         // TODO
         //myDatabase = DBConnection.dbconnect();
 
-        registerTitle.setText("Registration ("+user+")");
+        registerTitle.setText("Registration ("+ DashboardController.getUser()+")");
        
     }    
 

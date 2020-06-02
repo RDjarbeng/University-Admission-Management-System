@@ -5,9 +5,17 @@
  */
 package student.dashboard;
 
+import AdmissionSystem.Database;
 import com.jfoenix.controls.JFXButton;
 import java.net.URL;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -18,8 +26,9 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-import student.register.RegisterUIController;
+import model.StudentInfo;
+import student.AdmissionStatus.AdmissionStatus;
+import student.AdmissionStatus.AdmissionStatusController;
 
 /**
  * FXML Controller class
@@ -43,6 +52,9 @@ public class DashboardController implements Initializable {
     @FXML
     private JFXButton btnTrackApp;
 
+
+    FXMLLoader loader = new FXMLLoader(getClass().getResource("/student/AdmissionStatus/AdmissionStatus.fxml"));
+
     /**
      * Initializes the controller class.
      */
@@ -50,8 +62,62 @@ public class DashboardController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
 
-        studentDashboardLabel.setText("Student Dashboard ("+user+")");
-    }    
+        studentDashboardLabel.setText("Student Dashboard (" + user + ")");
+        btnTrackApp.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+
+//      get selected student
+                StudentInfo stinfo = new StudentInfo();
+
+                Database mydatabase = new Database();
+
+                try {
+                     mydatabase.fillStudentDetails(user, stinfo);
+
+
+                    //oblist.add(stinfo );
+
+
+                } catch (SQLException throwables) {
+                    System.out.println("Could not fetch student from DB");
+                    throwables.printStackTrace();
+                }
+
+                try {
+
+                    loader.load();
+                }
+                catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+
+                AdmissionStatusController vneController = loader.getController();
+                if(stinfo != null) {
+                    vneController.setData(
+                            stinfo.getReceiptID(),
+                            stinfo.getLname(),
+                            stinfo.getFname(),
+                            stinfo.getMname(),
+                            stinfo.getDob(),
+                            stinfo.getGender(),
+                            stinfo.getNationality(),
+                            stinfo.getEmail(),
+                            stinfo.getResAddress(),
+                            stinfo.getCourse(),
+                            stinfo.getHall(),
+                            stinfo.getStatus());
+                }
+                Parent root1 = loader.getRoot();
+                Stage stage = new Stage();
+                stage.setScene(new Scene(root1));
+                stage.setTitle("Admission details ("+user+")");
+                stage.show();
+
+            }
+        });
+    }
+
 
     @FXML
     private void closeWindow(MouseEvent event) {
@@ -64,7 +130,7 @@ public class DashboardController implements Initializable {
         
         try {
                      FXMLLoader loading = new FXMLLoader(getClass().getResource("/student/register/RegisterUI.fxml"));
-            RegisterUIController.setUser(user);
+//            RegisterUIController.setUser(user);
 //                     System.out.println("Hello dashboard controller1");
                      Parent root1 = (Parent)loading.load();
 //                     System.out.println("Hello dashboard controller34");
@@ -88,6 +154,8 @@ public class DashboardController implements Initializable {
                         e.printStackTrace();
                     }
     }
+
+
     public static String getUser() {
         return user;
     }

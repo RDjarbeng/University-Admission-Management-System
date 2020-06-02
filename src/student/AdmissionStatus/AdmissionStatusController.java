@@ -3,27 +3,26 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package admin.viewandedit;
-
-import java.net.URL;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ResourceBundle;
+package student.AdmissionStatus;
 
 import AdmissionSystem.Database;
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXTextArea;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import model.StudentInfo;
 
+import java.net.URL;
+import java.util.ResourceBundle;
+
 /**
  * FXML Controller class
  *
  * @author kezia
  */
-public class VnEController implements Initializable {
+public class AdmissionStatusController implements Initializable {
 
     @FXML
     private Label lblReceipt;
@@ -72,7 +71,10 @@ public class VnEController implements Initializable {
     @FXML
     private Label lblStatus;
 
-    Database updateDatabase;
+
+    @FXML
+    private JFXTextArea statusTextArea;
+    
 
 
     /**
@@ -80,6 +82,7 @@ public class VnEController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
 
     }    
     
@@ -89,19 +92,48 @@ public class VnEController implements Initializable {
     {
         
         
-        lblReceipt.setText(receiptID);
-        lblLname.setText(lname);
-        lblFname.setText(fname);
-        lblMname.setText(mname);
-        lblDob.setText(dob);
-        lblgender.setText(gender);
-        lblNationality.setText(nationality);
-        lblEmail.setText(email);
-
-        lblResidentialAddress.setText(resAddress);
-        lblCourse.setText(course);
-        lblHall.setText(hall);
+//        lblReceipt.setText(receiptID);
+//        lblLname.setText(lname);
+//        lblFname.setText(fname);
+//        lblMname.setText(mname);
+//        lblDob.setText(dob);
+//        lblgender.setText(gender);
+//        lblNationality.setText(nationality);
+//        lblEmail.setText(email);
+//
+//        lblResidentialAddress.setText(resAddress);
+//        lblCourse.setText(course);
+//        lblHall.setText(hall);
         lblStatus.setText(stinfoStatus);
+
+        String status ="Receipt ID: "+receiptID+" \n"+
+        "Last name: "+lname+" \n"+
+        "First name: "+fname+" \n"+
+                "Middle name: "+mname+" \n"+
+                "DOB: "+dob+" \n"+
+                "Gender: "+gender+" \n"+
+                "Nationality: "+nationality+" \n"+
+                "Email: "+email+" \n"+
+                "Address: "+resAddress+" \n"+
+                "_________________________"+" \n";
+        if(stinfoStatus.equals(Database.APP_STATUS_ACCEPTED)){
+            status +="Course : "+course+" \n"+
+                     "Hall: "+hall+" \n"+
+                     "Admission status: "+stinfoStatus+" \n";
+        }else{
+            status +="Course : "+course+" \n"+
+                    "Hall: "+" \n"+
+                    "Admission status: "+stinfoStatus+" \n";
+
+            lblCourse.setText(" ");
+            lblHall.setText(" ");
+        }
+                ;
+
+        statusTextArea.setText(status);
+
+
+
 
     }
 
