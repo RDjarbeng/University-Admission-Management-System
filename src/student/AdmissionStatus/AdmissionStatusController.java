@@ -59,14 +59,7 @@ public class AdmissionStatusController implements Initializable {
     @FXML
     private Label lblHall;
 
-    @FXML
-    private Label lblResults;
 
-    @FXML
-    private JFXButton btnAccept;
-
-    @FXML
-    private JFXButton btnReject;
 
     @FXML
     private Label lblStatus;
@@ -74,7 +67,9 @@ public class AdmissionStatusController implements Initializable {
 
     @FXML
     private JFXTextArea statusTextArea;
-    
+
+    @FXML
+    private Label admissionDetailsTitle;
 
 
     /**
@@ -90,20 +85,6 @@ public class AdmissionStatusController implements Initializable {
                         String nationality,
                         String email, String resAddress, String course, String hall, String stinfoStatus) //Blob results)
     {
-        
-        
-//        lblReceipt.setText(receiptID);
-//        lblLname.setText(lname);
-//        lblFname.setText(fname);
-//        lblMname.setText(mname);
-//        lblDob.setText(dob);
-//        lblgender.setText(gender);
-//        lblNationality.setText(nationality);
-//        lblEmail.setText(email);
-//
-//        lblResidentialAddress.setText(resAddress);
-//        lblCourse.setText(course);
-//        lblHall.setText(hall);
         lblStatus.setText(stinfoStatus);
 
         String status ="Receipt ID: "+receiptID+" \n"+
@@ -145,17 +126,48 @@ public class AdmissionStatusController implements Initializable {
 
     public void setData(StudentInfo stinfo) {
 
-        lblReceipt.setText(stinfo.getReceiptID());
-        lblLname.setText(stinfo.getLname());
-        lblFname.setText(stinfo.getFname());
-        lblMname.setText(stinfo.getMname());
-        lblDob.setText(stinfo.getDob());
-        lblgender.setText(stinfo.getGender());
-        lblNationality.setText(stinfo.getNationality());
-        lblEmail.setText(stinfo.getEmail());
-        lblResidentialAddress.setText(stinfo.getResAddress());
-        lblCourse.setText(stinfo.getCourse());
-        lblHall.setText(stinfo.getHall());
+//        lblReceipt.setText(stinfo.getReceiptID());
+//        lblLname.setText(stinfo.getLname());
+//        lblFname.setText(stinfo.getFname());
+//        lblMname.setText(stinfo.getMname());
+//        lblDob.setText(stinfo.getDob());
+//        lblgender.setText(stinfo.getGender());
+//        lblNationality.setText(stinfo.getNationality());
+//        lblEmail.setText(stinfo.getEmail());
+//        lblResidentialAddress.setText(stinfo.getResAddress());
+//        lblCourse.setText(stinfo.getCourse());
+//        lblHall.setText(stinfo.getHall());
+//        lblStatus.setText(stinfo.getStatus());
+
         lblStatus.setText(stinfo.getStatus());
+
+        String status ="Receipt ID: "+stinfo.getReceiptID()+" \n"+
+                "Last name: "+stinfo.getLname()+" \n"+
+                "First name: "+stinfo.getFname()+" \n"+
+                "Middle name: "+stinfo.getMname()+" \n"+
+                "DOB: "+stinfo.getDob()+" \n"+
+                "Gender: "+stinfo.getGender()+" \n"+
+                "Nationality: "+stinfo.getNationality()+" \n"+
+                "Email: "+stinfo.getEmail()+" \n"+
+                "Address: "+stinfo.getResAddress()+" \n"+
+                "_________________________"+" \n";
+        if(stinfo.getStatus().equals(Database.APP_STATUS_ACCEPTED)){
+            status +="Course : "+stinfo.getCourse()+" \n"+
+                    "Hall : "+stinfo.getAssignedHall()+" \n";
+
+
+        }else{
+            status +="Course : "+stinfo.getCourse()+" \n"+
+                    "Hall: "+stinfo.getHall()+" \n";
+        }
+        status +="Admission status : "+stinfo.getStatus()+" \n";
+
+        lblCourse.setText(stinfo.getCourse());
+        lblHall.setText(stinfo.getAssignedHall());
+
+        statusTextArea.setText(status);
+        admissionDetailsTitle.setText("Admission Details - "+stinfo.getReceiptID());
+
+
     }
 }

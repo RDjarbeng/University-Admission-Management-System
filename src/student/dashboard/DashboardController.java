@@ -53,7 +53,7 @@ public class DashboardController implements Initializable {
     private JFXButton btnTrackApp;
 
 
-    FXMLLoader loader = new FXMLLoader(getClass().getResource("/student/AdmissionStatus/AdmissionStatus.fxml"));
+
 
     /**
      * Initializes the controller class.
@@ -66,6 +66,8 @@ public class DashboardController implements Initializable {
         btnTrackApp.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
+
+                Parent root1;
 
 //      get selected student
                 StudentInfo stinfo = new StudentInfo();
@@ -85,34 +87,24 @@ public class DashboardController implements Initializable {
                 }
 
                 try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/student/AdmissionStatus/AdmissionStatus.fxml"));
 
-                    loader.load();
+                     root1 =loader.load();
+                    AdmissionStatusController vneController = loader.getController();
+                    if(stinfo != null) {
+                        vneController.setData(stinfo);
+                    }
+//                Parent root1 = loader.getRoot();
+                    Stage stage = new Stage();
+                    stage.setScene(new Scene(root1));
+                    stage.setTitle("Admission details ("+user+")");
+                    stage.show();
+
                 }
                 catch (Exception ex) {
                     ex.printStackTrace();
                 }
 
-                AdmissionStatusController vneController = loader.getController();
-                if(stinfo != null) {
-                    vneController.setData(
-                            stinfo.getReceiptID(),
-                            stinfo.getLname(),
-                            stinfo.getFname(),
-                            stinfo.getMname(),
-                            stinfo.getDob(),
-                            stinfo.getGender(),
-                            stinfo.getNationality(),
-                            stinfo.getEmail(),
-                            stinfo.getResAddress(),
-                            stinfo.getCourse(),
-                            stinfo.getHall(),
-                            stinfo.getStatus());
-                }
-                Parent root1 = loader.getRoot();
-                Stage stage = new Stage();
-                stage.setScene(new Scene(root1));
-                stage.setTitle("Admission details ("+user+")");
-                stage.show();
 
             }
         });
@@ -140,6 +132,7 @@ public class DashboardController implements Initializable {
 
                      //stage.initStyle(StageStyle.TRANSPARENT);
                      stage.setScene(new Scene(root1));
+                     stage.setTitle("Register ");
                     System.out.println("Hello dashboard controller66");
  
                      stage.show();

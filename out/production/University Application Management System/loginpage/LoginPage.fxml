@@ -87,7 +87,7 @@
                               <Font name="Ebrima Bold" size="36.0" />
                            </font>
                         </Label>
-                        <JFXTextField fx:id="txtPaymentReceipt" focusColor="#bec8e4" labelFloat="true" layoutX="131.0" layoutY="318.0" prefHeight="37.0" prefWidth="243.0" promptText="Payment Receipt" style="-fx-text-inner-color: #bec8e4;" unFocusColor="#99299ee8">
+                        <JFXTextField fx:id="txtStudentUsername" focusColor="#bec8e4" labelFloat="true" layoutX="131.0" layoutY="318.0" prefHeight="37.0" prefWidth="243.0" promptText="Payment Receipt" style="-fx-text-inner-color: #bec8e4;" unFocusColor="#99299ee8">
                            <font>
                               <Font name="Ebrima" size="16.0" />
                            </font>
@@ -95,7 +95,7 @@
                               <Glow />
                            </effect>
                         </JFXTextField>
-                        <JFXPasswordField fx:id="txtPin" focusColor="#7e90c5" labelFloat="true" layoutX="131.0" layoutY="386.0" prefHeight="25.0" prefWidth="251.0" promptText="PIN" style="-fx-text-inner-color: #ffffff;" unFocusColor="#99299e">
+                        <JFXPasswordField fx:id="txtStudentPassword" focusColor="#7e90c5" labelFloat="true" layoutX="131.0" layoutY="386.0" prefHeight="25.0" prefWidth="251.0" promptText="PIN" style="-fx-text-inner-color: #ffffff;" unFocusColor="#99299e">
                            <font>
                               <Font name="Ebrima" size="16.0" />
                            </font>

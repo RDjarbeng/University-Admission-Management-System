@@ -51,6 +51,8 @@ public class Database {
     public static final String APP_STATUS_PENDING = "PENDING";
     public static final String APP_DATE_CREATED = "DATECREATED";
     public static final String APP_HALLASSIGNED = "HALLASSIGNED";
+    public static final String APP_COURSEASSIGNED = "COURSEASSIGNED";
+    public static final String APP_COURSEASSIGNED_NOCOURSEASSIGNED = "COURSEASSIGNED";
     public static final String APP_HALLASSIGNED_NOHALLASSIGNED = "NO HALL ASSIGNED";
 
 
@@ -147,6 +149,41 @@ public class Database {
 
         return executeSelectQuery(fullDetails);
 
+    }
+
+    public int insertStudent(StudentInfo student) throws SQLException {
+
+        String insert;
+        insert="INSERT INTO STUDENT(" +
+                "ReceiptID," +
+                " LastName," +
+                " FirstName," +
+                " MIDDLENAME," +
+                " DOB," +
+                " gender," +
+                " NATIONALITY, " +
+                "PhoneNumber," +
+                " ResidentialAddress," +
+                " email" +
+                " )VALUES(?,?,?,?,?,?,?,?,?,?)";
+        preparedStatement = getConn().prepareStatement(insert);
+
+        preparedStatement.setString(1, student.getReceiptID());
+        preparedStatement.setString(2, student.getLname());
+        preparedStatement.setString(3, student.getFname());
+        preparedStatement.setString(4, student.getMname());
+        preparedStatement.setString(5, student.getDob());
+        preparedStatement.setString(6, student.getGender());
+        preparedStatement.setString(7, student.getNationality());
+        preparedStatement.setString(8, student.getPhoneNumber());
+        preparedStatement.setString(9, student.getResAddress());
+        preparedStatement.setString(10, student.getEmail());
+
+        if(preparedStatement.execute()) {
+            return 1;
+        } else {
+            return 0;
+        }
     }
 
     public ResultSet getRejectedStudents() throws SQLException {
@@ -314,6 +351,7 @@ public class Database {
             student.setHall(rs.getString(Database.FIRSTHALL));
             student.setStatus(rs.getString(Database.APP_STATUS));
             student.setAssignedHall(rs.getString(Database.APP_HALLASSIGNED));
+//            student.setCourseAssigned(rs.getString(Database.APP_COURSEASSIGNED));
             rs.close();
             return  true;
         }else {
@@ -373,7 +411,7 @@ public class Database {
         return data;
     }
 
-    public void updateStudentStatus(String adminStatement, String id, String hall) throws SQLException {
+    public void updateStudentStatus(String adminStatement, StudentInfo studentInfo) throws SQLException {
         String accept ="UPDATE "+ Database.APPLICATION_TABLE+" SET "+Database.APP_STATUS +"= ?" +
                 ", "+Database.APP_HALLASSIGNED +"= ?" +
                 "WHERE " +
@@ -384,8 +422,23 @@ public class Database {
 
         PreparedStatement updateStudent = getPreparedStatement(accept);
         updateStudent.setString(1, adminStatement);
-        updateStudent.setString(2, hall);
-        updateStudent.setString(3, id);
+        updateStudent.setString(2, studentInfo.getAssignedHall());
+        updateStudent.setString(3, studentInfo.getReceiptID());
+        updateStudent.executeUpdate();
+
+    }
+
+    public void updateRejectedStudentStatus(String adminStatement, String id) throws SQLException {
+        String accept ="UPDATE "+ Database.APPLICATION_TABLE+" SET "+Database.APP_STATUS +"= ?" +
+                " WHERE " +
+                "Application" +
+                "."+Database.APP_RECEIPTID+" =?";
+
+        System.out.println("Update Query :"+ accept);
+
+        PreparedStatement updateStudent = getPreparedStatement(accept);
+        updateStudent.setString(1, adminStatement);
+        updateStudent.setString(2, id);
         updateStudent.executeUpdate();
 
     }
@@ -556,6 +609,7 @@ public class Database {
 };
 
 
+//DELETE
 
 //
 //Tables

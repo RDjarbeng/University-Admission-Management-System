@@ -50,9 +50,9 @@ public class LoginPageController implements Initializable {
     @FXML
     private Pane paneStudent;
     @FXML
-    private JFXTextField txtPaymentReceipt;
+    private JFXTextField txtStudentUsername;
     @FXML
-    private JFXPasswordField txtPin;
+    private JFXPasswordField txtStudentPassword;
     @FXML
     private JFXButton btnStudentLogin;
     @FXML
@@ -122,15 +122,15 @@ public class LoginPageController implements Initializable {
     private void handleStudentLogin(MouseEvent event) {
         
         
-        String receipt = txtPaymentReceipt.getText();
-        String pin = txtPin.getText();
+        String receipt = txtStudentUsername.getText();
+        String pin = txtStudentPassword.getText();
         
         if (receipt.equals("") && pin.equals(""))
         {
             //System.out.println("Hello");
             userLoginStatusLabel.setText("Username/password field cannot be empty!");
             //JOptionPane.showMessageDialog(null, "Incorrect receipt or pin!");
-            txtPaymentReceipt.requestFocus();
+            txtStudentUsername.requestFocus();
 
         }
         
@@ -171,10 +171,10 @@ public class LoginPageController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
 
+        txtStudentUsername.requestFocus();
 
-        //animate the UG badge
+        //animate the ug logo
         fadeAnimation();
 
     }
@@ -288,9 +288,9 @@ public class LoginPageController implements Initializable {
 
                 //JOptionPane.showMessageDialog(null, "Login Failed!");
                 //txtPaymentReceipt.setText("");//clear text field
-                txtPaymentReceipt.requestFocus();
+                txtStudentUsername.requestFocus();
 
-                txtPin.setText("");//clear passwordfield
+                txtStudentPassword.setText("");//clear passwordfield
 
             }
         }
@@ -300,9 +300,9 @@ public class LoginPageController implements Initializable {
 
             //JOptionPane.showMessageDialog(null, "Login Failed!");
             //txtPaymentReceipt.setText("");//clear text field
-            txtPaymentReceipt.requestFocus();
+            txtStudentUsername.requestFocus();
 
-            txtPin.setText("");//clear passwordfield
+            txtStudentPassword.setText("");//clear passwordfield
         }
         return false;
     }

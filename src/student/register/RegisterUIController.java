@@ -15,6 +15,8 @@ import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+
+import com.jfoenix.controls.JFXRadioButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -27,6 +29,8 @@ import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import model.Student;
+import model.StudentInfo;
 import student.dashboard.DashboardController;
 
 import javax.swing.JOptionPane;
@@ -34,23 +38,12 @@ import javax.swing.JOptionPane;
 
 /**
  * FXML Controller class
- *
+ * @author Richard
  * @author kezia
  */
 public class RegisterUIController implements Initializable {
-
-//    public static String getUser() {
-//        return user;
-//    }
-//
-//    public static void setUser(String user) {
-//        RegisterUIController.user = user;
-//    }
-//
-//    public static String user;
-
     @FXML
-    private Label registerTitle;//title on register page
+    private Label registerTitle;
 
     @FXML
     private TextField txtSurname;
@@ -62,16 +55,10 @@ public class RegisterUIController implements Initializable {
     private TextField txtMName;
 
     @FXML
-    private TextField txtExt;
+    private TextField txtNationality;
 
     @FXML
-    private TextField txtGender;
-
-    @FXML
-    private TextField txtPops;
-
-    @FXML
-    private TextField txtMoms;
+    private TextField txtDOB;
 
     @FXML
     private TextField txtNum;
@@ -92,16 +79,30 @@ public class RegisterUIController implements Initializable {
     private Button btnSubmitReg;
 
     @FXML
-    private TextField txtDOB;
-    
-    private Database myDatabase;
-    private PreparedStatement pst;
-    @FXML
     private TextField txtReceipt;
+
     @FXML
-    private ListView listview;
+    private ListView<String> listview;
+
     @FXML
     private Button btnChPdf;
+
+    @FXML
+    private JFXRadioButton genderMaleRButton;
+
+    @FXML
+    private ToggleGroup gender;
+
+    @FXML
+    private JFXRadioButton genderFemaleCheck;
+
+    @FXML
+    private Label registerStatusLabel;
+
+
+    //backend
+    private Database myDatabase;
+    private PreparedStatement pst;
 
     private FileInputStream fis;
     
@@ -117,6 +118,8 @@ public class RegisterUIController implements Initializable {
         //myDatabase = DBConnection.dbconnect();
 
         registerTitle.setText("Registration ("+ DashboardController.getUser()+")");
+        txtReceipt.setText(DashboardController.getUser());
+        registerStatusLabel.setText("");
        
     }    
 
@@ -125,76 +128,81 @@ public class RegisterUIController implements Initializable {
     @FXML
     private void handleRegSubmit(ActionEvent event) {
 
-
         String receipt = txtReceipt.getText();
      String lname = txtSurname.getText();
      String fname = txtFname.getText();
      String mname = txtMName.getText();
-     //String ext = txtExt.getText();
+     String nationality = txtNationality.getText();
      String dob = txtDOB.getText();
-     //String gender = txtGender.getText();
-     String gender = "male";
-     String father = txtPops.getText();
-//     String mother = txtMoms.getText();
-     String num = txtNum.getText();
+        String gender;
+     if(genderMaleRButton.isSelected()) {
+         gender = "MALE";
+     } else {
+         gender = "FEMALE";
+     }
+     String phoneNum = txtNum.getText();
      String email = txtEmail.getText();
      String address = txtAdd.getText();
-     String prog = txtProg.getText();
+     String course = txtProg.getText();
      String hall = txtHall.getText();
 
-
-    
-     try { 
-         
+     try {
 //            Class.forName("com.mysql.jdbc.Driver");
-            myDatabase = new Database();
 
-            if(!(lname == null)){
-                if(newPath != null){
+
+            if(!(lname.isEmpty() || fname.isEmpty() || dob.isEmpty() || nationality.isEmpty() || phoneNum.isEmpty())){
+                if(!newPath.isEmpty()){
+
+                    //if file has been selected
+                    myDatabase = new Database();
+                    StudentInfo applicant = new StudentInfo();
+
+                    //STUDENT TABLE
+                    applicant.setReceiptID(receipt);
+                    applicant.setLname(lname);
+                    applicant.setFname(fname);
+                    applicant.setMname(mname);
+                    applicant.setDob(dob);
+                    applicant.setNationality(nationality);
+                    applicant.setGender(gender);
+                    applicant.setPhoneNumber(phoneNum);
+                    applicant.setEmail(email);
+                    applicant.setResAddress(address);
+                    //APPLICATION TABLE
+                    applicant.setCourse(course);
+                    applicant.setHall(hall);
+
+                    int i =0;
+                    myDatabase.insertStudent( applicant);
 
                     //todo
                     //move this to Database.java
-                    File resultPDF = new File(newPath);
-                    fis = new FileInputStream(resultPDF);
-                    System.out.println("FIle size fis:" +fis.getChannel().size());
-
-                    String insert;
-                    insert="INSERT INTO STUDENT(ReceiptID, LastName, FirstName, MIDDLENAME, DOB, gender, NATIONALITY, " +
-                            "PHONENUMBER)VALUES(?,?,?,?,?,?,?,?)";
-                    pst = myDatabase.getConn().prepareStatement(insert);
-                    pst.setString(1, receipt);
-
-                    pst.setString(2, lname);
-                    pst.setString(3, fname);
-                    pst.setString(4, mname);
-                    pst.setString(5, dob);
-                    pst.setString(6, gender);
-                    pst.setString(7, father);
-                    pst.setString(8, father);
-
-                    int i = pst.executeUpdate();
-
-                    insert ="INSERT INTO "+Database.APPLICATION_TABLE +
+                    String insert ="INSERT INTO "+Database.APPLICATION_TABLE +
                             "(RECEIPTID,"+
                             Database.FIRSTCHOICE+", "+
                             Database.RESULTS+") "+
                             "VALUES(?,?,?)";
                     System.out.println("Insert: "+insert);
 
+                    File resultPDF = new File(newPath);
+                    fis = new FileInputStream(resultPDF);
+                    System.out.println("FIle size :" +fis.getChannel().size());
+
                     pst = myDatabase.getConn().prepareStatement(insert);
                     pst.setString(1, receipt);
-                    pst.setString(2, prog);
+                    pst.setString(2, course);
                     pst.setBinaryStream(3,fis,fis.available());
 
-                    pst.executeUpdate();
+                     i =pst.executeUpdate();
 
 
 
-                    System.out.println("SAVED!!!!");
+                    System.out.println("Student Registered!");
 
 
 
                     if (i ==1) {
+                        registerStatusLabel.setText("Registration Successful");
                         JOptionPane.showMessageDialog(null, "Registration Successful");
 
                         try {
@@ -218,30 +226,35 @@ public class RegisterUIController implements Initializable {
                             pst.close();
                         }
 
+                    }else {
+                        registerStatusLabel.setText("Something went wrong");
                     }
 
                 }else{
-                    System.out.println("No file to upload");
+                    registerStatusLabel.setText("No file to upload");
                 }
 
+            }else{
+                registerStatusLabel.setText( "Fields marked * are required");
             }
 
 
 
        
         } 
-        catch (SQLException | FileNotFoundException ex){
-            ex.printStackTrace();        
+        catch (SQLException ex){
+            ex.printStackTrace();
+            registerStatusLabel.setText("Something went wrong");
         } catch (IOException e) {
          e.printStackTrace();
-         System.out.println("file not found");
+         registerStatusLabel.setText("File Error!");
      }
 
 
     }
 
     @FXML
-    private void handlePdfChoose(ActionEvent event) throws IOException {
+    private void handlePdfChoose(ActionEvent event)  {
 
 
         
@@ -249,18 +262,16 @@ public class RegisterUIController implements Initializable {
         fc.getExtensionFilters().addAll(
         new ExtensionFilter("PDF File", "*.pdf"));
         File selectedFile = fc.showOpenDialog(null);
+        if (selectedFile.exists()) {
         s_file = selectedFile.getAbsolutePath();
         newPath = s_file.replace('\\', '/');
         System.out.println("FILE: "+s_file);
         System.out.println("New FILE: "+newPath);
         System.out.println("file size: "+ selectedFile.length());
-
-        
-        if (selectedFile != null) {
         listview.getItems().add(selectedFile.getName());
         }
         else {
-        JOptionPane.showMessageDialog(null, "Invalid File Format! upload only pdf's");
+        registerStatusLabel.setText( "Invalid File Format. Upload only pdf's");
 
         }
         

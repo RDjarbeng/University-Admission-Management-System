@@ -87,6 +87,9 @@ public class VnEController implements Initializable {
     @FXML
     private JFXCheckBox checkboxHallAssigned;
 
+    @FXML
+    private Label viewAndEditStatusLabel;
+
     private StudentInfo student;
 
     Database updateDatabase;
@@ -98,27 +101,29 @@ public class VnEController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
+         viewAndEditStatusLabel.setText("");
+
         btnAccept.setOnAction(actionEvent ->{
-                    System.out.println("accepted");
+
                     updateDatabase = new Database();
                     try {
                         //update the student information
                         String studentHall= comboBoxAssignHall.getSelectionModel().getSelectedItem();//get Hall assigned
-                        updateDatabase.updateStudentStatus(Database.APP_STATUS_ACCEPTED, lblReceipt.getText(), studentHall);
+                        student.setAssignedHall(studentHall);
+                        updateDatabase.updateStudentStatus(Database.APP_STATUS_ACCEPTED, student);
                         //update the UI
 
-                        ResultSet  resultSet= updateDatabase.getStudentFromDatabase(lblReceipt.getText());
-                        System.out.println(updateDatabase.getNumRows(resultSet));
-                        lblStatus.setText((resultSet.next())?resultSet.getString(Database.APP_STATUS):
-                                ("Error..."));
                         updateDatabase.fillStudentDetails(lblReceipt.getText(), student);
                         setData(student);
+                        viewAndEditStatusLabel.setText("Student status changed to "+Database.APP_STATUS_ACCEPTED);
 
 
 
                         updateDatabase.closeConnection();
                     } catch (SQLException throwables) {
-                        System.out.println("Problem updating student details");
+//                        System.out.println("Problem updating student details");
+                        viewAndEditStatusLabel.setText("Problem updating student details");
                         throwables.printStackTrace();
                     }
                 }
@@ -128,20 +133,25 @@ public class VnEController implements Initializable {
                     System.out.println("Rejected");
                     updateDatabase = new Database();
                     try {
-                        String studentHall= comboBoxAssignHall.getSelectionModel().getSelectedItem();
 
-                        if(!checkboxHallAssigned.isSelected())
-                            studentHall= Database.APP_HALLASSIGNED_NOHALLASSIGNED;
+                        //this should not modify hall information
+//                        String studentHall= student.getAssignedHall();
+//
+//                        if(!checkboxHallAssigned.isSelected())
+//                            studentHall=comboBoxAssignHall.getSelectionModel().getSelectedItem();
+
                         //update the student information
-                        updateDatabase.updateStudentStatus(Database.APP_STATUS_REJECT, lblReceipt.getText(), studentHall);
+                        updateDatabase.updateRejectedStudentStatus(Database.APP_STATUS_REJECT, lblReceipt.getText());
                         //update the UI
 //                        initialize(url, rb);
                         lblStatus.setText(Database.APP_STATUS_REJECT);
+                        viewAndEditStatusLabel.setText("Student status changed to "+Database.APP_STATUS_REJECT);
 
                         updateDatabase.closeConnection();
 
                     } catch (SQLException throwables) {
-                        System.out.println("Problem updating student details");
+//                        System.out.println("Problem updating student details");
+                        viewAndEditStatusLabel.setText("Problem updating student details");
                         throwables.printStackTrace();
                     }
                 }
@@ -157,7 +167,8 @@ public class VnEController implements Initializable {
                     updateDatabase.closeConnection();
 
                 } catch (SQLException throwables) {
-                    System.out.println("Problem downloading student details");
+//                    System.out.println("Problem downloading student details");
+                    viewAndEditStatusLabel.setText("Problem downloading student details");
                     throwables.printStackTrace();
                 }
             }

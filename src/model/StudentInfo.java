@@ -26,15 +26,28 @@ public class StudentInfo {
     String postalAddress;
     String course;
     String hall;
-
-
-
     String assignedHall;
-
-
-
     String status;
     String dateCreated;
+    String phoneNumber;
+
+    public String getCourseAssigned() {
+        return courseAssigned;
+    }
+
+    public void setCourseAssigned(String courseAssigned) {
+        this.courseAssigned = courseAssigned;
+    }
+
+    String courseAssigned;
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
 
     public StudentInfo() {
 
