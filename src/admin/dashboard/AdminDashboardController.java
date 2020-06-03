@@ -54,7 +54,7 @@ public class AdminDashboardController implements Initializable {
             Stage stage = new Stage();
             //stage.initStyle(StageStyle.TRANSPARENT);
             stage.setScene(new Scene(root));
-            stage.setTitle("View Applicantsf");
+            stage.setTitle("View Applicants");
             //stage.setFullScreen(true);
             stage.show();
             //((Node)(event.getSource())).getScene().getWindow().hide();

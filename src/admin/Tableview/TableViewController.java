@@ -88,19 +88,21 @@ public class TableViewController implements Initializable{
             ex.printStackTrace();
         }
        VnEController vneController = loader.getController();
-        vneController.setData(
-                stinfo.getReceiptID(),
-                stinfo.getLname(),
-                stinfo.getFname(),
-                stinfo.getMname(),
-                stinfo.getDob(),
-                stinfo.getGender(),
-                stinfo.getNationality(),
-                stinfo.getEmail(),
-                stinfo.getResAddress(),
-                stinfo.getCourse(),
-                stinfo.getHall(),
-                stinfo.getStatus());
+                vneController.setData(stinfo);
+//        vneController.setData(
+//                stinfo.getReceiptID(),
+//                stinfo.getLname(),
+//                stinfo.getFname(),
+//                stinfo.getMname(),
+//                stinfo.getDob(),
+//                stinfo.getGender(),
+//                stinfo.getNationality(),
+//                stinfo.getEmail(),
+//                stinfo.getResAddress(),
+//                stinfo.getCourse(),
+//                stinfo.getHall(),
+//                stinfo.getStatus());
+
             Parent root1 = loader.getRoot();
            Stage stage = new Stage();
           stage.setScene(new Scene(root1));
@@ -162,15 +164,15 @@ public class TableViewController implements Initializable{
         colnMname.setCellValueFactory(new PropertyValueFactory<>("dateCreated"));
 
 
-
-
-
-
-
         tableView.setItems(oblist);
-        
-            
-               }
+        try {
+            rs.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+
+    }
 
     
 

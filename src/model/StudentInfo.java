@@ -29,6 +29,10 @@ public class StudentInfo {
 
 
 
+    String assignedHall;
+
+
+
     String status;
     String dateCreated;
 
@@ -192,6 +196,14 @@ public class StudentInfo {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getAssignedHall() {
+        return assignedHall;
+    }
+
+    public void setAssignedHall(String assignedHall) {
+        this.assignedHall = assignedHall;
     }
 
 

@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
+<?import com.jfoenix.controls.JFXComboBox?>
 <?import java.net.URL?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane id="AnchorPane" prefHeight="700.0" prefWidth="800.0" style="-fx-background-color: #659ec7;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="admin.viewandedit.VnEController">
@@ -62,12 +65,7 @@
             <Font size="16.0" />
          </font>
       </Label>
-      <Label fx:id="lblHall" layoutX="568.0" layoutY="182.0" prefHeight="27.0" prefWidth="190.0" style="-fx-background-color: white;" text="Label">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Label>
-      <Label fx:id="lblResults" alignment="TOP_LEFT" contentDisplay="TOP" layoutX="568.0" layoutY="294.0" prefHeight="94.0" prefWidth="190.0" style="-fx-background-color: white;" text="Go to results">
+      <Label fx:id="lblResults" alignment="TOP_LEFT" contentDisplay="TOP" layoutX="563.0" layoutY="130.0" prefHeight="94.0" prefWidth="190.0" style="-fx-background-color: white;" text="Go to results">
          <font>
             <Font size="16.0" />
          </font>
@@ -122,18 +120,13 @@
             <Font name="Dubai Light" size="16.0" />
          </font>
       </Label>
-      <Label layoutX="447.0" layoutY="180.0" prefHeight="30.0" prefWidth="74.0" text="Hall:">
-         <font>
-            <Font name="Dubai Light" size="16.0" />
-         </font>
-      </Label>
-      <Label layoutX="447.0" layoutY="294.0" prefHeight="30.0" prefWidth="74.0" text="Results:">
+      <Label layoutX="442.0" layoutY="130.0" prefHeight="30.0" prefWidth="74.0" text="Results:">
          <font>
             <Font name="Dubai Light" size="16.0" />
          </font>
       </Label>
       <Separator layoutX="415.0" layoutY="48.0" orientation="VERTICAL" prefHeight="552.0" prefWidth="2.0" />
-      <JFXButton layoutX="564.0" layoutY="396.0" prefHeight="25.0" prefWidth="92.0" style="-fx-background-color: #ffffff;" text="Open" />
+      <JFXButton fx:id="btnDownloadResults" layoutX="564.0" layoutY="231.0" prefHeight="25.0" prefWidth="92.0" style="-fx-background-color: #ffffff;" text="Download" />
       <JFXButton fx:id="btnAccept" layoutX="447.0" layoutY="552.0" prefHeight="25.0" prefWidth="92.0" style="-fx-background-color: #ffffff;" text="Accept" textFill="#09ab78">
          <font>
             <Font size="17.0" />
@@ -154,5 +147,30 @@
             <Font size="16.0" />
          </font>
       </Label>
+      <Label fx:id="lblHall" layoutX="561.0" layoutY="287.0" prefHeight="27.0" prefWidth="190.0" style="-fx-background-color: white;" text="Label">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="431.0" layoutY="285.0" prefHeight="30.0" prefWidth="74.0" text="Hall:">
+         <font>
+            <Font name="Dubai Light" size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="421.0" layoutY="334.0" prefHeight="30.0" prefWidth="108.0" text="Assign hall:">
+         <font>
+            <Font name="Dubai Light" size="16.0" />
+         </font>
+      </Label>
+      <JFXCheckBox fx:id="checkboxHallAssigned" alignment="CENTER" layoutX="586.0" layoutY="397.0" text="Hall Already assigned">
+         <font>
+            <Font name="System Italic" size="13.0" />
+         </font>
+      </JFXCheckBox>
+      <HBox layoutX="562.0" layoutY="337.0">
+         <children>
+            <JFXComboBox fx:id="comboBoxAssignHall" prefHeight="25.0" prefWidth="193.0" unFocusColor="#f5e5e5" />
+         </children>
+      </HBox>
    </children>
 </AnchorPane>

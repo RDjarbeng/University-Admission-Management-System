@@ -2,6 +2,7 @@ package AdmissionSystem;
 
 import model.StudentInfo;
 
+import java.io.*;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -49,6 +50,8 @@ public class Database {
     public static final String APP_STATUS_ACCEPTED = "ACCEPTED";
     public static final String APP_STATUS_PENDING = "PENDING";
     public static final String APP_DATE_CREATED = "DATECREATED";
+    public static final String APP_HALLASSIGNED = "HALLASSIGNED";
+    public static final String APP_HALLASSIGNED_NOHALLASSIGNED = "NO HALL ASSIGNED";
 
 
 
@@ -83,6 +86,7 @@ public class Database {
     public String [] getApplicantNames() throws SQLException {
         ResultSet result = stmt.executeQuery("Select ReceiptID, lastName"+"" +
                 " from Student");
+
 
         int rowCount = getNumRows(result);
         String [] studentNames = new String[rowCount];
@@ -304,16 +308,17 @@ public class Database {
             student.setNationality(rs.getString(Database.STUDENT_NATIONALITY));
             student.setEmail(rs.getString(Database.STUDENT_EMAIL));
             student.setResAddress(rs.getString(Database.STUDENT_RESIDENTIALADDRESS));
-                    student.setPostalAddress(rs.getString(Database.STUDENT_POSTALADDRESS)
-            );
-//            System.out.println("filling student details");
+                    student.setPostalAddress(rs.getString(Database.STUDENT_POSTALADDRESS));
 
             student.setCourse(rs.getString(Database.FIRSTCHOICE));
             student.setHall(rs.getString(Database.FIRSTHALL));
             student.setStatus(rs.getString(Database.APP_STATUS));
+            student.setAssignedHall(rs.getString(Database.APP_HALLASSIGNED));
+            rs.close();
             return  true;
         }else {
             System.out.println("Error creating student");
+            rs.close();
             return false;
         }
 
@@ -368,8 +373,9 @@ public class Database {
         return data;
     }
 
-    public void updateStudentStatus(String adminStatement, String id) throws SQLException {
+    public void updateStudentStatus(String adminStatement, String id, String hall) throws SQLException {
         String accept ="UPDATE "+ Database.APPLICATION_TABLE+" SET "+Database.APP_STATUS +"= ?" +
+                ", "+Database.APP_HALLASSIGNED +"= ?" +
                 "WHERE " +
                 "Application" +
                 ". "+Database.APP_RECEIPTID+" =?";
@@ -378,7 +384,8 @@ public class Database {
 
         PreparedStatement updateStudent = getPreparedStatement(accept);
         updateStudent.setString(1, adminStatement);
-        updateStudent.setString(2, id);
+        updateStudent.setString(2, hall);
+        updateStudent.setString(3, id);
         updateStudent.executeUpdate();
 
     }
@@ -508,6 +515,40 @@ public class Database {
         }
         System.out.println("Complete");
 
+    }
+
+    public boolean getStudentDocument(String receiptID) throws SQLException {
+        ResultSet resultSet = null;
+        String selection = "SELECT * FROM "+ APPLICATION_TABLE +" WHERE "+APP_RECEIPTID+" =?";
+
+        preparedStatement = conn.prepareStatement(selection);
+        preparedStatement.setString(1, receiptID);
+        resultSet = preparedStatement.executeQuery();
+
+        try{
+            if (resultSet.next()){
+                FileOutputStream fileOutputStream = null;
+                String filename = "C:\\Users\\use\\Desktop\\AdminDocs\\"+receiptID+" results.pdf";
+
+                File file= new File(filename);
+                fileOutputStream = new FileOutputStream(filename);
+                InputStream inputStream = resultSet.getBinaryStream(RESULTS);
+
+                byte[] buffer = new byte[1024];
+                while (inputStream.read(buffer)>0){
+                    fileOutputStream.write(buffer);
+                }
+                fileOutputStream.close();
+                inputStream.close();
+                System.out.println("File created at: \n"+filename);
+                return true;
+            }
+        } catch (IOException e) {
+            System.out.println("Error: Unable to fully create file "+receiptID);
+            e.printStackTrace();
+        }
+
+        return  false;
     }
 
 
