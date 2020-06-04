@@ -130,7 +130,7 @@ public class LoginPageController implements Initializable {
         {
             //System.out.println("Hello");
             userLoginStatusLabel.setText("Username/password field cannot be empty!");
-            //JOptionPane.showMessageDialog(null, "Incorrect receipt or pin!");
+            //JOptionPane.showMessageDialog(null, "Inco``rrect receipt or pin!");
             txtStudentUsername.requestFocus();
 
         }

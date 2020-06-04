@@ -15,9 +15,12 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXRadioButton;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -102,6 +105,10 @@ public class RegisterUIController implements Initializable {
     private Label registerStatusLabel;
 
 
+    @FXML
+    private JFXComboBox<String> hallComboBox;
+
+
 
 
     //backend
@@ -124,9 +131,51 @@ public class RegisterUIController implements Initializable {
         txtReceipt.setText(DashboardController.getUser());
         registerStatusLabel.setText("");
 
+        hallComboBox.setItems(FXCollections.observableArrayList(getMaleHalls()));
+        hallComboBox.getSelectionModel().select(0);
 
 
 
+
+    }
+
+    @FXML
+    void handleGenderList(ActionEvent event) {
+
+        if(genderMaleRButton.isSelected()){
+            hallComboBox.setItems(FXCollections.observableArrayList(getMaleHalls()));
+            hallComboBox.getSelectionModel().select(0);
+        }else {
+            hallComboBox.setItems(FXCollections.observableArrayList(getFemaleHalls()));
+            hallComboBox.getSelectionModel().select(0);
+        }
+
+    }
+
+
+
+    public ArrayList getMaleHalls(){
+        ArrayList<String> Halls = new ArrayList<>();
+        Halls.add("No hall assigned");
+        Halls.add("Akuafo Hall");
+        Halls.add("Legon Hall");
+        Halls.add("African Union Hall(PENTAGON)");
+            Halls.add("Commonwealth Hall");
+
+
+        return  Halls;
+    }
+
+    public ArrayList getFemaleHalls(){
+        ArrayList<String> Halls = new ArrayList<>();
+        Halls.add("No hall assigned");
+        Halls.add("Akuafo Hall");
+        Halls.add("Legon Hall");
+        Halls.add("African Union Hall (PENTAGON)");
+        Halls.add("Volta Hall");
+
+
+        return  Halls;
     }
 
     @FXML
@@ -152,7 +201,7 @@ public class RegisterUIController implements Initializable {
      String email = txtEmail.getText();
      String address = txtAdd.getText();
      String course = txtProg.getText();
-     String hall = txtHall.getText();
+     String hall =  hallComboBox.getSelectionModel().getSelectedItem();
 
      try {
 //            Class.forName("com.mysql.jdbc.Driver");
@@ -209,19 +258,19 @@ public class RegisterUIController implements Initializable {
 
 
 
-                    if (i ==1) {
+                    if (i >0) {
                         registerStatusLabel.setText("Registration Successful");
                         JOptionPane.showMessageDialog(null, "Registration Successful");
 
                         try {
                             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/student/dashboard/Dashboard.fxml"));
-                            System.out.println("Hello loginpage controller1");
+
                             Parent root1 = (Parent)fxmlLoader.load();
                             Stage stage = new Stage();
                             stage.initStyle(StageStyle.TRANSPARENT);
                             stage.setScene(new Scene(root1));
                             stage.show();
-                            System.out.println("Hello loginpage controller2222");
+
                             ((Node)(event.getSource())).getScene().getWindow().hide();
 
 
@@ -235,7 +284,7 @@ public class RegisterUIController implements Initializable {
                         }
 
                     }else {
-                        registerStatusLabel.setText("Something went wrong");
+                        registerStatusLabel.setText("Something went wrong, registration failed");
                     }
 
                 }else{
@@ -252,7 +301,7 @@ public class RegisterUIController implements Initializable {
         } 
         catch (SQLException ex){
             ex.printStackTrace();
-            registerStatusLabel.setText("Something went wrong");
+            registerStatusLabel.setText("Something went wrong, database connectivity error");
         } catch (IOException e) {
          e.printStackTrace();
          registerStatusLabel.setText("File Error!");
