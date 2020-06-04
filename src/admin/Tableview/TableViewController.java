@@ -92,7 +92,15 @@ public class TableViewController implements Initializable{
             stage.setScene(new Scene(root1));
             stage.setTitle("(Admin)Student details");
             ((Node)(event.getSource())).getScene().getWindow().hide();
+            stage.showAndWait();
+
+            loader = new FXMLLoader(getClass().getResource("/admin/dashboard/AdminDashboard.fxml"));
+             root1 = (Parent) loader.load();
+            stage = new Stage();
+            stage.initStyle(StageStyle.TRANSPARENT);
+            stage.setScene(new Scene(root1));
             stage.show();
+
 
 
 

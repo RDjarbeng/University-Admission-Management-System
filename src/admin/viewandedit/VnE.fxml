@@ -172,9 +172,9 @@
             <JFXComboBox fx:id="comboBoxAssignHall" prefHeight="25.0" prefWidth="193.0" unFocusColor="#f5e5e5" />
          </children>
       </HBox>
-      <Label fx:id="viewStatusLabel" layoutX="10.0" layoutY="657.0" prefHeight="30.0" prefWidth="746.0" text="Label" textFill="#c6e117">
+      <Label fx:id="viewStatusLabel" layoutX="10.0" layoutY="657.0" prefHeight="32.0" prefWidth="780.0" text="Label" textFill="#ddff00">
          <font>
-            <Font size="22.0" />
+            <Font name="System Italic" size="22.0" />
          </font>
       </Label>
    </children>

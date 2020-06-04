@@ -168,7 +168,8 @@ public class DashboardController implements Initializable {
                 e.printStackTrace();
             }
         }else{
-            JOptionPane.showMessageDialog(null, "Your registration is complete\n View your details -> Track Admission");
+            JOptionPane.showMessageDialog(null, "Your registration is complete\n View your details\n > Track " +
+                    "Admission");
         }
 
     }

@@ -83,7 +83,9 @@ public class AdminDashboardController implements Initializable {
             stage.setScene(new Scene(root));
             stage.setTitle("View Applicants");
             //stage.setFullScreen(true);
-            ((Node)(event.getSource())).getScene().getWindow().hide();
+            if(pending >0) {
+                ((Node)(event.getSource())).getScene().getWindow().hide();
+            }
 
             stage.show();
 
@@ -96,7 +98,7 @@ public class AdminDashboardController implements Initializable {
     }
 
     @FXML
-    private void handleViewSelectedApplicants(ActionEvent event) {
+    private void handleViewAcceptedApplicants(ActionEvent event) {
         try {
             TableViewController.table =2;
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/admin/Tableview/TableView.fxml"));
@@ -108,7 +110,10 @@ public class AdminDashboardController implements Initializable {
             //stage.initStyle(StageStyle.TRANSPARENT);
             stage.setScene(new Scene(root));
             //stage.setFullScreen(true);
-            ((Node)(event.getSource())).getScene().getWindow().hide();
+
+            if(accepted >0) {
+                ((Node)(event.getSource())).getScene().getWindow().hide();
+            }
             stage.show();
         }
         catch (Exception ex) {
@@ -126,7 +131,9 @@ public class AdminDashboardController implements Initializable {
             Stage stage = new Stage();
             //stage.initStyle(StageStyle.TRANSPARENT);
             stage.setScene(new Scene(root));
-            ((Node)(event.getSource())).getScene().getWindow().hide();
+            if(rejected >0) {
+                ((Node)(event.getSource())).getScene().getWindow().hide();
+            }
             stage.show();
 //            fxmlLoader = new FXMLLoader(getClass().getResource("/admin/dashboard/AdminDashboard.fxml"));
 //

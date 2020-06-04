@@ -614,7 +614,7 @@ public class Database {
 
     }
 
-    public boolean getStudentDocument(String receiptID) throws SQLException {
+    public String getStudentDocument(String receiptID) throws SQLException {
         ResultSet resultSet = null;
         String selection = "SELECT * FROM "+ APPLICATION_TABLE +" WHERE "+APP_RECEIPTID+" =?";
 
@@ -637,15 +637,17 @@ public class Database {
                 }
                 fileOutputStream.close();
                 inputStream.close();
+
                 System.out.println("File created at: \n"+filename);
-                return true;
+                filename =filename.replace("\\", "/");
+                return filename;
             }
         } catch (IOException e) {
             System.out.println("Error: Unable to fully create file "+receiptID);
             e.printStackTrace();
         }
 
-        return  false;
+        return  "false";
     }
 
 

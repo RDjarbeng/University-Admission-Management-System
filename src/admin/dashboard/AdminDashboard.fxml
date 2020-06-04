@@ -26,7 +26,7 @@
                   <Font name="Dubai Bold" size="18.0" />
                </font>
             </JFXButton>
-            <JFXButton fx:id="btnViewSelectedApplicants" alignment="BOTTOM_CENTER" buttonType="RAISED" contentDisplay="CENTER" layoutX="386.0" layoutY="189.0" onAction="#handleViewSelectedApplicants" prefHeight="250.0" prefWidth="272.0" ripplerFill="WHITE" styleClass="option" stylesheets="@admindashboard.css" text="View Selected Applicants" textFill="#166aaf">
+            <JFXButton fx:id="btnViewSelectedApplicants" alignment="BOTTOM_CENTER" buttonType="RAISED" contentDisplay="CENTER" layoutX="386.0" layoutY="189.0" onAction="#handleViewAcceptedApplicants" prefHeight="250.0" prefWidth="272.0" ripplerFill="WHITE" styleClass="option" stylesheets="@admindashboard.css" text="View Selected Applicants" textFill="#166aaf">
                <font>
                   <Font name="Dubai Bold" size="18.0" />
                </font>
@@ -60,7 +60,7 @@
       </Pane>
       <ImageView fx:id="btnClose" fitHeight="25.0" fitWidth="31.0" layoutX="974.0" layoutY="2.0" onMouseClicked="#handleCloseButton" pickOnBounds="true" preserveRatio="true" styleClass="close">
          <image>
-            <Image url="@../../images/x.png" />
+            <Image url="@../../images/close.png" />
          </image>
       </ImageView>
    </children>

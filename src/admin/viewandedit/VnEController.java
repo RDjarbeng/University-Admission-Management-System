@@ -101,7 +101,7 @@ public class VnEController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-//         viewAndEditStatusLabel.setText("");
+         viewStatusLabel.setText("");
 
         btnAccept.setOnAction(actionEvent ->{
 
@@ -145,7 +145,7 @@ public class VnEController implements Initializable {
 //                        initialize(url, rb);
                         lblStatus.setText(Database.APP_STATUS_REJECT);
                         viewStatusLabel.setText("Student status changed to "+Database.APP_STATUS_REJECT);
-                        System.out.println("I won't change");
+
                         updateDatabase.closeConnection();
 
                     } catch (SQLException throwables) {
@@ -162,8 +162,9 @@ public class VnEController implements Initializable {
                 updateDatabase = new Database();
                 try {
                     //download the student results
-                    updateDatabase.getStudentDocument(lblReceipt.getText());
+                    String filePath =updateDatabase.getStudentDocument(lblReceipt.getText());
                     updateDatabase.closeConnection();
+                    viewStatusLabel.setText("File downloaded at "+filePath);
 
                 } catch (SQLException throwables) {
 //                    System.out.println("Problem downloading student details");
