@@ -117,8 +117,8 @@ public class RegisterUIController implements Initializable {
 
     private FileInputStream fis;
     
-    String newPath;
-    String s_file;
+    String newPath ="";
+    String s_file="`";
 
     /**
      * Initializes the controller class.
@@ -185,6 +185,8 @@ public class RegisterUIController implements Initializable {
     @FXML
     private void handleRegSubmit(ActionEvent event) {
 
+
+
         String receipt = txtReceipt.getText();
      String lname = txtSurname.getText();
      String fname = txtFname.getText();
@@ -202,6 +204,8 @@ public class RegisterUIController implements Initializable {
      String address = txtAdd.getText();
      String course = txtProg.getText();
      String hall =  hallComboBox.getSelectionModel().getSelectedItem();
+     if(hall.toUpperCase().equals(Database.APP_HALLASSIGNED_NOHALLASSIGNED))
+         hall= Database.APP_HALLASSIGNED_NOHALLASSIGNED;
 
      try {
 //            Class.forName("com.mysql.jdbc.Driver");
@@ -211,6 +215,7 @@ public class RegisterUIController implements Initializable {
                 if(!newPath.isEmpty()){
 
                     //if file has been selected
+                    btnSubmitReg.setDisable(true);
                     myDatabase = new Database();
                     StudentInfo applicant = new StudentInfo();
 
@@ -227,7 +232,7 @@ public class RegisterUIController implements Initializable {
                     applicant.setResAddress(address);
                     //APPLICATION TABLE
                     applicant.setCourse(course);
-                    applicant.setHall(hall);
+//                    applicant.setHall(hall);
 
                     int i =0;
                     myDatabase.insertStudent( applicant);
@@ -237,8 +242,9 @@ public class RegisterUIController implements Initializable {
                     String insert ="INSERT INTO "+Database.APPLICATION_TABLE +
                             "(RECEIPTID,"+
                             Database.FIRSTCHOICE+", "+
+                            Database.FIRSTHALL+", "+
                             Database.RESULTS+") "+
-                            "VALUES(?,?,?)";
+                            "VALUES(?,?,?,?)";
                     System.out.println("Insert: "+insert);
 
                     File resultPDF = new File(newPath);
@@ -248,7 +254,8 @@ public class RegisterUIController implements Initializable {
                     pst = myDatabase.getConn().prepareStatement(insert);
                     pst.setString(1, receipt);
                     pst.setString(2, course);
-                    pst.setBinaryStream(3,fis,fis.available());
+                    pst.setString(3, hall);
+                    pst.setBinaryStream(4,fis,fis.available());
 
                      i =pst.executeUpdate();
 

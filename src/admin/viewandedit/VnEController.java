@@ -242,7 +242,7 @@ public class VnEController implements Initializable {
         lblResidentialAddress.setText(stinfo.getResAddress());
         lblCourse.setText(stinfo.getCourse());
 
-        if(!stinfo.getAssignedHall().equals(Database.APP_HALLASSIGNED_NOHALLASSIGNED)) {
+        if(!stinfo.getAssignedHall().toUpperCase().equals(Database.APP_HALLASSIGNED_NOHALLASSIGNED)) {
             lblHall.setText(stinfo.getAssignedHall());
         } else {
             lblHall.setText(stinfo.getHall());

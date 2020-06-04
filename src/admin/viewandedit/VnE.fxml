@@ -127,12 +127,12 @@
       </Label>
       <Separator layoutX="415.0" layoutY="48.0" orientation="VERTICAL" prefHeight="552.0" prefWidth="2.0" />
       <JFXButton fx:id="btnDownloadResults" layoutX="564.0" layoutY="231.0" prefHeight="25.0" prefWidth="92.0" style="-fx-background-color: #ffffff;" text="Download" />
-      <JFXButton fx:id="btnAccept" layoutX="447.0" layoutY="552.0" prefHeight="25.0" prefWidth="92.0" style="-fx-background-color: #ffffff;" text="Accept" textFill="#09ab78">
+      <JFXButton fx:id="btnAccept" layoutX="564.0" layoutY="563.0" prefHeight="25.0" prefWidth="92.0" style="-fx-background-color: #ffffff;" text="Accept" textFill="#09ab78">
          <font>
             <Font size="17.0" />
          </font>
       </JFXButton>
-      <JFXButton fx:id="btnReject" layoutX="610.0" layoutY="552.0" prefHeight="25.0" prefWidth="92.0" style="-fx-background-color: #ffffff;" text="Decline" textFill="#d35c5c">
+      <JFXButton fx:id="btnReject" layoutX="665.0" layoutY="564.0" prefHeight="25.0" prefWidth="92.0" style="-fx-background-color: #ffffff;" text="Decline" textFill="#d35c5c">
          <font>
             <Font size="16.0" />
          </font>
@@ -164,7 +164,7 @@
       </Label>
       <JFXCheckBox fx:id="checkboxHallAssigned" alignment="CENTER" layoutX="586.0" layoutY="397.0" text="Hall Already assigned">
          <font>
-            <Font name="System Italic" size="13.0" />
+            <Font name="System Italic" size="14.0" />
          </font>
       </JFXCheckBox>
       <HBox layoutX="562.0" layoutY="337.0">
