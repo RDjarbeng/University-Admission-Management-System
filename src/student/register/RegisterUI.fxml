@@ -11,6 +11,7 @@
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.effect.Glow?>
+<?import javafx.scene.effect.InnerShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -166,5 +167,13 @@
             <Glow />
          </effect>
       </Label>
+      <ImageView fx:id="registerBtnBack" fitHeight="30.0" fitWidth="38.0" layoutX="16.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true" styleClass="close">
+         <image>
+            <Image url="@../../images/backarrow.png" />
+         </image>
+         <effect>
+            <InnerShadow choke="0.79" color="#171717" />
+         </effect>
+      </ImageView>
    </children>
 </AnchorPane>

@@ -16,6 +16,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -24,6 +25,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import model.StudentInfo;
 
 
@@ -55,7 +57,7 @@ public class TableViewController implements Initializable{
     Database mydatabase;
     
     ObservableList<StudentInfo> oblist = FXCollections.observableArrayList();
-     FXMLLoader loader = new FXMLLoader(getClass().getResource("/admin/viewandedit/VnE.fxml"));
+
 
     
 
@@ -64,13 +66,14 @@ public class TableViewController implements Initializable{
     void handleViewRow(MouseEvent event) {
 //      get selected student
         StudentInfo stinfo = tableView.getSelectionModel().getSelectedItem();
-
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/admin/viewandedit/VnE.fxml"));
             if (stinfo == null) {
                 System.out.println("Nothing selected");
             }
             else {
 
                 try {
+                    System.out.println("fetching student");
 //                    rs = mydatabase.getStudentFromDatabase(stinfo.getReceiptID());
                     mydatabase.fillStudentDetails(stinfo.getReceiptID(), stinfo);
                     //oblist.add(stinfo );
@@ -82,32 +85,21 @@ public class TableViewController implements Initializable{
         try {
             System.out.println("Hello table controller 1");
             loader.load();
-            
-        } 
+            VnEController vneController = loader.getController();
+            vneController.setData(stinfo);
+            Parent root1 = loader.getRoot();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root1));
+            stage.setTitle("(Admin)Student details");
+            ((Node)(event.getSource())).getScene().getWindow().hide();
+            stage.show();
+
+
+
+        }
       catch (Exception ex) {
             ex.printStackTrace();
         }
-       VnEController vneController = loader.getController();
-                vneController.setData(stinfo);
-//        vneController.setData(
-//                stinfo.getReceiptID(),
-//                stinfo.getLname(),
-//                stinfo.getFname(),
-//                stinfo.getMname(),
-//                stinfo.getDob(),
-//                stinfo.getGender(),
-//                stinfo.getNationality(),
-//                stinfo.getEmail(),
-//                stinfo.getResAddress(),
-//                stinfo.getCourse(),
-//                stinfo.getHall(),
-//                stinfo.getStatus());
-
-            Parent root1 = loader.getRoot();
-           Stage stage = new Stage();
-          stage.setScene(new Scene(root1));
-          stage.setTitle("(Admin)Student details");
-          stage.show();
 
                 
             

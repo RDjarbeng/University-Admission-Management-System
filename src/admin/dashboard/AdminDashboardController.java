@@ -5,19 +5,23 @@
  */
 package admin.dashboard;
 
+import AdmissionSystem.Database;
 import admin.Tableview.TableViewController;
 import com.jfoenix.controls.JFXButton;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 /**
  * FXML Controller class
@@ -27,13 +31,17 @@ import javafx.stage.Stage;
 public class AdminDashboardController implements Initializable {
 
     @FXML
-    private JFXButton btnViewandEdit;
+    private JFXButton btnViewPending;
     @FXML
     private JFXButton btnViewSelectedApplicants;
     @FXML
     private JFXButton btnViewRejectedApplicants;
     @FXML
     private ImageView btnClose;
+
+    public static int rejected = 0;
+    public static int pending = 0;
+    public static int accepted = 0;
 
 
 
@@ -43,10 +51,29 @@ public class AdminDashboardController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
+
+        Database myDatabase = new Database();
+
+
+        try {
+            accepted = myDatabase.getNumAcceptedStudents();
+            pending = myDatabase.getNumPendingStudents();
+            rejected = myDatabase.getNumRejectedStudents();
+
+            myDatabase.closeConnection();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+
+
+        btnViewPending.setText("View pending applicants ("+pending+")");
+        btnViewRejectedApplicants.setText("View rejected applicants ("+rejected+")");
+        btnViewSelectedApplicants.setText("View selected applicants ("+accepted+")");
+    }
 
     @FXML
-    private void handleViewandEdit(ActionEvent event) {
+    private void handleViewPendingApplicants(ActionEvent event) {
         try {
             TableViewController.table =1;
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/admin/Tableview/TableView.fxml"));
@@ -56,8 +83,11 @@ public class AdminDashboardController implements Initializable {
             stage.setScene(new Scene(root));
             stage.setTitle("View Applicants");
             //stage.setFullScreen(true);
+            ((Node)(event.getSource())).getScene().getWindow().hide();
+
             stage.show();
-            //((Node)(event.getSource())).getScene().getWindow().hide();
+
+
         }
         catch (Exception ex) {
             ex.printStackTrace();
@@ -78,8 +108,8 @@ public class AdminDashboardController implements Initializable {
             //stage.initStyle(StageStyle.TRANSPARENT);
             stage.setScene(new Scene(root));
             //stage.setFullScreen(true);
+            ((Node)(event.getSource())).getScene().getWindow().hide();
             stage.show();
-            //((Node)(event.getSource())).getScene().getWindow().hide();
         }
         catch (Exception ex) {
             ex.printStackTrace();
@@ -96,9 +126,15 @@ public class AdminDashboardController implements Initializable {
             Stage stage = new Stage();
             //stage.initStyle(StageStyle.TRANSPARENT);
             stage.setScene(new Scene(root));
-            //stage.setFullScreen(true);
+            ((Node)(event.getSource())).getScene().getWindow().hide();
             stage.show();
-            //((Node)(event.getSource())).getScene().getWindow().hide();
+//            fxmlLoader = new FXMLLoader(getClass().getResource("/admin/dashboard/AdminDashboard.fxml"));
+//
+//            Parent root1 = (Parent) fxmlLoader.load();
+//            stage = new Stage();
+//            stage.initStyle(StageStyle.TRANSPARENT);
+//            stage.setScene(new Scene(root1));
+//            stage.show();
         }
         catch (Exception ex) {
             ex.printStackTrace();

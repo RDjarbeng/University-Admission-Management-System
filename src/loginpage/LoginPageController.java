@@ -6,6 +6,7 @@
 package loginpage;
 
 import AdmissionSystem.Database;
+import admin.dashboard.AdminDashboardController;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
@@ -203,8 +204,9 @@ public class LoginPageController implements Initializable {
         try {
             String adminPassword =txtAdminPassword.getText();
             String adminUsername = txtAdminUsername.getText();
+            Database myDatabase = new Database();
 
-            resultSet = fetchAdmin(adminUsername, adminPassword);
+            resultSet = fetchAdmin(adminUsername, adminPassword, myDatabase);
 
 
             if (resultSet.next())
@@ -213,8 +215,9 @@ public class LoginPageController implements Initializable {
 //                    JOptionPane.showMessageDialog(null, "Login Successful!");
                 if(resultSet.getString("Username").equals(adminUsername) && resultSet.getString("Password").equals(adminPassword)) {
                     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/admin/dashboard/AdminDashboard.fxml"));
-                    System.out.println("Hello adminpage");
+
                     Parent root1 = (Parent) fxmlLoader.load();
+
 
                     Stage stage = new Stage();
                     stage.initStyle(StageStyle.TRANSPARENT);
@@ -307,8 +310,8 @@ public class LoginPageController implements Initializable {
         return false;
     }
 
-    public ResultSet fetchAdmin(String user, String password) throws SQLException {
-        Database myDatabase = new Database();
+    public ResultSet fetchAdmin(String user, String password, Database myDatabase) throws SQLException {
+
         preparedStatement = myDatabase.getConn().prepareStatement("select * from admin where username=? and " +
                 "password=?");
 

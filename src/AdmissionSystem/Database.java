@@ -198,6 +198,21 @@ public class Database {
          return executeSelectQuery(select);
     }
 
+    public int getNumRejectedStudents() throws SQLException {
+
+        String select ="select * from "+Database.STUDENT_TABLE +", "+Database.APPLICATION_TABLE
+                + " WHERE "+Database.STUDENT_TABLE+"."+Database.STUDENT_RECEIPTID+" = "+
+                Database.APPLICATION_TABLE+"."+Database.APP_RECEIPTID
+                +" AND "+ Database.APPLICATION_TABLE +"." +Database.APP_STATUS+ " = " +
+                "'REJECTED' "
+                ;
+
+        ResultSet rs= executeSelectQuery(select);
+        int num = getNumRows(rs);
+        rs.close();
+        return num;
+    }
+
     public ResultSet getAcceptedStudents() throws SQLException {
 
         String select ="select * from "+Database.STUDENT_TABLE +", "+Database.APPLICATION_TABLE
@@ -210,6 +225,20 @@ public class Database {
         return executeSelectQuery(select);
     }
 
+    public int getNumAcceptedStudents() throws SQLException {
+
+        String select ="select * from "+Database.STUDENT_TABLE +", "+Database.APPLICATION_TABLE
+                + " WHERE "+Database.STUDENT_TABLE+"."+Database.STUDENT_RECEIPTID+" = "+
+                Database.APPLICATION_TABLE+"."+Database.APP_RECEIPTID
+                +" AND "+ Database.APPLICATION_TABLE +"." +Database.APP_STATUS+ " = " +
+                "'ACCEPTED' "
+                ;
+        ResultSet rs= executeSelectQuery(select);
+        int num = getNumRows(rs);
+        rs.close();
+        return num;
+    }
+
     public ResultSet getPendingStudents() throws SQLException {
 
         String select ="select * from "+Database.STUDENT_TABLE +", "+Database.APPLICATION_TABLE
@@ -218,8 +247,23 @@ public class Database {
                 +" AND "+ Database.APPLICATION_TABLE +"." +Database.APP_STATUS+ " = " +
                 "'PENDING' "
                 ;
-        System.out.println("Query pending students: "+select);
+//        System.out.println("Query pending students: "+select);
         return executeSelectQuery(select);
+    }
+
+    public int getNumPendingStudents() throws SQLException {
+
+        String select ="select * from "+Database.STUDENT_TABLE +", "+Database.APPLICATION_TABLE
+                + " WHERE "+Database.STUDENT_TABLE+"."+Database.STUDENT_RECEIPTID+" = "+
+                Database.APPLICATION_TABLE+"."+Database.APP_RECEIPTID
+                +" AND "+ Database.APPLICATION_TABLE +"." +Database.APP_STATUS+ " = " +
+                "'PENDING' "
+                ;
+
+        ResultSet rs= executeSelectQuery(select);
+        int num = getNumRows(rs);
+        rs.close();
+        return num;
     }
 
 
@@ -355,7 +399,7 @@ public class Database {
             rs.close();
             return  true;
         }else {
-            System.out.println("Error creating student");
+
             rs.close();
             return false;
         }
@@ -411,7 +455,7 @@ public class Database {
         return data;
     }
 
-    public void updateStudentStatus(String adminStatement, StudentInfo studentInfo) throws SQLException {
+    public void updateSelectedStudentStatus(String adminStatement, StudentInfo studentInfo) throws SQLException {
         String accept ="UPDATE "+ Database.APPLICATION_TABLE+" SET "+Database.APP_STATUS +"= ?" +
                 ", "+Database.APP_HALLASSIGNED +"= ?" +
                 "WHERE " +

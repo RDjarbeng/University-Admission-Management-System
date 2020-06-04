@@ -7,6 +7,7 @@ package student.register;
 
 import AdmissionSystem.Database;
 
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -25,6 +26,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
@@ -100,6 +102,8 @@ public class RegisterUIController implements Initializable {
     private Label registerStatusLabel;
 
 
+
+
     //backend
     private Database myDatabase;
     private PreparedStatement pst;
@@ -114,17 +118,21 @@ public class RegisterUIController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-        //myDatabase = DBConnection.dbconnect();
+
 
         registerTitle.setText("Registration ("+ DashboardController.getUser()+")");
         txtReceipt.setText(DashboardController.getUser());
         registerStatusLabel.setText("");
-       
-    }    
 
 
-     
+
+
+    }
+
+    @FXML
+    void handleRegBackButton(MouseEvent event) {
+
+    }
     @FXML
     private void handleRegSubmit(ActionEvent event) {
 
@@ -256,8 +264,6 @@ public class RegisterUIController implements Initializable {
     @FXML
     private void handlePdfChoose(ActionEvent event)  {
 
-
-        
         FileChooser fc = new FileChooser();
         fc.getExtensionFilters().addAll(
         new ExtensionFilter("PDF File", "*.pdf"));

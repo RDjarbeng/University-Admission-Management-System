@@ -6,7 +6,6 @@
 package admin.viewandedit;
 
 import java.net.URL;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -88,7 +87,7 @@ public class VnEController implements Initializable {
     private JFXCheckBox checkboxHallAssigned;
 
     @FXML
-    private Label viewAndEditStatusLabel;
+    private Label viewStatusLabel;
 
     private StudentInfo student;
 
@@ -102,7 +101,7 @@ public class VnEController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-         viewAndEditStatusLabel.setText("");
+//         viewAndEditStatusLabel.setText("");
 
         btnAccept.setOnAction(actionEvent ->{
 
@@ -111,19 +110,19 @@ public class VnEController implements Initializable {
                         //update the student information
                         String studentHall= comboBoxAssignHall.getSelectionModel().getSelectedItem();//get Hall assigned
                         student.setAssignedHall(studentHall);
-                        updateDatabase.updateStudentStatus(Database.APP_STATUS_ACCEPTED, student);
+                        updateDatabase.updateSelectedStudentStatus(Database.APP_STATUS_ACCEPTED, student);
                         //update the UI
 
                         updateDatabase.fillStudentDetails(lblReceipt.getText(), student);
                         setData(student);
-                        viewAndEditStatusLabel.setText("Student status changed to "+Database.APP_STATUS_ACCEPTED);
+                        viewStatusLabel.setText("Student status changed to "+Database.APP_STATUS_ACCEPTED);
 
 
 
                         updateDatabase.closeConnection();
                     } catch (SQLException throwables) {
 //                        System.out.println("Problem updating student details");
-                        viewAndEditStatusLabel.setText("Problem updating student details");
+                        viewStatusLabel.setText("Problem updating student details");
                         throwables.printStackTrace();
                     }
                 }
@@ -145,13 +144,13 @@ public class VnEController implements Initializable {
                         //update the UI
 //                        initialize(url, rb);
                         lblStatus.setText(Database.APP_STATUS_REJECT);
-                        viewAndEditStatusLabel.setText("Student status changed to "+Database.APP_STATUS_REJECT);
-
+                        viewStatusLabel.setText("Student status changed to "+Database.APP_STATUS_REJECT);
+                        System.out.println("I won't change");
                         updateDatabase.closeConnection();
 
                     } catch (SQLException throwables) {
 //                        System.out.println("Problem updating student details");
-                        viewAndEditStatusLabel.setText("Problem updating student details");
+                        viewStatusLabel.setText("Problem updating student details");
                         throwables.printStackTrace();
                     }
                 }
@@ -168,7 +167,7 @@ public class VnEController implements Initializable {
 
                 } catch (SQLException throwables) {
 //                    System.out.println("Problem downloading student details");
-                    viewAndEditStatusLabel.setText("Problem downloading student details");
+                    viewStatusLabel.setText("Problem downloading student details");
                     throwables.printStackTrace();
                 }
             }

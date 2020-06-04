@@ -30,6 +30,8 @@ import model.StudentInfo;
 import student.AdmissionStatus.AdmissionStatus;
 import student.AdmissionStatus.AdmissionStatusController;
 
+import javax.swing.*;
+
 /**
  * FXML Controller class
  *
@@ -52,6 +54,8 @@ public class DashboardController implements Initializable {
     @FXML
     private JFXButton btnTrackApp;
 
+    boolean isRegistered;
+
 
 
 
@@ -62,7 +66,10 @@ public class DashboardController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
 
+        isRegistered = false;
+
         studentDashboardLabel.setText("Student Dashboard (" + user + ")");
+
         btnTrackApp.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
@@ -71,14 +78,10 @@ public class DashboardController implements Initializable {
 
 //      get selected student
                 StudentInfo stinfo = new StudentInfo();
-
                 Database mydatabase = new Database();
 
                 try {
-                     mydatabase.fillStudentDetails(user, stinfo);
-
-
-                    //oblist.add(stinfo );
+                     isRegistered =mydatabase.fillStudentDetails(user, stinfo);
 
 
                 } catch (SQLException throwables) {
@@ -86,23 +89,29 @@ public class DashboardController implements Initializable {
                     throwables.printStackTrace();
                 }
 
-                try {
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/student/AdmissionStatus/AdmissionStatus.fxml"));
+                if(isRegistered){
+                    try {
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/student/AdmissionStatus/AdmissionStatus.fxml"));
 
-                     root1 =loader.load();
-                    AdmissionStatusController vneController = loader.getController();
-                    if(stinfo != null) {
-                        vneController.setData(stinfo);
-                    }
+                        root1 =loader.load();
+                        AdmissionStatusController vneController = loader.getController();
+                        if(stinfo != null) {
+                            vneController.setData(stinfo);
+                        }
 //                Parent root1 = loader.getRoot();
-                    Stage stage = new Stage();
-                    stage.setScene(new Scene(root1));
-                    stage.setTitle("Admission details ("+user+")");
-                    stage.show();
+                        Stage stage = new Stage();
+                        stage.setScene(new Scene(root1));
+                        stage.setTitle("Admission details ("+user+")");
+                        ((Stage)((Node)(actionEvent.getSource())).getScene().getWindow()).hide();
+                        stage.showAndWait();
+                        ((Stage)((Node)(actionEvent.getSource())).getScene().getWindow()).show();
 
-                }
-                catch (Exception ex) {
-                    ex.printStackTrace();
+                    }
+                    catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                }else {
+                    JOptionPane.showMessageDialog(null, "Register first!\n Before viewing admission status");
                 }
 
 
@@ -119,35 +128,50 @@ public class DashboardController implements Initializable {
 
     @FXML
     private void handleRegisterButton(MouseEvent event) {
-        
+        StudentInfo stinfo = new StudentInfo();
+        Database mydatabase = new Database();
+
+
         try {
-                     FXMLLoader loading = new FXMLLoader(getClass().getResource("/student/register/RegisterUI.fxml"));
+            isRegistered =mydatabase.fillStudentDetails(user, stinfo);
+
+
+        } catch (SQLException throwables) {
+            System.out.println("Could not fetch student from DB");
+            throwables.printStackTrace();
+        }
+
+        if(!isRegistered){
+            try {
+
+                FXMLLoader loading = new FXMLLoader(getClass().getResource("/student/register/RegisterUI.fxml"));
 //            RegisterUIController.setUser(user);
 //                     System.out.println("Hello dashboard controller1");
-                     Parent root1 = (Parent)loading.load();
+                Parent root1 = (Parent)loading.load();
 //                     System.out.println("Hello dashboard controller34");
 
-                     Stage stage = new Stage();
+                Stage stage = new Stage();
 //                     System.out.println("Hello dashboard controller41");
 
-                     //stage.initStyle(StageStyle.TRANSPARENT);
-                     stage.setScene(new Scene(root1));
-                     stage.setTitle("Register ");
-                    System.out.println("Hello dashboard controller66");
- 
-                     stage.show();
-                     System.out.println("Hello dashboard controller2222");
-                    ((Node)(event.getSource())).getScene().getWindow().hide();
-                     System.out.println("Hello dashboard 128");
+                //stage.initStyle(StageStyle.TRANSPARENT);
+                stage.setScene(new Scene(root1));
+                stage.setTitle("Register ");
+
+                ((Stage)((Node)(event.getSource())).getScene().getWindow()).hide();
+                stage.showAndWait();
 
 
-                     
-                    }
-                    catch(Exception e){
-                        e.printStackTrace();
-                    }
+                ((Stage)((Node)(event.getSource())).getScene().getWindow()).show();
+
+            }
+            catch(Exception e){
+                e.printStackTrace();
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "Your registration is complete\n View your details -> Track Admission");
+        }
+
     }
-
 
     public static String getUser() {
         return user;
